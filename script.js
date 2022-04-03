@@ -22,6 +22,23 @@ function retrieveData() {
 // clears the saved data from localStorage
 function clearData() {
 	for (const key in gameData) {
-  	localStorage.deleteItem(`${key}`);
+  		localStorage.deleteItem(`${key}`);
   }
+}
+
+// =========== ===========
+
+// changes the pH level
+function adjustPH(change) {
+	gameData.pH = parseFloat(gameData.pH);
+	if (gameData.pH > 6 && gameData.pH < 8) {
+		if (change == '+') gameData.pH += 0.1;
+		if (change == '-') gameData.pH -= 0.1;
+    gameData.pH = Math.round(gameData.pH * 10) / 10;
+	} else {
+		if (change == '+') gameData.pH += 0.01;
+		if (change == '-') gameData.pH -= 0.01;
+    gameData.pH = Math.round(gameData.pH * 100) / 100;
+	}
+  saveData();
 }
