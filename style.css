@@ -1,0 +1,18 @@
+:root {
+	/*--light-green: #8FD694;*/
+	--light-green: #ACFFA1;
+	--dark-green: #002800;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	background: var(--light-green);
+}
+
+/*removes link underlines thoroughly*/
+a:link { text-decoration: none !important; }
+a:hover { text-decoration: none !important; }
+a:active { text-decoration: none !important; }
+a:visited { text-decoration: none !important; }
