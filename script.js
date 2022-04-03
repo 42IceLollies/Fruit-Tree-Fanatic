@@ -1,5 +1,16 @@
 const gameData = {
-	example: 4
+	level: 1,
+	growth: 1,
+	pH: 7.0,
+	bees: false,
+	treeType: undefined,
+	infested: false,
+	fertilizer: 0,
+  coins: 100,
+  grafted: false,
+  pruneNum: 0,
+  pruneMax: [0, 0, 3, 5, 5, 5, 5, 6, 6, 7, 7, 7, 8, 8, 8],
+  baseFruit: [0, 40, 55, 80, 85, 90, 95, 100, 100, 105, 110, 110, 115, 120],
 }
 
 // =============== save data functions ===============
@@ -22,7 +33,7 @@ function retrieveData() {
 // clears the saved data from localStorage
 function clearData() {
 	for (const key in gameData) {
-  		localStorage.deleteItem(`${key}`);
+  	localStorage.deleteItem(`${key}`);
   }
 }
 
