@@ -11,13 +11,16 @@
 	<script src="script.js"></script>
 </head>
 <body>
-<br>
-<header id='main-title'>Fruit Tree Fanatic</header>
+<img src="images/homePageImg.png" class="homeBackground">
 
-<div id='main-buttons'>
+<!-- <div class="secondLayer"> -->
+<header id='main-title' class="secondLayer" >Fruit Tree Fanatic</header>
+
+<div id='main-buttons' class="secondLayer">
 	<button id='new-game'>New Game</button>
 	<br>
 	<button id='resume-game'>Resume Game</button>
+<!-- </div> -->
 </div>
 
 </body>
@@ -28,6 +31,10 @@
 	font-family: "Courgette", sans-serif;
 	font-size: 3em;
 	color: var(--dark-green);
+	/* Sorry, I really hate to use absolute positioning, for some reason the z-index property didn't want to work
+	if I figure out what the bug is, I'll switch it back */
+	position:absolute;
+	top:35%;
 }
 
 #main-buttons {
@@ -54,6 +61,21 @@ button {
 button:hover {background: #CDC;}
 button:focus {background: #BCB;}
 button:disabled {background: #ABA; opacity: 0.5}
+
+/* makes background size of screen and puts behind other elements */
+.homeBackground{
+	width:100%;
+	height:100%;
+	position:relative;
+	z-index: 1;
+}
+
+/* puts other elements on top */
+.secondLayer{
+position: relative;
+z-index: 2;
+}
+
 </style>
 <script>
 if (localStorage.getItem('saveData') == 'true') {
@@ -61,5 +83,6 @@ if (localStorage.getItem('saveData') == 'true') {
 } else {
 	document.getElementById('resume-game').disabled = false;
 }
+
 </script>
 </html>
