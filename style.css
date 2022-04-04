@@ -1,7 +1,12 @@
 :root {
-  /*--light-green: #8FD694;*/
   --light-green: #acffa1;
   --dark-green: #002800;
+  --lighter-green: #D0EFCB;
+  --grey: #999;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 /* makes it so height can be used for elements later on */
@@ -18,15 +23,17 @@ body {
 }
 
 /*removes link underlines thoroughly*/
-a:link {
-  text-decoration: none !important;
+a:link {text-decoration: none !important;}
+a:hover {text-decoration: none !important;}
+a:active {text-decoration: none !important;}
+a:visited {text-decoration: none !important;}
+
+#info {
+  background: var(--grey);
+  opacity: 0.7;
+  border-radius: 30px;
 }
-a:hover {
-  text-decoration: none !important;
-}
-a:active {
-  text-decoration: none !important;
-}
-a:visited {
-  text-decoration: none !important;
+
+#info p {
+  color: white;
 }
