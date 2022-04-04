@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>New Game</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Courgette&family=Inter&display=swap" rel="stylesheet">
+	<link rel='stylesheet' href='style.css'></link>
+	
+</head>
+<body>
+<div id='tree-options'>
+	<div class='option'>
+		<!-- <img src='./images/appleTree/appleTreeOne.png' height='60%'></div> -->
+		<!-- I can't figure out how to put in the image without the option divs all going to seperate lines -->
+	</div>
+	<div class='option'>
+		
+	</div>
+	<div class='option'>
+		
+	</div>
+</div> <!-- end of tree options -->
+<div id='info'>
+	<p>
+		Pick a tree, any tree. I now must type more to test fonts.
+	</p>
+</div> <!-- end of info -->
+
+<script src="script.js"></script>
+</body>
+<style>
+* {
+/*	border: 1px solid black;*/
+}
+
+:root {
+  --light-green: #acffa1;
+  --dark-green: #002800;
+  --lighter-green: #D0EFCB;
+  --grey: #999;
+  font-family: "Inter", sans-serif;
+}
+
+#tree-options {
+	width: 100%;
+	height: 65%;
+	display: flex;
+	justify-content: space-evenly;
+	padding: 0;
+	padding-top: 10px;
+	margin: 0;
+}
+
+.option {
+	width: 30%;
+	height: 95%;
+	background: var(--lighter-green);
+	border-radius: 30px;
+	box-shadow: 0 0 7px var(--grey);
+	transition: box-shadow, 0.5s;
+	display: inline-block;
+}
+
+.option:hover {
+	box-shadow: 0px 0px 15px #666;
+}
+
+#info {
+	height: 30%;
+	width: 90%;
+	margin: 0 auto;
+	box-shadow: 0 0 7px var(--grey);
+	padding: 10px;
+}
+
+</style>
+</html>
