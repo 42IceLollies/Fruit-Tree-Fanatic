@@ -1,7 +1,7 @@
 :root {
   --light-green: #acffa1;
   --dark-green: #002800;
-  --lighter-green: #D0EFCB;
+  --lighter-green: #d0efcb;
   --grey: #999;
 }
 
@@ -22,11 +22,25 @@ body {
   background: var(--light-green);
 }
 
+/* centers all images */
+img {
+  position: relative;
+  margin: auto;
+}
+
 /*removes link underlines thoroughly*/
-a:link {text-decoration: none !important;}
-a:hover {text-decoration: none !important;}
-a:active {text-decoration: none !important;}
-a:visited {text-decoration: none !important;}
+a:link {
+  text-decoration: none !important;
+}
+a:hover {
+  text-decoration: none !important;
+}
+a:active {
+  text-decoration: none !important;
+}
+a:visited {
+  text-decoration: none !important;
+}
 
 #info {
   background: var(--grey);
