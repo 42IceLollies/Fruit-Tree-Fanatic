@@ -87,6 +87,17 @@ function determineInfestation() {
 	}
 }
 
+// determines how much the tree grows based on the amount of fertilizer purchased and the level
+// to be run before level and fertilizer are updated
+function determineGrowth() {
+	// for 1st and 2nd level, 0.02
+	if (gameData.level == 1 || gameData.level == 2) gameData.growth += gameData.fertilizer * 0.02;
+	// for 3rd through 5th, 0.01
+	if (gameData.level >= 3 && gameData.level <= 5) gameData.growth += gameData.fertilizer * 0.01;
+	// from then on, 0.005
+	if (gameData.level > 5) gameData.growth += gameData.fertilizer * 0.005;
+}
+
 // determines the fruit yield at the beginning of each level
 // to be run after level has been updated and growth from fertilizer has been determined, but no other data has been changed
 // incomplete
