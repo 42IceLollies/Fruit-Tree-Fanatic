@@ -9,6 +9,7 @@ const gameData = {
 	fertilizer: 0,
 	coins: 100,
 	grafted: false,
+	graftedTreeType: "unselected",
 	pruneNum: 0,
 	pruneMax: [0, 0, 3, 5, 5, 5, 5, 6, 6, 7, 7, 7, 8, 8, 8],
 	baseFruit: [0, 40, 55, 80, 85, 90, 95, 100, 100, 105, 110, 110, 115, 120],
@@ -153,4 +154,33 @@ function buyBees() {
 		gameData.coins -= beePrice;
 		gameData.bees = true;
 	}
+}
+
+function buyRepellent() {
+	// can't buy it if there's no infestation
+	if (!gameData.infested) return;
+	const repellentPrice = Math.round((gameData.coinYield / 2) / 5) * 5;
+  console.log(repellentPrice);
+  if (gameData.coins >= repellentPrice) {
+  	gameData.coins -= repellentPrice;
+    gameData.infested = false;
+  }
+}
+
+function buyGraft() {
+	// can't buy until level 7
+	if (gameData.level < 7) return;
+	// the price is the coins value from 100 fruit
+	let graftPrice = 100;
+  if (gameData.treeType == 'peach') graftPrice *= 2;
+  if (gameData.treeType == 'lemon') graftPrice *= 3;
+  
+  if (gameData.coins >= graftPrice) {
+  	gameData.coins -= graftPrice;
+    gameData.grafted = true;
+    // determine the grafted type based on the tree type
+    if (gameData.treeType == 'apple') gameData.graftedTreeType = 'pear';
+    if (gameData.treeType == 'peach') gameData.graftedTreeType = 'plum';
+    if (gameData.treeType == 'lemon') gameData.graftedTreeType = 'orange';
+  }
 }
