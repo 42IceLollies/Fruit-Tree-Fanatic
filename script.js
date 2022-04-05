@@ -49,7 +49,7 @@ function clearData() {
 	}
 }
 
-// =========== ===========
+// =========== mathematical functions ===========
 
 // changes the pH level
 function adjustPH(change) {
@@ -72,15 +72,39 @@ function determineInfestation() {
 	if (gameData.level < 4 || gameData.level > 13) return;
 	if (gameData.infested == true) return;
 	let chance;
-	if (gameData.treeType == 'apple') chance = 10; 
+	// 10% for apple trees
+	if (gameData.treeType == 'apple') chance = 10;
+	// 20% for peach trees
 	if (gameData.treeType == 'peach') chance = 20;
+	// 30% for lemon trees
 	if (gameData.treeType == 'lemon') chance = 30;
+	// if the tree was infested last round, halve the chance
 	if (gameData.lastLevelInfested == gameData.level - 1) chance /= 2;
 	const percent = Math.random() * 100;
 	if (percent <= chance) {
 		gameData.infested = true;
 		gameData.lastLevelInfested = gameData.level;
 	}
+}
+
+// determines the fruit yield at the beginning of each level
+// to be run after level has been updated and growth from fertilizer has been determined, but no other data has been changed
+// incomplete
+function determineYield() {
+	// without bees, the pollinationRate could reduce yield by up to 5%
+	let pollinationRate = Math.round((0 - Math.random() / 20) * 100) / 100;
+	if (gameData.bees) {
+		pollinationRate = 0.5;
+	}
+	let pruneMult = 0;
+	if (gameData.level > 1) {
+		const pruneFraction = gameData.pruneMax[gameData.level - 2] / gameData.pruneNum;
+		// if pruned to fullest extent, 10% is added
+		let pruneMult = 0.1 * pruneFraction;
+	}
+	let result = gameData.baseFruit[gameData.level - 1] * (1 + pollinationRate + gameData.growth + pruneMult);
+	result = Math.round(result);
+	/* console.log([pollinationRate, gameData.growth, pruneMult, result]) */
 }
 
 // =========== purchase functions ===========
