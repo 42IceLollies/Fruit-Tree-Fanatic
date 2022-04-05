@@ -1,6 +1,6 @@
 const gameData = {
 	level: 1,
-	growth: 1,
+	growth: 0,
 	pH: 7.0,
 	bees: false,
 	treeType: "unselected",
@@ -124,6 +124,7 @@ function buyFertilizer() {
 	if (gameData.coins >= 10) {
   		gameData.coins -= 10;
 		gameData.fertilizer++;
+		// lower the pH
 		adjustPH('-');
 	}
 }
@@ -131,6 +132,7 @@ function buyFertilizer() {
 function buyLimestone() {
 	if (gameData.coins >= 10) {
   		gameData.coins -= 10;
+		// raise the pH
 		adjustPH('+');
 	}
 }
@@ -139,5 +141,16 @@ function buyPrune() {
 	if (gameData.coins >= 15 && gameData.pruneNum < gameData.pruneMax[gameData.level - 1]) {
   		gameData.coins -= 15;
 		gameData.pruneNum++;
+	}
+}
+
+function buyBees() {
+	// can't buy bees if there's an infestation, or if it was infested this level
+	if (gameData.infested || gameData.lastLevelInfested == gameData.level) return;
+	// a third of the coin yield, rounded to the nearest 5
+	const beePrice = Math.round((gameData.coinYield / 3) / 5) * 5;
+	if (gameData.coins >= beePrice) {
+		gameData.coins -= beePrice;
+		gameData.bees = true;
 	}
 }
