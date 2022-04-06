@@ -209,20 +209,19 @@ function buyGraft() {
 //==================== Displays Elements Based on Level ========================
 
 // make buttons on main page menu visible based on level
+// run every time the level is updated
+// it doesn't work when run in sublime, but works in jsfiddle. i think linking the files together is where the issue is
+function updateButtons() {
+  if (gameData.level >= 2) document.getElementById("btn2").style.display = "block";
+  
+  if (gameData.level >= 3) document.getElementById("btn3").style.display = "block";
+  
+  if (gameData.level >= 4) {
+    document.getElementById("btn4").style.display = "block";
+    document.getElementById("btn5").style.display = "block";
+  }
 
-if (gameData.level >= 2) {
-  document.getElementById("btn2").style.display = "block";
+  if (gameData.level >= 7) document.getElementById("btn6").style.display = "block";
+  
 }
-
-if (gameData.level >= 3) {
-  document.getElementById("btn3").style.display = "block";
-}
-
-if (gameData.level >= 4) {
-  document.getElementById("btn4").style.display = "block";
-  document.getElementById("btn5").style.display = "block";
-}
-
-if (gameData.level >= 7) {
-  document.getElementById("btn6").style.display = "block";
-}
+updateButtons();
