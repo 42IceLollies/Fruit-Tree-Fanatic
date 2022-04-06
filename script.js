@@ -220,8 +220,9 @@ if (gameData.level >= 3) {
 
 if (gameData.level >= 4) {
   document.getElementById("btn4").style.display = "block";
+  document.getElementById("btn5").style.display = "block";
 }
 
 if (gameData.level >= 7) {
-  document.getElementById("btn5").style.display = "block";
+  document.getElementById("btn6").style.display = "block";
 }
