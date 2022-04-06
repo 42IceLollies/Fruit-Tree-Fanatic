@@ -13,37 +13,52 @@
  
     <body>
         <!-- Tree div -->
-        <div>
+        <div id='treeDiv'>
             <!-- img of tree here -->
-        </div>
+        </div id='menuDiv'>
         <!-- menu div -->
         <!-- not quite sure how this works, was trying to use it to place menu at bottom of screen -->
         <footer style="height:100%;">
             <div class="menu">
-                <button class="menu"><img src="/images/fertilizer.png" class="menu"></button>
+                <button class="menu"><img src="./images/fertilizer.png" class="menu"></button>
             </div>
             <div class="menu">
-                <button id="btn2" class="menu" style="display:none"><img src="/images/ph.png" class="menu"></button>
-                <!-- Are we doing just limestone or both limestone and sodium? -->
+                <button id="btn2" class="menu" style="display:none"><img src="./images/limestone.png" class="menu"></button>
+                <!-- Just limestone -->
             </div>
             <div class="menu">
-                <button id="btn3" class="menu" style="display:none"><img src="images/pruning.png" class="menu"></button>
+                <button id="btn3" class="menu" style="display:none"><img src="./images/pruning.png" class="menu"></button>
+            </div>
+            <div class='menu'>
+                <button id="btn4" class="menu" style="display:none"><img src="./images/bee.png" class="menu"></button>
             </div>
             <div class="menu">
-                <button id="btn4" class="menu" style="display:none"><img src="images/bugRepellant.png" class="menu"></button>
+                <button id="btn5" class="menu" style="display:none"><img src="images/bugRepellant.png" class="menu"></button>
             </div>
             <div class="menu">
-                <button id="btn5" class="menu" style="display:none"><img src="images/grafting.png" class="menu"></button>
+                <button id="btn6" class="menu" style="display:none"><img src="images/grafting.png" class="menu"></button>
             </div>
             <!-- close of menu div -->
         </footer>
  
  
         <style>
+            #treeDiv {
+                height: 80%;
+                margin: 0;
+            }
+
+            #menuDiv {
+                height: 20%;
+                width: 100%;
+                margin: 0;
+            }
+
             .menu{
                 float:left;
                 height:20%;
-                width:20%;
+                width:16.6666%;
+                border: 1px solid black;
             }
  
             button.menu{
