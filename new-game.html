@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,12 +13,19 @@
 <body>
 <div id='tree-options'>
     <div class='option'>
-        <img src='./images/appleTree/appleTreeOne.png' height='60%'></div>
-        <!-- I can't figure out how to put in the image without the option divs all going to seperate lines -->
-    <!-- </div>   I think you just accidentally closed your div too soon on this line-->
+        <img src='./images/appleTree/appleTreeOne.png' height='60%' class='treeImg'>
+        <div class='cost'>
+            <img src='./images/apple.png' class='costImg'>
+            <p style='display: inline-block'> = </p>
+            <img src='./images/coin.png' class='costImg'>
+        </div>
+        <div class='price'>
+            <p style='display: inline-block'>25</p>
+            <img src='./images/coin.png' class='priceImg'>
+        </div>
+    </div>
     <div class='option'>
-        <img src="/images/peachTree/peachTreeOne.png" height='60%'>     
-        <!-- I can crop and re-upload the images so they fit better when I get home -->
+        <img src="/images/peachTree/peachTreeOne.png" height='60%' class='treeImg'>     
     </div>
     <div class='option'>
         
@@ -35,17 +41,17 @@
 </body>
 <style>
  *{
-/*  border: 1px solid black;*/
+  /*border: 1px solid black;*/
 }
  
 :root {
   --light-green: #acffa1;
   --dark-green: #002800;
   --lighter-green: #D0EFCB;
-  --grey: #999;
+  --grey: #666;
   font-family: "Inter", sans-serif;
 }
- 
+
 #tree-options {
     width: 100%;
     height: 65%;
@@ -64,6 +70,8 @@
     box-shadow: 0 0 7px var(--grey);
     transition: box-shadow, 0.5s;
     display: inline-block;
+    display: flex;
+    flex-direction: column;
 }
  
 .option:hover {
@@ -76,6 +84,22 @@
     margin: 0 auto;
     box-shadow: 0 0 7px var(--grey);
     padding: 10px;
+}
+
+.cost, .price {
+    margin: 0 auto;
+}
+
+.costImg, .priceImg {
+    height: 25px;
+    display: inline-block;
+    margin: 0 8px;
+    position: relative;
+    top: 5px;
+}
+
+.priceImg {
+    margin: 0;
 }
  
 </style>
