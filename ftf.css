@@ -129,6 +129,7 @@ button.index:disabled {background: #ABA; opacity: 0.5}
 
 #info p {
   color: white;
+  text-align: center;
 }
 
 .cost {margin: 5px auto}

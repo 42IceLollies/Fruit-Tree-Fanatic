@@ -23,6 +23,7 @@ function saveData() {
   for (const key in gameData) {
     localStorage.setItem(`${key}`, gameData[key]);
   }
+  localStorage.setItem('saveData', 'true');
 }
 
 // pulls the info from localStorage when loading a saved game, and converts to original types
@@ -61,6 +62,7 @@ function clearData() {
   for (const key in gameData) {
     localStorage.removeItem(`${key}`);
   }
+  localStorage.setItem('saveData', 'false');
 }
 
 // =========== update display functions ===========
@@ -167,6 +169,15 @@ function nextLevel() {
   gameData.pruneNum = 0;
 }
 
+// =========== level-specific button functions ===========
+
+// runs when selecting a starting tree in new-game
+function startNewGame() {
+  clearData();
+  saveData();
+  location.href = 'main-page.html';
+}
+
 // =========== purchase functions ===========
 
 function buyFertilizer() {
@@ -234,4 +245,30 @@ function buyGraft() {
     if (gameData.treeType == "peach") gameData.graftedTreeType = "plum";
     if (gameData.treeType == "lemon") gameData.graftedTreeType = "orange";
   }
+}
+
+// =========== event listeners ===========
+
+if (document.URL.includes("new-game.html") ) {
+  const newAppleTree = document.getElementById('newAppleTree');
+  newAppleTree.addEventListener('click', () => {
+    gameData.treeType = 'apple';
+    startNewGame();
+  });
+
+  const newPeachTree = document.getElementById('newPeachTree');
+  newPeachTree.addEventListener('click', () => {
+    gameData.treeType = 'peach';
+    startNewGame();
+  });
+
+  const newLemonTree = document.getElementById('newLemonTree');
+  newLemonTree.addEventListener('click', () => {
+    gameData.treeType = 'lemon';
+    startNewGame();
+  });
+}
+
+if (document.URL.includes('main-page.html') && localStorage.getItem('saveData') == 'true') {
+  retrieveData();
 }
