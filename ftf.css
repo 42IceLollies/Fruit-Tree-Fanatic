@@ -24,11 +24,10 @@ body {
 }
 
 /* centers all images */
-/* this seems like it will interfer later */
-/*img {
+img {
   position: relative;
   margin: auto;
-}*/
+}
 
 /*removes link underlines thoroughly*/
 a:link {text-decoration: none !important}
