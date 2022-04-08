@@ -176,11 +176,15 @@ function startNewGame() {
   clearData();
   saveData();
   location.href = 'main-page.html';
+  // console.log(gameData);
+  // retrieveData();
+  // console.log(gameData);
 }
 
 // =========== purchase functions ===========
 
 function buyFertilizer() {
+  console.log('fertilizer');
   if (gameData.coins >= 10) {
     gameData.coins -= 10;
     gameData.fertilizer++;
@@ -190,6 +194,7 @@ function buyFertilizer() {
 }
 
 function buyLimestone() {
+  console.log('limestone');
   if (gameData.coins >= 10) {
     gameData.coins -= 10;
     // raise the pH
@@ -253,22 +258,49 @@ if (document.URL.includes("new-game.html") ) {
   const newAppleTree = document.getElementById('newAppleTree');
   newAppleTree.addEventListener('click', () => {
     gameData.treeType = 'apple';
+    gameData.coins -= 25;
     startNewGame();
   });
 
   const newPeachTree = document.getElementById('newPeachTree');
   newPeachTree.addEventListener('click', () => {
     gameData.treeType = 'peach';
+    gameData.coins -= 45;
     startNewGame();
   });
 
   const newLemonTree = document.getElementById('newLemonTree');
   newLemonTree.addEventListener('click', () => {
     gameData.treeType = 'lemon';
+    gameData.coins -= 65;
     startNewGame();
   });
 }
 
+if (document.URL.includes('main-page.html')) {
+  // ||
+  // \/
+  // the event listeners aren't working, the selectors and functions both work seperately
+  const fertilizer = document.getElementById('fertilizer');
+  fertilizer.addEventListener('click', buyFertilizer);
+
+  const limestone = document.getElementById('limestone');
+  limestone.addEventListener('click', buyLimestone);
+
+  const bees = document.getElementById('bees');
+  bees.addEventListener('click', buyBees);
+
+  const repellent = document.getElementById('repellent')
+  repellent.addEventListener('click', buyRepellent);
+
+  const pruning = document.getElementById('pruning')
+  pruning.addEventListener('click', buyPrune);
+
+  const grafting = document.getElementById('grafting')
+  grafting.addEventListener('click', buyGraft);
+}
+
 if (document.URL.includes('main-page.html') && localStorage.getItem('saveData') == 'true') {
   retrieveData();
+  console.log(gameData);
 }
