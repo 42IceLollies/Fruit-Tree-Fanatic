@@ -1,0 +1,189 @@
+:root {
+  --light-green: #acffa1;
+  --dark-green: #002800;
+  --lighter-green: #D0EFCB;
+  --grey: #666;
+  font-family: "Inter", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* makes it so height can be used for elements later on */
+html {
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--light-green);
+}
+
+/* centers all images */
+/* this seems like it will interfer later */
+/*img {
+  position: relative;
+  margin: auto;
+}*/
+
+/*removes link underlines thoroughly*/
+a:link {text-decoration: none !important}
+a:hover {text-decoration: none !important}
+a:active {text-decoration: none !important}
+a:visited {text-decoration: none !important}
+
+#info {
+  background: var(--grey);
+  opacity: 0.7;
+  border-radius: 30px;
+}
+
+#info p {
+  color: white;
+}
+
+/* ======= index.html styles ======= */
+
+#main-title {
+  width: 100%;
+  text-align: center;
+  font-family: "Courgette", sans-serif;
+  font-size: 3em;
+  color: var(--dark-green);
+  position:absolute;
+  top:35%;
+}
+
+#main-buttons {
+  position: absolute;
+  width: 40%;
+  top: 50%;
+  margin: 0 30%;
+}
+
+button.index {
+  display: block;
+  margin: 0 auto;
+  font-size: 20px;
+  font-family: 'Inter', sans-serif;
+  border-radius: 12px;
+  border: 1px var(--dark-green) solid;
+  color: var(--dark-green);
+  text-transform: uppercase;
+  background: #DED;
+  width: 200px;
+  height: 1.8em;
+}
+
+button.index:hover {background: #CDC;}
+button.index:focus {background: #BCB;}
+button.index:disabled {background: #ABA; opacity: 0.5}
+
+/* makes background size of screen and puts behind other elements */
+.homeBackground{
+  width:100%;
+  height:100%;
+  position:relative;
+  z-index: 1;
+}
+
+/* puts other elements on top */
+.secondLayer{
+  position: relative;
+  z-index: 2;
+}
+
+/* ======= new-game.html styles ======= */
+
+#tree-options {
+    width: 100%;
+    height: 65%;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0;
+    padding-top: 10px;
+    margin: 0;
+}
+ 
+.option {
+    width: 30%;
+    height: 95%;
+    background: var(--lighter-green);
+    border-radius: 30px;
+    box-shadow: 0 0 7px var(--grey);
+    transition: box-shadow, 0.5s;
+    display: inline-block;
+    display: flex;
+    flex-direction: column;
+}
+ 
+.option:hover {
+    box-shadow: 0px 0px 15px #666;
+}
+ 
+#info {
+    height: 30%;
+    width: 90%;
+    margin: 0 auto;
+    box-shadow: 0 0 7px var(--grey);
+    padding: 10px;
+}
+
+.cost, .price {
+    margin: 0 auto;
+}
+
+.costImg, .priceImg {
+    height: 25px;
+    display: inline-block;
+    margin: 0 8px;
+    position: relative;
+    top: 5px;
+}
+
+.priceImg {
+    margin: 0;
+}
+
+/* ======= main-page.html styles ======= */
+
+#treeDiv {
+  height: 80%;
+  margin: 0;
+}
+      
+.menuFooter {
+  height: 100%
+}
+
+#menuDiv {
+  height: 20%;
+  width: 100%;
+  margin: 0;
+}
+
+.menu {
+  float: left;
+  height: 100%;
+  width: 16.6666%;
+  /* border: 1px solid black; */
+}
+
+.menuBtn {
+  height: 100%;
+  width: 100%;
+  border: none;
+  background-color: var(--lighter-green);
+}
+
+.menuImg {
+  height: 100%;
+  width: auto;
+  margin: auto;
+}
+      
+.hidden {display: none}
