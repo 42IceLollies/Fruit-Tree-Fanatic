@@ -1,66 +1,74 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Fruit Tree Fanatic</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Inter&display=swap" rel="stylesheet">
-  <link rel='stylesheet' href='ftf.css'>
-</head>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fruit Tree Fanatic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Courgette&family=Inter&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="ftf.css" />
+  </head>
 
-<body>
-  <!-- for a fade-in effect between levels -->
-  <div id='transition'></div>
+  <body>
+    <!-- for a fade-in effect between levels -->
+    <div id="transition"></div>
 
-  <div id='treeDiv'>
-    <!-- img of tree here -->
-  </div> <!-- end of treeDiv -->
-  <div id='menuDiv'>
-
-    <div class="menu" id='fertilizer'>
-      <button id='btn1' class="menuBtn" onclick=buyFertilizer()>
-        <img src="./images/fertilizer.png" class="menuImg">
-        <div class='price'>
-            <p class='coinText'>10</p>
-            <img src='./images/coin.png' class='priceImg'>
+    <div id="treeDiv">
+      <!-- img of tree here -->
+      <img id="mainTree" />
+    </div>
+    <!-- end of treeDiv -->
+    <div id="menuDiv">
+      <div class="menu" id="fertilizer">
+        <button id="btn1" class="menuBtn" onclick="buyFertilizer()">
+          <img src="./images/fertilizer.png" class="menuImg" />
+          <div class="price">
+            <p class="coinText">10</p>
+            <img src="./images/coin.png" class="priceImg" />
+          </div>
+        </button>
       </div>
-      </button>
-      
-    </div> <!-- end of menu -->
-    <div class="menu" id='limestone'>
-      <button id="btn2" class="menuBtn hidden" onclick=buyLimestone()>
-        <img src="./images/limestone.png" class="menuImg">
-      </button>
-    </div> <!-- end of menu -->
+      <!-- end of menu -->
+      <div class="menu" id="limestone">
+        <button id="btn2" class="menuBtn hidden" onclick="buyLimestone()">
+          <img src="./images/limestone.png" class="menuImg" />
+        </button>
+      </div>
+      <!-- end of menu -->
 
-    <div class="menu" id='pruning'>
-      <button id="btn3" class="menuBtn hidden" onclick=buyPrune()>
-        <img src="./images/pruning.png" class="menuImg">
-      </button>
-    </div> <!-- end of menu -->
+      <div class="menu" id="pruning">
+        <button id="btn3" class="menuBtn hidden" onclick="buyPrune()">
+          <img src="./images/pruning.png" class="menuImg" />
+        </button>
+      </div>
+      <!-- end of menu -->
 
-    <div class='menu' id='bees'>
-      <button id="btn4" class="menuBtn hidden" onclick=buyBees()>
-        <img src="./images/bee.png" class="menuImg">
-      </button>
-    </div> <!-- end of menu -->
+      <div class="menu" id="bees">
+        <button id="btn4" class="menuBtn hidden" onclick="buyBees()">
+          <img src="./images/bee.png" class="menuImg" />
+        </button>
+      </div>
+      <!-- end of menu -->
 
-    <div class="menu" id='repellent'>
-      <button id="btn5" class="menuBtn hidden" onclick=buyRepellent()>
-        <img src="./images/bugRepellant.png" class="menuImg">
-      </button>
-    </div> <!-- end of menu -->
+      <div class="menu" id="repellent">
+        <button id="btn5" class="menuBtn hidden" onclick="buyRepellent()">
+          <img src="./images/bugRepellant.png" class="menuImg" />
+        </button>
+      </div>
+      <!-- end of menu -->
 
-    <div class="menu" id='grafting'>
-      <button id="btn6" class="menuBtn hidden" onclick=buyGraft()>
-        <img src="./images/grafting.png" class="menuImg">
-      </button>
-    </div> <!-- end of menu -->
-
-  </div> <!-- end of menuDiv -->
-  <script type="text/javascript" src='ftf.js'></script>
-</body>
-
+      <div class="menu" id="grafting">
+        <button id="btn6" class="menuBtn hidden" onclick="buyGraft()">
+          <img src="./images/grafting.png" class="menuImg" />
+        </button>
+      </div>
+      <!-- end of menu -->
+    </div>
+    <!-- end of menuDiv -->
+    <script type="text/javascript" src="ftf.js"></script>
+  </body>
 </html>

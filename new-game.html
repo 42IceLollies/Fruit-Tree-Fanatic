@@ -1,73 +1,88 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>New Game</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Inter&display=swap" rel="stylesheet">
-    <link rel='stylesheet' href='ftf.css'>
-</head>
-<body>
-<div id='tree-options'>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Courgette&family=Inter&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="ftf.css" />
+  </head>
+  <body>
+    <div id="tree-options">
+      <div class="option" id="newAppleTree">
+        <img
+          src="./images/appleTree/appleTree1.png"
+          height="60%"
+          class="treeImg"
+        />
 
-    <div class='option' id='newAppleTree'>
-        <img src='./images/appleTree/appleTreeOne.png' height='60%' class='treeImg'>
-
-        <div class='cost'>
-            <img src='./images/apple.png' class='costImg'>
-            <p class='coinText equal'> = </p>
-            <img src='./images/coin.png' class='costImg'>
+        <div class="cost">
+          <img src="./images/apple.png" class="costImg" />
+          <p class="coinText equal">=</p>
+          <img src="./images/coin.png" class="costImg" />
         </div>
 
-        <div class='price'>
-            <p class='coinText'>25</p>
-            <img src='./images/coin.png' class='priceImg'>
+        <div class="price">
+          <p class="coinText">25</p>
+          <img src="./images/coin.png" class="priceImg" />
+        </div>
+      </div>
+      <!-- end of option -->
+
+      <div class="option" id="newPeachTree">
+        <img
+          src="./images/peachTree/peachTree1.png"
+          height="60%"
+          class="treeImg"
+        />
+
+        <div class="cost">
+          <img src="./images/peach.png" class="costImg" />
+          <p class="coinText equal">=</p>
+          <img src="./images/coin.png" class="costImg" />
+          <img src="./images/coin.png" class="costImg" />
         </div>
 
-    </div> <!-- end of option -->
+        <div class="price">
+          <p class="coinText">45</p>
+          <img src="./images/coin.png" class="priceImg" />
+        </div>
+      </div>
+      <!-- end of option -->
 
-    <div class='option' id='newPeachTree'>
-        <img src="./images/peachTree/peachTreeOne.png" height='60%' class='treeImg'>  
+      <div class="option" id="newLemonTree">
+        <img
+          src="./images/lemonTree/lemonTree1.png"
+          height="60%"
+          class="treeImg"
+        />
 
-        <div class='cost'>
-            <img src='./images/peach.png' class='costImg'>
-            <p class='coinText equal'> = </p>
-            <img src='./images/coin.png' class='costImg'>
-            <img src='./images/coin.png' class='costImg'>
+        <div class="cost">
+          <img src="./images/lemon.png" class="costImg" />
+          <p class="coinText equal">=</p>
+          <img src="./images/coin.png" class="costImg" />
+          <img src="./images/coin.png" class="costImg" />
+          <img src="./images/coin.png" class="costImg" />
         </div>
 
-        <div class='price'>
-            <p class='coinText'>45</p>
-            <img src='./images/coin.png' class='priceImg'>
-        </div>   
-    </div> <!-- end of option -->
-
-    <div class='option' id='newLemonTree'>
-        <img src="./images/lemonTree/lemonTreeOne.png" height='60%' class='treeImg'>
-
-        <div class='cost'>
-            <img src='./images/lemon.png' class='costImg'>
-            <p class='coinText equal'> = </p>
-            <img src='./images/coin.png' class='costImg'>
-            <img src='./images/coin.png' class='costImg'>
-            <img src='./images/coin.png' class='costImg'>
+        <div class="price">
+          <p class="coinText">65</p>
+          <img src="./images/coin.png" class="priceImg" />
         </div>
+      </div>
+      <!-- end of option -->
+    </div>
+    <!-- end of tree options -->
+    <div id="info">
+      <p>Pick a tree, any tree. I now must type more to test fonts.</p>
+    </div>
+    <!-- end of info -->
 
-        <div class='price'>
-            <p class='coinText'>65</p>
-            <img src='./images/coin.png' class='priceImg'>
-        </div>
-    </div> <!-- end of option -->
-
-</div> <!-- end of tree options -->
-<div id='info'>
-    <p>
-        Pick a tree, any tree. I now must type more to test fonts.
-    </p>
-</div> <!-- end of info -->
- 
-<script src="ftf.js" type="text/javascript"></script>
-</body>
+    <script src="ftf.js" type="text/javascript"></script>
+  </body>
 </html>

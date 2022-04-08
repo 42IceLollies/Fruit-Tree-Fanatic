@@ -1,8 +1,9 @@
 :root {
   --light-green: #acffa1;
   --dark-green: #002800;
-  --lighter-green: #D0EFCB;
+  --lighter-green: #d0efcb;
   --grey: #666;
+  --brown: #6a3e2d;
   font-family: "Inter", sans-serif;
 }
 
@@ -30,10 +31,18 @@ img {
 }
 
 /*removes link underlines thoroughly*/
-a:link {text-decoration: none !important}
-a:hover {text-decoration: none !important}
-a:active {text-decoration: none !important}
-a:visited {text-decoration: none !important}
+a:link {
+  text-decoration: none !important;
+}
+a:hover {
+  text-decoration: none !important;
+}
+a:active {
+  text-decoration: none !important;
+}
+a:visited {
+  text-decoration: none !important;
+}
 
 /* ======= index.html styles ======= */
 
@@ -43,8 +52,8 @@ a:visited {text-decoration: none !important}
   font-family: "Courgette", sans-serif;
   font-size: 3em;
   color: var(--dark-green);
-  position:absolute;
-  top:35%;
+  position: absolute;
+  top: 35%;
 }
 
 #main-buttons {
@@ -58,30 +67,37 @@ button.index {
   display: block;
   margin: 0 auto;
   font-size: 20px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   border-radius: 12px;
   border: 1px var(--dark-green) solid;
   color: var(--dark-green);
   text-transform: uppercase;
-  background: #DED;
+  background: #ded;
   width: 200px;
   height: 1.8em;
 }
 
-button.index:hover {background: #CDC;}
-button.index:focus {background: #BCB;}
-button.index:disabled {background: #ABA; opacity: 0.5}
+button.index:hover {
+  background: #cdc;
+}
+button.index:focus {
+  background: #bcb;
+}
+button.index:disabled {
+  background: #aba;
+  opacity: 0.5;
+}
 
 /* makes background size of screen and puts behind other elements */
-.homeBackground{
-  width:100%;
-  height:100%;
-  position:relative;
+.homeBackground {
+  width: 100%;
+  height: 100%;
+  position: relative;
   z-index: 1;
 }
 
 /* puts other elements on top */
-.secondLayer{
+.secondLayer {
   position: relative;
   z-index: 2;
 }
@@ -89,42 +105,42 @@ button.index:disabled {background: #ABA; opacity: 0.5}
 /* ======= new-game.html styles ======= */
 
 #tree-options {
-    width: 100%;
-    height: 65%;
-    display: flex;
-    justify-content: space-evenly;
-    padding: 0;
-    padding-top: 10px;
-    margin: 0;
+  width: 100%;
+  height: 65%;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0;
+  padding-top: 10px;
+  margin: 0;
 }
- 
+
 .option {
-    width: 30%;
-    height: 95%;
-    background: var(--lighter-green);
-    border-radius: 30px;
-    box-shadow: 0 0 7px var(--grey);
-    transition: box-shadow, 0.5s;
-    display: inline-block;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 10px;
-    overflow: hidden;
+  width: 30%;
+  height: 95%;
+  background: var(--lighter-green);
+  border-radius: 30px;
+  box-shadow: 0 0 7px var(--grey);
+  transition: box-shadow, 0.5s;
+  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+  overflow: hidden;
 }
- 
+
 .option:hover {
-    box-shadow: 0px 0px 15px #666;
+  box-shadow: 0px 0px 15px #666;
 }
- 
+
 #info {
-    background: var(--grey);
-    opacity: 1;
-    border-radius: 30px;
-    height: 30%;
-    width: 90%;
-    margin: 0 auto;
-    box-shadow: 0 0 7px var(--grey);
-    padding: 10px;
+  background: var(--grey);
+  opacity: 1;
+  border-radius: 30px;
+  height: 30%;
+  width: 90%;
+  margin: 0 auto;
+  box-shadow: 0 0 7px var(--grey);
+  padding: 10px;
 }
 
 #info p {
@@ -132,19 +148,24 @@ button.index:disabled {background: #ABA; opacity: 0.5}
   text-align: center;
 }
 
-.cost {margin: 5px auto}
-.price {margin: 0 auto}
+.cost {
+  margin: 5px auto;
+}
+.price {
+  margin: 0 auto;
+}
 
-.costImg, .priceImg {
-    height: 25px;
-    display: inline-block;
-    margin: 0;
-    position: relative;
-    top: 4px;
+.costImg,
+.priceImg {
+  height: 25px;
+  display: inline-block;
+  margin: 0;
+  position: relative;
+  top: 4px;
 }
 
 .priceImg {
-    margin: 0;
+  margin: 0;
 }
 
 .equal {
@@ -156,12 +177,19 @@ button.index:disabled {background: #ABA; opacity: 0.5}
 #treeDiv {
   height: 80%;
   margin: 0;
+  padding-top: 2%;
+}
+
+#mainTree {
+  height: 100%;
+  display: flex;
 }
 
 #menuDiv {
   height: 20%;
   width: 100%;
   margin: 0;
+  background: var(--brown);
 }
 
 .menu {
@@ -176,7 +204,7 @@ button.index:disabled {background: #ABA; opacity: 0.5}
   width: 100%;
   border: none;
   background-color: var(--lighter-green);
-  border: 2px solid var(--dark-green);
+  border: 5px solid var(--brown);
   border-left: none;
 }
 
@@ -185,7 +213,7 @@ button.index:disabled {background: #ABA; opacity: 0.5}
   width: auto;
   margin: auto;
 }
-      
+
 .hidden {
   display: none;
   border: none;
