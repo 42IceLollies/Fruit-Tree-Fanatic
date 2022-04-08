@@ -8,7 +8,6 @@
 
 * {
   box-sizing: border-box;
-  /*border: 1px solid black;*/
 }
 
 /* makes it so height can be used for elements later on */
@@ -35,16 +34,6 @@ a:link {text-decoration: none !important}
 a:hover {text-decoration: none !important}
 a:active {text-decoration: none !important}
 a:visited {text-decoration: none !important}
-
-#info {
-  background: var(--grey);
-  opacity: 0.7;
-  border-radius: 30px;
-}
-
-#info p {
-  color: white;
-}
 
 /* ======= index.html styles ======= */
 
@@ -119,6 +108,8 @@ button.index:disabled {background: #ABA; opacity: 0.5}
     display: inline-block;
     display: flex;
     flex-direction: column;
+    padding-bottom: 10px;
+    overflow: hidden;
 }
  
 .option:hover {
@@ -126,6 +117,9 @@ button.index:disabled {background: #ABA; opacity: 0.5}
 }
  
 #info {
+    background: var(--grey);
+    opacity: 1;
+    border-radius: 30px;
     height: 30%;
     width: 90%;
     margin: 0 auto;
@@ -133,20 +127,27 @@ button.index:disabled {background: #ABA; opacity: 0.5}
     padding: 10px;
 }
 
-.cost, .price {
-    margin: 0 auto;
+#info p {
+  color: white;
 }
+
+.cost {margin: 5px auto}
+.price {margin: 0 auto}
 
 .costImg, .priceImg {
     height: 25px;
     display: inline-block;
-    margin: 0 8px;
+    margin: 0;
     position: relative;
-    top: 5px;
+    top: 4px;
 }
 
 .priceImg {
     margin: 0;
+}
+
+.equal {
+  margin: 0 20px;
 }
 
 /* ======= main-page.html styles ======= */
@@ -198,4 +199,12 @@ button.index:disabled {background: #ABA; opacity: 0.5}
   opacity: 0;
   z-index: 3;
   transition: opacity 1s;
+}
+
+/* ======= mixed styles ======= */
+
+p.coinText {
+  display: inline-block;
+  font-size: 20px;
+  margin: 0;
 }
