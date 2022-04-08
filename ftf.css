@@ -8,6 +8,7 @@
 
 * {
   box-sizing: border-box;
+  /*border: 1px solid black;*/
 }
 
 /* makes it so height can be used for elements later on */
@@ -154,10 +155,6 @@ button.index:disabled {background: #ABA; opacity: 0.5}
   height: 80%;
   margin: 0;
 }
-      
-.menuFooter {
-  height: 100%
-}
 
 #menuDiv {
   height: 20%;
@@ -169,7 +166,6 @@ button.index:disabled {background: #ABA; opacity: 0.5}
   float: left;
   height: 100%;
   width: 16.6666%;
-  /* border: 1px solid black; */
 }
 
 .menuBtn {
@@ -177,12 +173,29 @@ button.index:disabled {background: #ABA; opacity: 0.5}
   width: 100%;
   border: none;
   background-color: var(--lighter-green);
+  border: 2px solid var(--dark-green);
+  border-left: none;
 }
 
 .menuImg {
-  height: 100%;
+  height: 60%;
   width: auto;
   margin: auto;
 }
       
-.hidden {display: none}
+.hidden {
+  display: none;
+  border: none;
+}
+
+/*for a fade out effect between levels*/
+#transition {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  background: #000;
+  opacity: 0;
+  z-index: 3;
+  transition: opacity 1s;
+}
