@@ -7,82 +7,27 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Courgette&family=Inter&display=swap" rel="stylesheet">
-	<link rel='stylesheet' href='style.css'></link>
-	<script src="script.js"></script>
+	<link rel='stylesheet' href='ftf.css'></link>
+	<!-- <script src="ftf.js"></script> --> <!-- unnessecary -->
 </head>
 <body>
 <img src="images/homePageImg.png" class="homeBackground">
 
 <!-- <div class="secondLayer"> -->
-<header id='main-title' class="secondLayer" >Fruit Tree Fanatic</header>
+<header id='main-title' class="secondLayer">Fruit Tree Fanatic</header>
 
 <div id='main-buttons' class="secondLayer">
-	<a id='new-game-link' href='new-game.html'><button id='new-game'>New Game</button></a>
+	<a id='new-game-link' href='new-game.html'><button id='new-game' class='index'>New Game</button></a>
 	<br>
-	<button id='resume-game'>Resume Game</button>
-<!-- </div> -->
-</div>
+	<button id='resume-game' class='index'>Resume Game</button>
+</div> <!-- end of main-buttons -->
 
 </body>
-<style>
-#main-title {
-	width: 100%;
-	text-align: center;
-	font-family: "Courgette", sans-serif;
-	font-size: 3em;
-	color: var(--dark-green);
-	/* Sorry, I really hate to use absolute positioning, for some reason the z-index property didn't want to work
-	if I figure out what the bug is, I'll switch it back */
-	position:absolute;
-	top:35%;
-}
-
-#main-buttons {
-	position: absolute;
-	width: 40%;
-	top: 50%;
-	margin: 0 30%;
-}
-
-button {
-	display: block;
-	margin: 0 auto;
-	font-size: 20px;
-	font-family: 'Inter', sans-serif;
-	border-radius: 12px;
-	border: 1px var(--dark-green) solid;
-	color: var(--dark-green);
-	text-transform: uppercase;
-	background: #DED;
-	width: 200px;
-	height: 1.8em;
-}
-
-button:hover {background: #CDC;}
-button:focus {background: #BCB;}
-button:disabled {background: #ABA; opacity: 0.5}
-
-/* makes background size of screen and puts behind other elements */
-.homeBackground{
-	width:100%;
-	height:100%;
-	position:relative;
-	z-index: 1;
-}
-
-/* puts other elements on top */
-.secondLayer{
-position: relative;
-z-index: 2;
-}
-
-</style>
 <script>
 if (localStorage.getItem('saveData') == 'true') {
 	document.getElementById('resume-game').disabled = false;
 } else {
 	document.getElementById('resume-game').disabled = false;
 }
-
 </script>
 </html>
