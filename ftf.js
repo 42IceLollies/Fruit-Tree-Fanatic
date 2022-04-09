@@ -89,8 +89,6 @@ if (document.URL.includes("main-page.html")) {
   updateButtons();
 }
 
-retrieveData();
-console.log(gameData.level);
 function displayTree() {
   document.getElementById("mainTree").src =
     "./images/" +
@@ -100,20 +98,6 @@ function displayTree() {
     "Tree" +
     Math.ceil(gameData.level / 3) +
     ".png";
-
-  console.log(
-    "./images/" +
-      gameData.treeType +
-      "Tree/" +
-      gameData.treeType +
-      "Tree" +
-      gameData.level +
-      ".png"
-  );
-}
-
-if (document.URL.includes("main-page.html")) {
-  displayTree();
 }
 
 // =========== mathematical functions ===========
@@ -217,7 +201,8 @@ function startNewGame() {
 // =========== purchase functions ===========
 
 function buyFertilizer() {
-  console.log("fertilizer");
+  console.clear();
+  console.log(gameData);
   if (gameData.coins >= 10) {
     gameData.coins -= 10;
     gameData.fertilizer++;
@@ -227,7 +212,6 @@ function buyFertilizer() {
 }
 
 function buyLimestone() {
-  console.log("limestone");
   if (gameData.coins >= 10) {
     gameData.coins -= 10;
     // raise the pH
@@ -315,5 +299,10 @@ if (
   localStorage.getItem("saveData") == "true"
 ) {
   retrieveData();
-  console.log(gameData);
 }
+
+if (document.URL.includes("main-page.html")) {
+  displayTree();
+}
+
+console.log(gameData);
