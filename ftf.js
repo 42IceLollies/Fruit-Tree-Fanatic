@@ -89,6 +89,7 @@ if (document.URL.includes("main-page.html")) {
   updateButtons();
 }
 
+//sets tree image based on level and changes the height
 function displayTree() {
   document.getElementById("mainTree").src =
     "./images/" +
@@ -98,6 +99,9 @@ function displayTree() {
     "Tree" +
     Math.ceil(gameData.level / 3) +
     ".png";
+
+  document.getElementById("treeDiv").style.paddingTop =
+    16 - gameData.level + "%";
 }
 
 // =========== mathematical functions ===========
