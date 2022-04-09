@@ -310,29 +310,6 @@ if (document.URL.includes("new-game.html")) {
   });
 }
 
-if (document.URL.includes("main-page.html")) {
-  // ||
-  // \/
-  // the event listeners aren't working, the selectors and functions both work seperately
-  const fertilizer = document.getElementById("fertilizer");
-  fertilizer.addEventListener("click", buyFertilizer);
-
-  const limestone = document.getElementById("limestone");
-  limestone.addEventListener("click", buyLimestone);
-
-  const bees = document.getElementById("bees");
-  bees.addEventListener("click", buyBees);
-
-  const repellent = document.getElementById("repellent");
-  repellent.addEventListener("click", buyRepellent);
-
-  const pruning = document.getElementById("pruning");
-  pruning.addEventListener("click", buyPrune);
-
-  const grafting = document.getElementById("grafting");
-  grafting.addEventListener("click", buyGraft);
-}
-
 if (
   document.URL.includes("main-page.html") &&
   localStorage.getItem("saveData") == "true"
