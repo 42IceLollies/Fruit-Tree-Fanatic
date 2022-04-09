@@ -305,17 +305,20 @@ if (document.URL.includes("new-game.html")) {
   });
 }
 
-if (
-  document.URL.includes("main-page.html") &&
-  localStorage.getItem("saveData") == "true"
-) {
-  retrieveData();
-}
-
 if (document.URL.includes("main-page.html")) {
+  if (localStorage.getItem("saveData") == "true") retrieveData();
   displayTree();
   menuImgDimensions();
   updateButtons();
+}
+
+if (document.URL.includes("index.html")) {
+  // grey out resume button if there's no save data
+  if (localStorage.getItem('saveData') == 'true') {
+    document.getElementById('resume-game').disabled = false;
+  } else {
+    document.getElementById('resume-game').disabled = true;
+  }
 }
 
 console.log(gameData);

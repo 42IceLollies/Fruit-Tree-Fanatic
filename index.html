@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Fruit Tree Fanatic</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Courgette&family=Inter&display=swap" rel="stylesheet">
-	<link rel='stylesheet' href='ftf.css'></link>
-	<!-- <script src="ftf.js"></script> --> <!-- unnessecary -->
-</head>
-<body>
-<img src="images/homePageImg.png" class="homeBackground">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Fruit Tree Fanatic</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Courgette&family=Inter&display=swap" rel="stylesheet">
+		<link rel='stylesheet' href='ftf.css'></link>
+	</head>
+	<body>
+		<img src="images/homePageImg.png" class="homeBackground">
 
-<!-- <div class="secondLayer"> -->
-<header id='main-title' class="secondLayer">Fruit Tree Fanatic</header>
+		<!-- <div class="secondLayer"> -->
+		<header id='main-title' class="secondLayer">Fruit Tree Fanatic</header>
 
-<div id='main-buttons' class="secondLayer">
-	<a id='new-game-link' href='new-game.html'><button id='new-game' class='index'>New Game</button></a>
-	<br>
-	<button id='resume-game' class='index' onclick="location.href = 'main-page.html'">Resume Game</button>
-</div> <!-- end of main-buttons -->
+		<div id='main-buttons' class="secondLayer">
+			<a id='new-game-link' href='new-game.html'><button id='new-game' class='index'>New Game</button></a>
+			<br>
+			<button id='resume-game' class='index' onclick="location.href = 'main-page.html'">Resume Game</button>
+		</div> <!-- end of main-buttons -->
 
-</body>
-<script>
-if (localStorage.getItem('saveData') == 'true') {
-	document.getElementById('resume-game').disabled = false;
-} else {
-	document.getElementById('resume-game').disabled = true;
-}
-</script>
+		<script src='ftf.js' type="text/javascript"></script>
+	</body>
 </html>
