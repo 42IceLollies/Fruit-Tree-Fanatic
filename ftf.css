@@ -232,6 +232,7 @@ button.index:disabled {
   opacity: 0;
   /* The z-index is keeping the buttons from being clicked in the menu, is there  like some way to 
   disable it after the transition is completed or something */
+  /*You could probably set it back down in js*/
   /* z-index: 3; */
   transition: opacity 1s;
 }

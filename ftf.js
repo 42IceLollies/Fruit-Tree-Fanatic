@@ -69,24 +69,20 @@ function clearData() {
 
 // make buttons on main page menu visible based on level
 // run every time the level is updated
-// it doesn't work when run in sublime, but works in jsfiddle. i think linking the files together is where the issue is
-if (document.URL.includes("main-page.html")) {
-  function updateButtons() {
-    if (gameData.level >= 2)
-      document.getElementById("btn2").classList.remove("hidden");
+function updateButtons() {
+  if (gameData.level >= 2)
+    document.getElementById("btn2").classList.remove("hidden");
 
-    if (gameData.level >= 3)
-      document.getElementById("btn3").classList.remove("hidden");
+  if (gameData.level >= 3)
+    document.getElementById("btn3").classList.remove("hidden");
 
-    if (gameData.level >= 4) {
-      document.getElementById("btn4").classList.remove("hidden");
-      document.getElementById("btn5").classList.remove("hidden");
-    }
-
-    if (gameData.level >= 7)
-      document.getElementById("btn6").classList.remove("hidden");
+  if (gameData.level >= 4) {
+    document.getElementById("btn4").classList.remove("hidden");
+    document.getElementById("btn5").classList.remove("hidden");
   }
-  updateButtons();
+
+  if (gameData.level >= 7)
+    document.getElementById("btn6").classList.remove("hidden");
 }
 
 //sets tree image based on level and changes the height
@@ -100,8 +96,19 @@ function displayTree() {
     Math.ceil(gameData.level / 3) +
     ".png";
 
-  document.getElementById("treeDiv").style.paddingTop =
-    16 - gameData.level + "%";
+  document.getElementById("treeDiv").style.paddingTop = 16 - gameData.level + "%";
+}
+
+// sets the menuImg dimensions so they all fit in the buttons
+function menuImgDimensions() {
+  const menusNode = document.querySelectorAll('.menuImg');
+  const menus = Array.from(menusNode);
+  menus.forEach(menu => {
+    if (menu.width > menu.height) {
+      menu.style.width = '80%';
+      menu.style.height = 'auto';
+    }
+  });
 }
 
 // =========== mathematical functions ===========
@@ -307,6 +314,8 @@ if (
 
 if (document.URL.includes("main-page.html")) {
   displayTree();
+  menuImgDimensions();
+  updateButtons();
 }
 
 console.log(gameData);
