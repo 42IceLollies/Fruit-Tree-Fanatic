@@ -19,7 +19,7 @@
 <div id='main-buttons' class="secondLayer">
 	<a id='new-game-link' href='new-game.html'><button id='new-game' class='index'>New Game</button></a>
 	<br>
-	<button id='resume-game' class='index'>Resume Game</button>
+	<button id='resume-game' class='index' onclick="location.href = 'main-page.html'">Resume Game</button>
 </div> <!-- end of main-buttons -->
 
 </body>
@@ -27,7 +27,7 @@
 if (localStorage.getItem('saveData') == 'true') {
 	document.getElementById('resume-game').disabled = false;
 } else {
-	document.getElementById('resume-game').disabled = false;
+	document.getElementById('resume-game').disabled = true;
 }
 </script>
 </html>
