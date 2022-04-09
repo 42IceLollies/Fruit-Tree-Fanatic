@@ -70,24 +70,27 @@ function clearData() {
 // make buttons on main page menu visible based on level
 // run every time the level is updated
 // it doesn't work when run in sublime, but works in jsfiddle. i think linking the files together is where the issue is
-function updateButtons() {
-  if (gameData.level >= 2)
-    document.getElementById("btn2").classList.remove("hidden");
+if (document.URL.includes("main-page.html")) {
+  function updateButtons() {
+    if (gameData.level >= 2)
+      document.getElementById("btn2").classList.remove("hidden");
 
-  if (gameData.level >= 3)
-    document.getElementById("btn3").classList.remove("hidden");
+    if (gameData.level >= 3)
+      document.getElementById("btn3").classList.remove("hidden");
 
-  if (gameData.level >= 4) {
-    document.getElementById("btn4").classList.remove("hidden");
-    document.getElementById("btn5").classList.remove("hidden");
+    if (gameData.level >= 4) {
+      document.getElementById("btn4").classList.remove("hidden");
+      document.getElementById("btn5").classList.remove("hidden");
+    }
+
+    if (gameData.level >= 7)
+      document.getElementById("btn6").classList.remove("hidden");
   }
-
-  if (gameData.level >= 7)
-    document.getElementById("btn6").classList.remove("hidden");
+  updateButtons();
 }
-updateButtons();
 
 retrieveData();
+console.log(gameData.level);
 function displayTree() {
   document.getElementById("mainTree").src =
     "./images/" +
@@ -95,8 +98,18 @@ function displayTree() {
     "Tree/" +
     gameData.treeType +
     "Tree" +
-    Math.ceil(gameData.level / 5) +
+    Math.ceil(gameData.level / 3) +
     ".png";
+
+  console.log(
+    "./images/" +
+      gameData.treeType +
+      "Tree/" +
+      gameData.treeType +
+      "Tree" +
+      gameData.level +
+      ".png"
+  );
 }
 
 if (document.URL.includes("main-page.html")) {
@@ -185,6 +198,8 @@ function nextLevel() {
   determineYield();
   gameData.bees = false;
   gameData.pruneNum = 0;
+  displayTree();
+  updateButtons();
 }
 
 // =========== level-specific button functions ===========

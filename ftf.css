@@ -202,10 +202,13 @@ button.index:disabled {
 .menuBtn {
   height: 100%;
   width: 100%;
-  border: none;
   background-color: var(--lighter-green);
   border: 5px solid var(--brown);
   border-left: none;
+}
+
+.menuBtn:hover {
+  border-width: 3px;
 }
 
 .menuImg {
@@ -227,7 +230,9 @@ button.index:disabled {
   margin: 0;
   background: #000;
   opacity: 0;
-  z-index: 3;
+  /* The z-index is keeping the buttons from being clicked in the menu, is there  like some way to 
+  disable it after the transition is completed or something */
+  /* z-index: 3; */
   transition: opacity 1s;
 }
 
