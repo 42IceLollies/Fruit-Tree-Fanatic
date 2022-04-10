@@ -1,9 +1,10 @@
 :root {
-  --light-green: #acffa1;
-  --dark-green: #002800;
-  --lighter-green: #d0efcb;
-  --grey: #666;
-  --brown: #6a3e2d;
+  --light-green: #acffa1; /*Mint Green*/
+  --dark-green: #002800; /*Dark Green*/
+  --lighter-green: #d0efcb; /*Tea Green*/
+  --grey: #666; /*Granite Gray*/
+  --brown: #6a3e2d; /*Van Dyke Brown*/
+  --ph-color: black; /*to be changed with js*/
   font-family: "Inter", sans-serif;
 }
 
@@ -241,6 +242,27 @@ button.index:disabled {
   opacity: 0.5;
 }
 
+#info-bar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 0;
+}
+
+#phDisplay {
+  float: right;
+  padding: 10px;
+  padding-top: 16px;
+}
+
+.real.phText {
+  color: var(--ph-color);
+}
+
+.ideal.phText {
+  color: var(--grey);
+}
+
 /* ======= mixed styles ======= */
 
 p.coinText {
@@ -260,7 +282,9 @@ p.dark-green {
 }
 
 #coinDisplay.main {
-  position: absolute;
+  /*position: absolute;
   top: 10px;
-  right: 10px;
+  right: 10px;*/
+  float: right;
+  padding: 10px;
 }

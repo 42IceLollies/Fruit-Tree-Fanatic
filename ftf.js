@@ -67,6 +67,13 @@ function clearData() {
 
 // =========== update display functions ===========
 
+// moved here so it can be used in display updates
+const idealPh = {
+  "apple": 6.7,
+  "peach": 6.5,
+  "lemon": 6.2,
+};
+
 // make buttons on main page menu visible based on level
 // run every time the level is updated
 function updateButtons() {
@@ -111,10 +118,20 @@ function menuImgDimensions() {
   });
 }
 
-// updates the coin counter in the corner of the screen
-function updateCoinCount() {
+// updates the info at the top of the screen
+function updateInfoBar() {
   const coinCount = document.getElementById('coinDisplayText');
-  coinCount.innerHTML = `${gameData.coins}`;
+  coinCount.innerHTML = gameData.coins;
+
+  const realPh = document.querySelector('p.real.phText');
+  realPh.innerHTML = gameData.pH;
+  const idealPhText = document.querySelector('p.ideal.phText');
+  idealPhText.innerHTML = ' | ' + idealPh[gameData.treeType];
+  const phDifference = determinePhAccuracy();
+  const root = document.querySelector(':root');
+  root.style.setProperty('--ph-color', 'red');
+  if (phDifference < 0.6) root.style.setProperty('--ph-color', 'goldenrod');
+  if (phDifference == 0) root.style.setProperty('--ph-color', 'green');
 }
 
 function updateDisabled() {
@@ -163,7 +180,9 @@ function updateButtonCost() {
 // called in purchase functions
 // declare new update functions before this one
 function updateAll() {
-  updateCoinCount();
+  displayTree();
+  updateButtons();
+  updateInfoBar();
   updateDisabled();
   updateButtonCost();
 }
@@ -219,16 +238,9 @@ function determineGrowth() {
   if (gameData.level > 5) gameData.growth += gameData.fertilizer * 0.005;
 }
 
-const idealPh = {
-  "apple": 6.7,
-  "peach": 6.5,
-  "lemon": 6.2,
-};
-
 function determinePhAccuracy() {
-  const difference = Math.abs(gameData.pH - idealPh[`${gameData.treeType}`]);
-  const difFraction = difference / 2.7;
-  return -0.1 * difFraction;
+  return Math.abs(
+    gameData.pH - idealPh[`${gameData.treeType}`]);
 }
 
 // determines the fruit yield at the beginning of each level
@@ -252,7 +264,9 @@ function determineYield() {
   let infestation = 0;
   if (gameData.infested) infestation = -0.5;
 
-  const phAccuracy = determinePhAccuracy();
+  const phDifference = determinePhAccuracy();
+  const difFraction = phDifference / 2.7;
+  const phAccuracy = -0.1 * difFraction;
 
   let result =
     gameData.baseFruit[gameData.level - 1] *
@@ -271,8 +285,6 @@ function nextLevel() {
   determineYield();
   gameData.bees = false;
   gameData.pruneNum = 0;
-  displayTree();
-  updateButtons();
   updateAll();
   saveData();
 }
@@ -375,8 +387,6 @@ function buyGraft() {
 // =========== event listeners ===========
 
 if (document.URL.includes("new-game.html")) {
-  updateCoinCount();
-
   const newAppleTree = document.getElementById("newAppleTree");
   newAppleTree.addEventListener("click", () => {
     gameData.treeType = "apple";
@@ -401,9 +411,7 @@ if (document.URL.includes("new-game.html")) {
 
 if (document.URL.includes("main-page.html")) {
   if (localStorage.getItem("saveData") == "true") retrieveData();
-  displayTree();
   menuImgDimensions();
-  updateButtons();
   updateAll();
 }
 
