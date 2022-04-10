@@ -146,11 +146,26 @@ function updateDisabled() {
   }
 }
 
+function updateButtonCost() {
+  const beesCostText = document.getElementById('beesCost');
+  beesCostText.innerHTML = Math.round(gameData.coinYield / 3 / 5) * 5;
+  
+  const repellentCostText = document.getElementById('repellentCost');
+  repellentCostText.innerHTML = Math.round(gameData.coinYield / 2 / 5) * 5;
+
+  const graftCostText = document.getElementById('graftCost');
+  let graftCost = 100;
+  if (gameData.treeType == 'peach') graftCost *= 2;
+  if (gameData.treeType == 'lemon') graftCost *= 3;
+  graftCostText.innerHTML = graftCost;
+}
+
 // called in purchase functions
 // declare new update functions before this one
 function updateAll() {
   updateCoinCount();
   updateDisabled();
+  updateButtonCost();
 }
 
 // =========== mathematical functions ===========
