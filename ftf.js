@@ -162,6 +162,18 @@ function determineGrowth() {
   if (gameData.level > 5) gameData.growth += gameData.fertilizer * 0.005;
 }
 
+const idealPh = {
+  "apple": 6.7,
+  "peach": 6.5,
+  "lemon": 6.2,
+};
+
+function determinePhAccuracy() {
+  const difference = Math.abs(gameData.pH - idealPh[`${gameData.treeType}`]);
+  const difFraction = difference / 2.7;
+  return -0.1 * difFraction;
+}
+
 // determines the fruit yield at the beginning of each level
 // to be run after level has been updated and growth from fertilizer has been determined, but no other data has been changed
 // incomplete
@@ -178,9 +190,12 @@ function determineYield() {
     // if pruned to fullest extent, 10% is added
     let pruneMult = 0.1 * pruneFraction;
   }
+  let infestation = 0;
+  if (gameData.infested) infestation = -0.5;
+  const phAccuracy = determinePhAccuracy();
   let result =
     gameData.baseFruit[gameData.level - 1] *
-    (1 + pollinationRate + gameData.growth + pruneMult);
+    (1 + pollinationRate + gameData.growth + pruneMult + infestation + phAccuracy);
   result = Math.round(result);
   /* console.log([pollinationRate, gameData.growth, pruneMult, result]) */
 }
