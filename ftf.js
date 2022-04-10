@@ -111,6 +111,18 @@ function menuImgDimensions() {
   });
 }
 
+// updates the coin counter in the corner of the screen
+function updateCoinCount() {
+  const coinCount = document.getElementById('coinDisplayText');
+  coinCount.innerHTML = `${gameData.coins}`;
+}
+
+// called in purchase functions
+// declare new update functions before this one
+function updateAll() {
+  updateCoinCount();
+}
+
 // =========== mathematical functions ===========
 
 // changes the pH level
@@ -210,6 +222,7 @@ function nextLevel() {
   gameData.pruneNum = 0;
   displayTree();
   updateButtons();
+  updateCoinCount();
 }
 
 // =========== level-specific button functions ===========
@@ -235,6 +248,7 @@ function buyFertilizer() {
     // lower the pH
     adjustPH("-");
   }
+  updateAll();
 }
 
 function buyLimestone() {
@@ -243,6 +257,7 @@ function buyLimestone() {
     // raise the pH
     adjustPH("+");
   }
+  updateAll();
 }
 
 function buyPrune() {
@@ -253,6 +268,7 @@ function buyPrune() {
     gameData.coins -= 15;
     gameData.pruneNum++;
   }
+  updateAll();
 }
 
 function buyBees() {
@@ -264,6 +280,7 @@ function buyBees() {
     gameData.coins -= beePrice;
     gameData.bees = true;
   }
+  updateAll();
 }
 
 function buyRepellent() {
@@ -275,6 +292,7 @@ function buyRepellent() {
     gameData.coins -= repellentPrice;
     gameData.infested = false;
   }
+  updateAll();
 }
 
 function buyGraft() {
@@ -293,11 +311,14 @@ function buyGraft() {
     if (gameData.treeType == "peach") gameData.graftedTreeType = "plum";
     if (gameData.treeType == "lemon") gameData.graftedTreeType = "orange";
   }
+  updateAll();
 }
 
 // =========== event listeners ===========
 
 if (document.URL.includes("new-game.html")) {
+  updateCoinCount();
+
   const newAppleTree = document.getElementById("newAppleTree");
   newAppleTree.addEventListener("click", () => {
     gameData.treeType = "apple";
@@ -325,6 +346,7 @@ if (document.URL.includes("main-page.html")) {
   displayTree();
   menuImgDimensions();
   updateButtons();
+  updateCoinCount();
 }
 
 if (document.URL.includes("index.html")) {

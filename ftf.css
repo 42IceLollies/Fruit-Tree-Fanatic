@@ -136,7 +136,7 @@ button.index:disabled {
   background: var(--grey);
   opacity: 1;
   border-radius: 30px;
-  height: 30%;
+  height: 28%;
   width: 90%;
   margin: 0 auto;
   box-shadow: 0 0 7px var(--grey);
@@ -146,26 +146,23 @@ button.index:disabled {
 #info p {
   color: white;
   text-align: center;
+  font-size: 1.4em;
 }
 
 .cost {
   margin: 5px auto;
 }
+
 .price {
   margin: 0 auto;
 }
 
-.costImg,
-.priceImg {
+.costImg {
   height: 25px;
   display: inline-block;
   margin: 0;
   position: relative;
   top: 4px;
-}
-
-.priceImg {
-  margin: 0;
 }
 
 .equal {
@@ -243,4 +240,20 @@ p.coinText {
   display: inline-block;
   font-size: 20px;
   margin: 0;
+}
+
+p.dark-green {
+  color: var(--dark-green);
+}
+
+#coinDisplay.new-game {
+  float: right;
+  padding-top: 10px;
+  padding-right: 10px;
+}
+
+#coinDisplay.main {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
