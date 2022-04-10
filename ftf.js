@@ -77,10 +77,12 @@ const idealPh = {
 // make buttons on main page menu visible based on level
 // run every time the level is updated
 function updateButtons() {
-  if (gameData.level >= 2)
+  if (gameData.level >= 2) {
     document.getElementById("btn2").classList.remove("hidden");
+    document.getElementById("phDisplay").classList.remove("hidden");
+  }
 
-  if (gameData.level >= 3)
+  if (gameData.level >= 3) 
     document.getElementById("btn3").classList.remove("hidden");
 
   if (gameData.level >= 4) {
