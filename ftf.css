@@ -234,6 +234,10 @@ button.index:disabled {
   transition: opacity 1s;
 }
 
+.menuBtn:disabled {
+  opacity: 0.5;
+}
+
 /* ======= mixed styles ======= */
 
 p.coinText {
@@ -248,8 +252,8 @@ p.dark-green {
 
 #coinDisplay.new-game {
   float: right;
-  padding-top: 10px;
-  padding-right: 10px;
+  padding: 10px;
+  padding-bottom: 0;
 }
 
 #coinDisplay.main {

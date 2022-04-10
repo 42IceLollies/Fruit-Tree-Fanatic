@@ -105,7 +105,7 @@ function menuImgDimensions() {
   const menus = Array.from(menusNode);
   menus.forEach(menu => {
     if (menu.width > menu.height) {
-      menu.style.width = '80%';
+      menu.style.width = '60%';
       menu.style.height = 'auto';
     }
   });
@@ -117,10 +117,40 @@ function updateCoinCount() {
   coinCount.innerHTML = `${gameData.coins}`;
 }
 
+function updateDisabled() {
+  // if a graft's been purchased, disable graft button
+  if (gameData.grafted == true) document.getElementById('btn6').disabled = true;
+  
+  // if prune is maxed out, disable prune button
+  const prune = document.getElementById('btn3');
+  if (gameData.pruneNum >= gameData.pruneMax[gameData.level - 1]) {
+    prune.disabled = true;
+  } else {
+    prune.disabled = false;
+  }
+
+  // if bees aren't available for any reason, disabled
+  const beeBtn = document.getElementById('btn4');
+  if (gameData.bees == true || gameData.infested == true || gameData.lastLevelInfested == gameData.level) {
+    beeBtn.disabled = true;
+  } else {
+    beeBtn.disabled = false;
+  }
+
+  // if there's not an infestation, disabled
+  const repellentBtn = document.getElementById('btn5');
+  if (gameData.infested) {
+    repellentBtn.disabled = false;
+  } else {
+    repellentBtn.disabled = true;
+  }
+}
+
 // called in purchase functions
 // declare new update functions before this one
 function updateAll() {
   updateCoinCount();
+  updateDisabled();
 }
 
 // =========== mathematical functions ===========
@@ -195,6 +225,7 @@ function determineYield() {
   if (gameData.bees) {
     pollinationRate = 0.5;
   }
+
   let pruneMult = 0;
   if (gameData.level > 1) {
     const pruneFraction =
@@ -202,14 +233,19 @@ function determineYield() {
     // if pruned to fullest extent, 10% is added
     let pruneMult = 0.1 * pruneFraction;
   }
+
   let infestation = 0;
   if (gameData.infested) infestation = -0.5;
+
   const phAccuracy = determinePhAccuracy();
+
   let result =
     gameData.baseFruit[gameData.level - 1] *
-    (1 + pollinationRate + gameData.growth + pruneMult + infestation + phAccuracy);
+    (1 + pollinationRate + gameData.growth + 
+    pruneMult + infestation + phAccuracy);
   result = Math.round(result);
-  /* console.log([pollinationRate, gameData.growth, pruneMult, result]) */
+  gameData.coinYield = result;
+  gameData.coins += result;
 }
 
 // to be run every time a level is completed
@@ -222,7 +258,8 @@ function nextLevel() {
   gameData.pruneNum = 0;
   displayTree();
   updateButtons();
-  updateCoinCount();
+  updateAll();
+  saveData();
 }
 
 // =========== level-specific button functions ===========
@@ -249,6 +286,7 @@ function buyFertilizer() {
     adjustPH("-");
   }
   updateAll();
+  saveData();
 }
 
 function buyLimestone() {
@@ -258,6 +296,7 @@ function buyLimestone() {
     adjustPH("+");
   }
   updateAll();
+  saveData();
 }
 
 function buyPrune() {
@@ -269,6 +308,7 @@ function buyPrune() {
     gameData.pruneNum++;
   }
   updateAll();
+  saveData();
 }
 
 function buyBees() {
@@ -281,6 +321,7 @@ function buyBees() {
     gameData.bees = true;
   }
   updateAll();
+  saveData();
 }
 
 function buyRepellent() {
@@ -293,6 +334,7 @@ function buyRepellent() {
     gameData.infested = false;
   }
   updateAll();
+  saveData();
 }
 
 function buyGraft() {
@@ -312,6 +354,7 @@ function buyGraft() {
     if (gameData.treeType == "lemon") gameData.graftedTreeType = "orange";
   }
   updateAll();
+  saveData();
 }
 
 // =========== event listeners ===========
@@ -346,7 +389,7 @@ if (document.URL.includes("main-page.html")) {
   displayTree();
   menuImgDimensions();
   updateButtons();
-  updateCoinCount();
+  updateAll();
 }
 
 if (document.URL.includes("index.html")) {
