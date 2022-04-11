@@ -17,13 +17,14 @@
     <!-- for a fade-in effect between levels -->
     <div id="transition"></div>
 
-
     <button id='infoBtn' onclick=toggleInfo()>i</button>
     <div id='infoMain' class='hidden'>
       <p id='infoMainText'>Text for the first level, yay! Let's hope it always fits in the box!</p>
     </div>
 
     <div id='info-bar'>
+      <button onclick=toggleMainMenu() style='float:right'>menu</button> <!-- styles to be finished -->
+
       <div id='coinDisplay' class='main'>
         <p class='coinText dark-green' id='coinDisplayText'></p>
         <img src="./images/coin.png" class="costImg" />
@@ -35,6 +36,12 @@
       </div>
 
     </div> <!-- end of info bar -->
+
+    <div id='mainMenu'>
+      <button onclick=toggleMainMenu()>close</button>
+    </div> <!-- end of mainMenu -->
+
+    </div> <!-- end of mainMenu -->
 
     <div id="treeDiv">
       <img id="mainTree" /> <!-- tree img -->

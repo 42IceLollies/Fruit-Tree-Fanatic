@@ -254,6 +254,11 @@ button.index:disabled {
   transition-timing-function: linear;
 }
 
+#transition.faded {
+  z-index: 5;
+  opacity: 0.5;
+}
+
 #transition.on {
   z-index: 5;
   opacity: 1;
@@ -310,15 +315,31 @@ button.index:disabled {
   z-index: 3;
   background: var(--grey);
   border-radius: 20px;
-  height: 50%;
-  width: 30%;
-  opacity: 0.7;
+  min-height: 30%;
+  max-height: 60%;
+  width: 40%;
+  opacity: 0.8;
   padding: 25px;
 }
 
 #infoMainText {
   color: white;
+}
 
+#mainMenu {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  z-index: 6;
+  right: -50%;
+  top: 5%;
+  transition: right 1s;
+  width: 25%;
+  border: 1px solid black;
+}
+
+#mainMenu.show {
+  right: 0;
 }
 
 /* ======= mixed styles ======= */

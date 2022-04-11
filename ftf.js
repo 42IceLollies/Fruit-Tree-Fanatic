@@ -298,10 +298,14 @@ function transition() {
   const transitionDiv = document.getElementById('transition');
   console.log(transitionDiv.classList);
   transitionDiv.classList.add('on');
-  // transitionDiv.classList.remove('off');
   setTimeout(() => {
     transitionDiv.classList.remove('on');
   }, 1000);
+}
+
+function toggleMainMenu() {
+  document.getElementById('mainMenu').classList.toggle('show');
+  document.getElementById('transition').classList.toggle('faded');
 }
 
 // =========== mathematical functions ===========
