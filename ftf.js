@@ -68,6 +68,8 @@ function clearData() {
 // =========== update display functions ===========
 
 // moved here so it can be used in display updates
+// moved here so it can be used in display updates
+// moved here so it can be used in display updates
 const idealPh = {
   "apple": 6.7,
   "peach": 6.5,
@@ -82,7 +84,7 @@ function updateButtons() {
     document.getElementById("phDisplay").classList.remove("hidden");
   }
 
-  if (gameData.level >= 3) 
+  if (gameData.level >= 3)
     document.getElementById("btn3").classList.remove("hidden");
 
   if (gameData.level >= 4) {
@@ -106,6 +108,87 @@ function displayTree() {
     ".png";
 
   document.getElementById("treeDiv").style.paddingTop = 16 - gameData.level + "%";
+}
+
+//sets and displays overlays for tree
+function displayOverlay(
+  insects,
+  bees,
+  fruit,
+  fruitYield,
+  lowFruitYield,
+  highFruitYield,
+  grafted
+) {
+  //sets insect overlay
+  if (insects) {
+    document.getElementById("bugOverlay").src = "images/insects.png";
+    document.getElementById("bugOverlay").classList.remove("hidden");
+  }
+
+  //sets bee overlay
+  if (bees) {
+    document.getElementById("beehives").classList.remove("hidden");
+    document.getElementById("bugOverlay").src = "images/bees.png";
+    document.getElementById("bugOverlay").classList.remove("hidden");
+  }
+
+  //sets fruit overlays
+  if (fruit) {
+    var rangeOfFruit = highFruitYield - lowFruitYield / 3;
+    var amtFruit;
+    var source;
+    switch (true) {
+      case fruitYield <= rangeOfFruit:
+        amtFruit = "less";
+        break;
+
+      case fruitYield > rangeOfFruit && fruitYield < rangeOfFruit * 2:
+        amtFruit = "some";
+        break;
+
+      case fruitYield >= rangeOfFruit * 2:
+        amtFruit = "more";
+    }
+
+    var fruit =
+      gameData.treeType.substring(0, 1).toUpperCase +
+      gameData.treeType.substring(1) +
+      "s";
+
+    if (grafted) {
+      var secondFruit =
+        gameData.graftedTreeType.substring(0, 1).toUpperCase +
+        gameData.graftedTreeType.substring(1) +
+        "s";
+      source =
+        amtFruit +
+        fruit +
+        "And" +
+        secondFruit +
+        "Tree" +
+        Math.ceil(gameData.level / 3);
+    } else {
+      source = amtFruit + fruit + "Tree" + Math.ciel(gameData.level / 3);
+    }
+
+    document.getElementById("fruitOverlay").src = source;
+    document.getElementById("fruitOverlay").classList.remove("hidden");
+  }
+}
+
+//gets rid of overlay
+function removeOverlay(fruit, insects, bees) {
+  if (fruit) {
+    document.getElementById("fruitOverlay").classList.add("hidden");
+  }
+  if (insects) {
+    document.getElementById("bugOverlay").classList.add("hidden");
+  }
+  if (bees) {
+    document.getElementById("beehives").classList.add("hidden");
+    document.getElementById("bugOverlay").classList.add("hidden");
+  }
 }
 
 // sets the menuImg dimensions so they all fit in the buttons
@@ -294,9 +377,28 @@ function determineYield() {
     gameData.baseFruit[gameData.level - 1] *
     (1 + pollinationRate + gameData.growth + 
     pruneMult + infestation + phAccuracy);
+
   result = Math.round(result);
   gameData.coinYield = result;
   gameData.coins += result;
+
+//sends information to the displayOverlay function to determine fruit overlay
+//didn't have enough time to put it in but also need to calculate the lowest number
+//of fruits possible and highest to pass in 
+  var grafted = gameData.graftedTreeType != "unselected";
+  displayOverlay(gameData.insects, gameData.bees, true, result, low, high, grafted);
+}
+
+// to be run every time a level is completed
+function nextLevel() {
+  determineGrowth();
+  gameData.fertilizer = 0;
+  gameData.level++;
+  determineYield();
+  gameData.bees = false;
+  gameData.pruneNum = 0;
+  updateAll();
+  saveData();
 }
 
 // =========== button specific functions ===========
