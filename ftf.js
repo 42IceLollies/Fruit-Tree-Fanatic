@@ -299,18 +299,6 @@ function determineYield() {
   gameData.coins += result;
 }
 
-// to be run every time a level is completed
-function nextLevel() {
-  determineGrowth();
-  gameData.fertilizer = 0;
-  gameData.level++;
-  determineYield();
-  gameData.bees = false;
-  gameData.pruneNum = 0;
-  updateAll();
-  saveData();
-}
-
 // =========== button specific functions ===========
 
 // runs when selecting a starting tree in new-game
@@ -325,11 +313,33 @@ function startNewGame() {
 
 // to be run by infoBtn
 function toggleInfo() {
-  console.log('hi');
   const info = document.getElementById('infoMain');
   info.classList.toggle('hidden');
   const infoBtn = document.getElementById('infoBtn');
   infoBtn.classList.toggle('white');
+}
+
+// run in nextLevel function, the first level text will
+// be set in the html file
+function setInfoText() {
+  const infoArray = []; // different text for each level
+  const infoText = document.getElementById('infoMainText');
+  if (infoArray[gameData.level - 1] !== undefined) {
+    infoText.innerHTML = infoArray[gameData.level];
+    toggleInfo();
+  }
+}
+
+// to be run every time a level is completed
+function nextLevel() {
+  determineGrowth();
+  gameData.fertilizer = 0;
+  gameData.level++;
+  determineYield();
+  gameData.bees = false;
+  gameData.pruneNum = 0;
+  updateAll();
+  saveData();
 }
 
 // =========== purchase functions ===========
@@ -444,6 +454,7 @@ if (document.URL.includes("main-page.html")) {
   if (localStorage.getItem("saveData") == "true") retrieveData();
   menuImgDimensions();
   updateAll();
+  if (gameData.level == 1) toggleInfo();
 }
 
 if (document.URL.includes("index.html")) {
