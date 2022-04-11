@@ -263,6 +263,30 @@ button.index:disabled {
   color: var(--grey);
 }
 
+#infoBtn {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  border: 2px solid var(--grey);
+  background: var(--grey);
+  color: #FFF;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+#infoBtn.white {
+  color: var(--grey);
+  border-color: #FFF;
+  background: #FFF;
+}
+
+#infoMain {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 /* ======= mixed styles ======= */
 
 p.coinText {

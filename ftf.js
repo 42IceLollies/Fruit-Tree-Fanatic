@@ -291,7 +291,7 @@ function nextLevel() {
   saveData();
 }
 
-// =========== level-specific button functions ===========
+// =========== button specific functions ===========
 
 // runs when selecting a starting tree in new-game
 function startNewGame() {
@@ -301,6 +301,14 @@ function startNewGame() {
   // console.log(gameData);
   // retrieveData();
   // console.log(gameData);
+}
+
+// to be run by infoBtn
+function toggleInfo() {
+  const info = document.getElementById('infoMain');
+  info.classList.toggle('hidden');
+  const infoBtn = document.getElementById('infoBtn');
+  infoBtn.classList.toggle('white');
 }
 
 // =========== purchase functions ===========
