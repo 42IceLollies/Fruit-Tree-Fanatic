@@ -115,8 +115,8 @@ function displayOverlay(
   fruitYield
 ) {
 
-  var lowFruitYield = gameData.baseFruit[gameData.level-1] * 2.15;
-  var highFruitYield = gameData.baseFruit[gameData.level-1]* 5.6;
+  var lowFruitYield = gameData.baseFruit[gameData.level-1] * 0.35;
+  var highFruitYield = gameData.baseFruit[gameData.level-1]* 2;
 
     var rangeOfFruit = highFruitYield - lowFruitYield / 3;
     var amtFruit;
@@ -370,7 +370,9 @@ function determineYield() {
   lowest is 35 (multiplied by 0.35)
   If you multiply them all together in a row, the ones 
   on the end have more influence than the first ones
-  (10*1.1*1.1=12.1 while 10*1.2=12)
+  (10*1.1*1.1=12.1 while 10*1.2=12) < this isn't the yield,
+  this is just an example to show the difference of
+  adding before multiplying  
   */ 
 
   /* oh yeah, that makes sense
