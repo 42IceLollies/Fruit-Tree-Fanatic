@@ -292,6 +292,17 @@ function updateAll() {
   updateInsects();
 }
 
+// set next level to happen in the middle of the transition later
+function transition() {
+  const transitionDiv = document.getElementById('transition');
+  console.log(transitionDiv.classList);
+  transitionDiv.classList.add('on');
+  // transitionDiv.classList.remove('off');
+  setTimeout(() => {
+    transitionDiv.classList.remove('on');
+  }, 1000);
+}
+
 // =========== mathematical functions ===========
 
 // changes the pH level

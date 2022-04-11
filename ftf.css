@@ -10,6 +10,7 @@
 
 * {
   box-sizing: border-box;
+  z-index: ;
 }
 
 /* makes it so height can be used for elements later on */
@@ -240,11 +241,6 @@ button.index:disabled {
   margin: auto;
 }
 
-.hidden {
-  display: none;
-  border: none;
-}
-
 /*for a fade out effect between levels*/
 #transition {
   position: fixed;
@@ -252,12 +248,15 @@ button.index:disabled {
   width: 100%;
   margin: 0;
   background: #000;
-  opacity: 0;
-  /* The z-index is keeping the buttons from being clicked in the menu, is there  like some way to 
-  disable it after the transition is completed or something */
-  /*You could probably set it back down in js*/
-  /* z-index: 3; */
-  transition: opacity 1s;
+  opacity: 0; 
+  transition: all 1s;
+  z-index: 0;
+  transition-timing-function: linear;
+}
+
+#transition.on {
+  z-index: 5;
+  opacity: 1;
 }
 
 .menuBtn:disabled {
@@ -295,7 +294,7 @@ button.index:disabled {
   position: absolute;
   top: 20px;
   left: 20px;
-  z-index: 3;
+  z-index: 4;
 }
 
 #infoBtn.white {
@@ -308,7 +307,7 @@ button.index:disabled {
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index: 2;
+  z-index: 3;
   background: var(--grey);
   border-radius: 20px;
   height: 50%;
@@ -323,6 +322,11 @@ button.index:disabled {
 }
 
 /* ======= mixed styles ======= */
+
+.hidden {
+  display: none;
+  border: none;
+}
 
 p.coinText {
   display: inline-block;
