@@ -151,6 +151,7 @@ function displayOverlay(
         amtFruit = "more";
     }
 
+    // V reused variable
     var fruit =
       gameData.treeType.substring(0, 1).toUpperCase +
       gameData.treeType.substring(1) +
@@ -395,9 +396,11 @@ function determineYield() {
 
 //sends information to the displayOverlay function to determine fruit overlay
 //didn't have enough time to put it in but also need to calculate the lowest number
-//of fruits possible and highest to pass in 
-  var grafted = gameData.graftedTreeType != "unselected";
-  displayOverlay(gameData.insects, gameData.bees, true, result, low, high, grafted);
+//of fruits possible and highest to pass in
+// couple of notes: the insects and bees are already being set, and need to be set more often than every level
+// many of these values can be called from inside the function, and don't need to be passed
+// the src doesn't need to be set from js since they're seperate img elements
+  displayOverlay(gameData.insects, gameData.bees, true, result, low, high, gameData.grafted);
 }
 
 // to be run every time a level is completed
