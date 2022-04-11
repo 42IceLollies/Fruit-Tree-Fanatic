@@ -183,6 +183,28 @@ button.index:disabled {
   display: flex;
 }
 
+#beeOverlay {
+  position: absolute;
+  top: 0;
+  margin: 0 auto;
+  width: 100%;
+  height: 80%;
+}
+
+#beeHive {
+  position: absolute;
+  bottom: 18%;
+  width: 20%;
+  right: 5%;
+}
+
+#insectOverlay {
+  position: absolute;
+  width: 100%;
+  height: 80%;
+  top: 0;
+}
+
 #menuDiv {
   height: 20%;
   width: 100%;

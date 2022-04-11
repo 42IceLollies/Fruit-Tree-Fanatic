@@ -179,6 +179,24 @@ function updateButtonCost() {
   graftCostText.innerHTML = graftCost;
 }
 
+function updateBees() {
+  const bees = document.getElementById('beeOverlay');
+  const beeHive = document.getElementById('beeHive');
+  if (gameData.bees) {
+    bees.classList.remove('hidden');
+    beeHive.classList.remove('hidden');
+  } else {
+    bees.classList.add('hidden');
+    beeHive.classList.add('hidden');
+  }
+}
+
+function updateInsects() {
+  const insects = document.getElementById('insectOverlay');
+  if (gameData.infested) insects.classList.remove('hidden');
+  if (!gameData.infested) insects.classList.add('hidden');
+}
+
 // called in purchase functions
 // declare new update functions before this one
 function updateAll() {
@@ -187,6 +205,8 @@ function updateAll() {
   updateInfoBar();
   updateDisabled();
   updateButtonCost();
+  updateBees();
+  updateInsects();
 }
 
 // =========== mathematical functions ===========
