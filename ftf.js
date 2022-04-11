@@ -364,17 +364,6 @@ function determineYield() {
   const phAccuracy = -0.1 * difFraction;
 
 
-  /*if we're calculating it in this way, it would be pretty much impossible
-  to get a number below the base amount of fruit for the level
-  (if you have 100 as the base, best case scenario, there will be 
-    560 fruits and estimated worst there would be 115) so do you 
-    think maybe we should change the base amounts so something lower?
-    -another idea would be to calculate it as baseFruit*pollinationRate*
-    pruneMult*infestation*phAccuracy though the estimated worse case
-    there would be about 14 fruits with a hundred as the base so that
-     might not be as good with smaller base numbers (that is assuming you
-       just kind of clicked straight through the levels without doing any thing, though) 
-      and best case scenario would be 165 fruits with that equation */
   
   /* With the scenario of 100 as base, the highest number 
   you can get is about 180-190, (multiplied by 1.8) 
@@ -383,6 +372,11 @@ function determineYield() {
   on the end have more influence than the first ones
   (10*1.1*1.1=12.1 while 10*1.2=12)
   */ 
+
+  /* oh yeah, that makes sense
+  what are the numbers that you're getting to put into the equation? I might 
+  be thinking about those wrong
+  */
   let result =
     gameData.baseFruit[gameData.level - 1] *
     (1 + pollinationRate + gameData.growth + 
