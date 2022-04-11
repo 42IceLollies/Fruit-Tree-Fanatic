@@ -140,7 +140,7 @@ function displayOverlay(
       gameData.treeType.substring(1) +
       "s";
 
-    if (gameData.graftedTreeType != "unselected") {
+    if (gameData.graftedTreeType !== "unselected") {
       var secondFruit =
         gameData.graftedTreeType.substring(0, 1).toUpperCase +
         gameData.graftedTreeType.substring(1) +
@@ -153,7 +153,7 @@ function displayOverlay(
         "Tree" +
         Math.ceil(gameData.level / 3);
     } else {
-      source = amtFruit + fruitType + "Tree" + Math.ciel(gameData.level / 3);
+      source = amtFruit + fruitType + "Tree" + Math.ceil(gameData.level / 3);
     }
 
     document.getElementById("fruitOverlay").src = source;
@@ -375,6 +375,14 @@ function determineYield() {
      might not be as good with smaller base numbers (that is assuming you
        just kind of clicked straight through the levels without doing any thing, though) 
       and best case scenario would be 165 fruits with that equation */
+  
+  /* With the scenario of 100 as base, the highest number 
+  you can get is about 180-190, (multiplied by 1.8) 
+  lowest is 35 (multiplied by 0.35)
+  If you multiply them all together in a row, the ones 
+  on the end have more influence than the first ones
+  (10*1.1*1.1=12.1 while 10*1.2=12)
+  */ 
   let result =
     gameData.baseFruit[gameData.level - 1] *
     (1 + pollinationRate + gameData.growth + 
