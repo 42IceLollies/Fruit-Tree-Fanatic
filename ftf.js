@@ -112,29 +112,12 @@ function displayTree() {
 
 //sets and displays overlays for tree
 function displayOverlay(
-  insects,
-  bees,
-  fruit,
-  fruitYield,
-  lowFruitYield,
-  highFruitYield,
-  grafted
+  fruitYield
 ) {
-  //sets insect overlay
-  if (insects) {
-    document.getElementById("bugOverlay").src = "images/insects.png";
-    document.getElementById("bugOverlay").classList.remove("hidden");
-  }
 
-  //sets bee overlay
-  if (bees) {
-    document.getElementById("beehives").classList.remove("hidden");
-    document.getElementById("bugOverlay").src = "images/bees.png";
-    document.getElementById("bugOverlay").classList.remove("hidden");
-  }
+  var lowFruitYield = gameData.baseFruit[gameData.level-1] * 2.15;
+  var highFruitYield = gameData.baseFruit[gameData.level-1]* 5.6;
 
-  //sets fruit overlays
-  if (fruit) {
     var rangeOfFruit = highFruitYield - lowFruitYield / 3;
     var amtFruit;
     var source;
@@ -151,13 +134,13 @@ function displayOverlay(
         amtFruit = "more";
     }
 
-    // V reused variable
-    var fruit =
+   
+    var fruitType =
       gameData.treeType.substring(0, 1).toUpperCase +
       gameData.treeType.substring(1) +
       "s";
 
-    if (grafted) {
+    if (gameData.graftedTreeType != "unselected") {
       var secondFruit =
         gameData.graftedTreeType.substring(0, 1).toUpperCase +
         gameData.graftedTreeType.substring(1) +
@@ -170,26 +153,17 @@ function displayOverlay(
         "Tree" +
         Math.ceil(gameData.level / 3);
     } else {
-      source = amtFruit + fruit + "Tree" + Math.ciel(gameData.level / 3);
+      source = amtFruit + fruitType + "Tree" + Math.ciel(gameData.level / 3);
     }
 
     document.getElementById("fruitOverlay").src = source;
     document.getElementById("fruitOverlay").classList.remove("hidden");
-  }
+  
 }
 
 //gets rid of overlay
-function removeOverlay(fruit, insects, bees) {
-  if (fruit) {
+function removeOverlay() {
     document.getElementById("fruitOverlay").classList.add("hidden");
-  }
-  if (insects) {
-    document.getElementById("bugOverlay").classList.add("hidden");
-  }
-  if (bees) {
-    document.getElementById("beehives").classList.add("hidden");
-    document.getElementById("bugOverlay").classList.add("hidden");
-  }
 }
 
 // sets the menuImg dimensions so they all fit in the buttons
@@ -389,6 +363,18 @@ function determineYield() {
   const difFraction = phDifference / 2.7;
   const phAccuracy = -0.1 * difFraction;
 
+
+  /*if we're calculating it in this way, it would be pretty much impossible
+  to get a number below the base amount of fruit for the level
+  (if you have 100 as the base, best case scenario, there will be 
+    560 fruits and estimated worst there would be 115) so do you 
+    think maybe we should change the base amounts so something lower?
+    -another idea would be to calculate it as baseFruit*pollinationRate*
+    pruneMult*infestation*phAccuracy though the estimated worse case
+    there would be about 14 fruits with a hundred as the base so that
+     might not be as good with smaller base numbers (that is assuming you
+       just kind of clicked straight through the levels without doing any thing, though) 
+      and best case scenario would be 165 fruits with that equation */
   let result =
     gameData.baseFruit[gameData.level - 1] *
     (1 + pollinationRate + gameData.growth + 
@@ -398,13 +384,8 @@ function determineYield() {
   gameData.coinYield = result;
   gameData.coins += result;
 
-//sends information to the displayOverlay function to determine fruit overlay
-//didn't have enough time to put it in but also need to calculate the lowest number
-//of fruits possible and highest to pass in
-// couple of notes: the insects and bees are already being set, and need to be set more often than every level
-// many of these values can be called from inside the function, and don't need to be passed
-// the src doesn't need to be set from js since they're seperate img elements
-  displayOverlay(gameData.insects, gameData.bees, true, result, low, high, gameData.grafted);
+
+  displayOverlay(result);
 }
 
 // to be run every time a level is completed
