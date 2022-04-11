@@ -305,6 +305,7 @@ function startNewGame() {
 
 // to be run by infoBtn
 function toggleInfo() {
+  console.log('hi');
   const info = document.getElementById('infoMain');
   info.classList.toggle('hidden');
   const infoBtn = document.getElementById('infoBtn');
