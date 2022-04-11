@@ -1,9 +1,10 @@
 :root {
-  --light-green: #acffa1;
-  --dark-green: #002800;
-  --lighter-green: #d0efcb;
-  --grey: #666;
-  --brown: #6a3e2d;
+  --light-green: #acffa1; /*Mint Green*/
+  --dark-green: #002800; /*Dark Green*/
+  --lighter-green: #d0efcb; /*Tea Green*/
+  --grey: #666; /*Granite Gray*/
+  --brown: #6a3e2d; /*Van Dyke Brown*/
+  --ph-color: black; /*to be changed with js*/
   font-family: "Inter", sans-serif;
 }
 
@@ -132,7 +133,7 @@ button.index:disabled {
   box-shadow: 0px 0px 15px #666;
 }
 
-#info {
+#info-new {
   background: var(--grey);
   opacity: 1;
   border-radius: 30px;
@@ -143,7 +144,7 @@ button.index:disabled {
   padding: 10px;
 }
 
-#info p {
+#info-new p {
   color: white;
   text-align: center;
   font-size: 1.4em;
@@ -202,6 +203,9 @@ button.index:disabled {
   background-color: var(--lighter-green);
   border: 5px solid var(--brown);
   border-left: none;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
 }
 
 .menuBtn:hover {
@@ -238,6 +242,58 @@ button.index:disabled {
   opacity: 0.5;
 }
 
+#info-bar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 0;
+}
+
+#phDisplay {
+  float: right;
+  padding: 10px;
+  padding-top: 16px;
+}
+
+.real.phText {
+  color: var(--ph-color);
+}
+
+.ideal.phText {
+  color: var(--grey);
+}
+
+#infoBtn {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  border: 2px solid var(--grey);
+  background: var(--grey);
+  color: #FFF;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 3;
+}
+
+#infoBtn.white {
+  color: var(--grey);
+  border-color: #FFF;
+  background: #FFF;
+}
+
+#infoMain {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: var(--grey);
+  border-radius: 20px;
+  height: 50%;
+  width: 30%;
+  opacity: 0.7;
+}
+
 /* ======= mixed styles ======= */
 
 p.coinText {
@@ -257,7 +313,9 @@ p.dark-green {
 }
 
 #coinDisplay.main {
-  position: absolute;
+  /*position: absolute;
   top: 10px;
-  right: 10px;
+  right: 10px;*/
+  float: right;
+  padding: 10px;
 }

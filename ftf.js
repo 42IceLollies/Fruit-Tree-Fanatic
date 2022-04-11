@@ -67,13 +67,22 @@ function clearData() {
 
 // =========== update display functions ===========
 
+// moved here so it can be used in display updates
+const idealPh = {
+  "apple": 6.7,
+  "peach": 6.5,
+  "lemon": 6.2,
+};
+
 // make buttons on main page menu visible based on level
 // run every time the level is updated
 function updateButtons() {
-  if (gameData.level >= 2)
+  if (gameData.level >= 2) {
     document.getElementById("btn2").classList.remove("hidden");
+    document.getElementById("phDisplay").classList.remove("hidden");
+  }
 
-  if (gameData.level >= 3)
+  if (gameData.level >= 3) 
     document.getElementById("btn3").classList.remove("hidden");
 
   if (gameData.level >= 4) {
@@ -111,10 +120,20 @@ function menuImgDimensions() {
   });
 }
 
-// updates the coin counter in the corner of the screen
-function updateCoinCount() {
+// updates the info at the top of the screen
+function updateInfoBar() {
   const coinCount = document.getElementById('coinDisplayText');
-  coinCount.innerHTML = `${gameData.coins}`;
+  coinCount.innerHTML = gameData.coins;
+
+  const realPh = document.querySelector('p.real.phText');
+  realPh.innerHTML = gameData.pH;
+  const idealPhText = document.querySelector('p.ideal.phText');
+  idealPhText.innerHTML = ' | ' + idealPh[gameData.treeType];
+  const phDifference = determinePhAccuracy();
+  const root = document.querySelector(':root');
+  root.style.setProperty('--ph-color', 'red');
+  if (phDifference < 0.6) root.style.setProperty('--ph-color', 'goldenrod');
+  if (phDifference == 0) root.style.setProperty('--ph-color', 'green');
 }
 
 function updateDisabled() {
@@ -146,11 +165,28 @@ function updateDisabled() {
   }
 }
 
+function updateButtonCost() {
+  const beesCostText = document.getElementById('beesCost');
+  beesCostText.innerHTML = Math.round(gameData.coinYield / 3 / 5) * 5;
+  
+  const repellentCostText = document.getElementById('repellentCost');
+  repellentCostText.innerHTML = Math.round(gameData.coinYield / 2 / 5) * 5;
+
+  const graftCostText = document.getElementById('graftCost');
+  let graftCost = 100;
+  if (gameData.treeType == 'peach') graftCost *= 2;
+  if (gameData.treeType == 'lemon') graftCost *= 3;
+  graftCostText.innerHTML = graftCost;
+}
+
 // called in purchase functions
 // declare new update functions before this one
 function updateAll() {
-  updateCoinCount();
+  displayTree();
+  updateButtons();
+  updateInfoBar();
   updateDisabled();
+  updateButtonCost();
 }
 
 // =========== mathematical functions ===========
@@ -204,16 +240,9 @@ function determineGrowth() {
   if (gameData.level > 5) gameData.growth += gameData.fertilizer * 0.005;
 }
 
-const idealPh = {
-  "apple": 6.7,
-  "peach": 6.5,
-  "lemon": 6.2,
-};
-
 function determinePhAccuracy() {
-  const difference = Math.abs(gameData.pH - idealPh[`${gameData.treeType}`]);
-  const difFraction = difference / 2.7;
-  return -0.1 * difFraction;
+  return Math.abs(
+    gameData.pH - idealPh[`${gameData.treeType}`]);
 }
 
 // determines the fruit yield at the beginning of each level
@@ -237,7 +266,9 @@ function determineYield() {
   let infestation = 0;
   if (gameData.infested) infestation = -0.5;
 
-  const phAccuracy = determinePhAccuracy();
+  const phDifference = determinePhAccuracy();
+  const difFraction = phDifference / 2.7;
+  const phAccuracy = -0.1 * difFraction;
 
   let result =
     gameData.baseFruit[gameData.level - 1] *
@@ -256,13 +287,11 @@ function nextLevel() {
   determineYield();
   gameData.bees = false;
   gameData.pruneNum = 0;
-  displayTree();
-  updateButtons();
   updateAll();
   saveData();
 }
 
-// =========== level-specific button functions ===========
+// =========== button specific functions ===========
 
 // runs when selecting a starting tree in new-game
 function startNewGame() {
@@ -272,6 +301,15 @@ function startNewGame() {
   // console.log(gameData);
   // retrieveData();
   // console.log(gameData);
+}
+
+// to be run by infoBtn
+function toggleInfo() {
+  console.log('hi');
+  const info = document.getElementById('infoMain');
+  info.classList.toggle('hidden');
+  const infoBtn = document.getElementById('infoBtn');
+  infoBtn.classList.toggle('white');
 }
 
 // =========== purchase functions ===========
@@ -360,8 +398,6 @@ function buyGraft() {
 // =========== event listeners ===========
 
 if (document.URL.includes("new-game.html")) {
-  updateCoinCount();
-
   const newAppleTree = document.getElementById("newAppleTree");
   newAppleTree.addEventListener("click", () => {
     gameData.treeType = "apple";
@@ -386,9 +422,7 @@ if (document.URL.includes("new-game.html")) {
 
 if (document.URL.includes("main-page.html")) {
   if (localStorage.getItem("saveData") == "true") retrieveData();
-  displayTree();
   menuImgDimensions();
-  updateButtons();
   updateAll();
 }
 

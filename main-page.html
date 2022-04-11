@@ -17,16 +17,28 @@
     <!-- for a fade-in effect between levels -->
     <div id="transition"></div>
 
-    <div id='coinDisplay' class='main'>
-      <p class='coinText dark-green' id='coinDisplayText'></p>
-      <img src="./images/coin.png" class="costImg" />
+
+    <button id='infoBtn' onclick='toggleInfo()'>i</button>
+    <div id='infoMain' class='hidden'>
+      <p id='infoMainText'></p>
     </div>
 
+    <div id='info-bar'>
+      <div id='coinDisplay' class='main'>
+        <p class='coinText dark-green' id='coinDisplayText'></p>
+        <img src="./images/coin.png" class="costImg" />
+      </div> <!-- end of coinDisplay -->
+
+      <div id='phDisplay' class='hidden'>
+        <p class='real phText coinText'></p>
+        <p class='ideal phText coinText'></p>
+      </div>
+
+    </div> <!-- end of info bar -->
+
     <div id="treeDiv">
-      <!-- img of tree here -->
-      <img id="mainTree" />
-    </div>
-    <!-- end of treeDiv -->
+      <img id="mainTree" /> <!-- tree img -->
+    </div> <!-- end of treeDiv -->
     <div id="menuDiv">
       <div class="menu" id="fertilizer">
         <button id="btn1" class="menuBtn" onclick="buyFertilizer()">
@@ -36,44 +48,60 @@
             <img src="./images/coin.png" class="costImg" />
           </div>
         </button>
-      </div>
-      <!-- end of menu -->
+      </div> <!-- end of menu -->
+
       <div class="menu" id="limestone">
         <button id="btn2" class="menuBtn hidden" onclick="buyLimestone()">
           <img src="./images/limestone.png" class="menuImg" />
+          <div class="price">
+            <p class="coinText">10</p>
+            <img src="./images/coin.png" class="costImg" />
+          </div>
         </button>
-      </div>
-      <!-- end of menu -->
+      </div> <!-- end of menu -->
 
       <div class="menu" id="pruning">
         <button id="btn3" class="menuBtn hidden" onclick="buyPrune()">
           <img src="./images/pruning.png" class="menuImg" />
+          <div class="price">
+            <p class="coinText">15</p>
+            <img src="./images/coin.png" class="costImg" />
+          </div>
         </button>
-      </div>
-      <!-- end of menu -->
+      </div> <!-- end of menu -->
 
       <div class="menu" id="bees">
         <button id="btn4" class="menuBtn hidden" onclick="buyBees()">
           <img src="./images/bee.png" class="menuImg" />
+          <div class="price">
+            <p class="coinText" id='beesCost'></p>
+            <img src="./images/coin.png" class="costImg" />
+          </div>
         </button>
-      </div>
-      <!-- end of menu -->
+      </div> <!-- end of menu -->
 
       <div class="menu" id="repellent">
         <button id="btn5" class="menuBtn hidden" onclick="buyRepellent()">
           <img src="./images/bugRepellant.png" class="menuImg" />
+          <div class="price">
+            <p class="coinText" id='repellentCost'></p>
+            <img src="./images/coin.png" class="costImg" />
+          </div>
         </button>
-      </div>
-      <!-- end of menu -->
+      </div> <!-- end of menu -->
 
       <div class="menu" id="grafting">
         <button id="btn6" class="menuBtn hidden" onclick="buyGraft()">
           <img src="./images/grafting.png" class="menuImg" />
+          <div class="price">
+            <p class="coinText" id='graftCost'></p>
+            <img src="./images/coin.png" class="costImg" />
+          </div>
         </button>
-      </div>
-      <!-- end of menu -->
-    </div>
-    <!-- end of menuDiv -->
+      </div> <!-- end of menu -->
+
+    </div> <!-- end of menuDiv -->
+
     <script type="text/javascript" src="ftf.js"></script>
   </body>
 </html>
