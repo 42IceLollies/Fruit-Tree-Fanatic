@@ -355,12 +355,20 @@ button.index:disabled {
   background: inherit;
   align-content: space-between;
   justify-content: space-evenly;
+  z-index: 7;
 }
 
 .menuDash {
   width: 100%;
   height: 10%;
   background: var(--grey);
+}
+
+#fruitOverlay {
+  position: absolute;
+  top: 15%;
+  margin: 0 auto;
+  width: 40%;
 }
 
 /* ======= mixed styles ======= */

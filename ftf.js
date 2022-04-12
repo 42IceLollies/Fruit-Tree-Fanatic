@@ -1,5 +1,5 @@
 const gameData = {
-  level: 1,
+  level: 7,
   growth: 0,
   pH: 7.0,
   bees: false,
@@ -139,8 +139,15 @@ function displayOverlay(
       gameData.treeType.substring(0, 1).toUpperCase() +
       gameData.treeType.substring(1) +
       "s";
+    if (gameData.treeType == 'peach') fruitType = 'Peaches';
+    // it returned peachs
 
-    if (grafted) {
+    var lcFruitType = gameData.treeType + 's';
+    if (lcFruitType == 'peachs') lcFruitType = gameData.treeType + 'es';
+
+    var srcStart = `./images/${gameData.treeType}Tree/${lcFruitType}/`
+
+    if (gameData.grafted) {
       var secondFruit =
         gameData.graftedTreeType.substring(0, 1).toUpperCase() +
         gameData.graftedTreeType.substring(1) +
@@ -153,7 +160,7 @@ function displayOverlay(
         "Tree" +
         Math.ceil(gameData.level / 3);
     } else {
-      source = amtFruit + fruitType + "Tree" + Math.ceil(gameData.level / 3);
+      source = srcStart + amtFruit + fruitType + "Tree" + Math.ceil(gameData.level / 3) + '.png';
     }
 
     document.getElementById("fruitOverlay").src = source;
@@ -363,28 +370,14 @@ function determineYield() {
   const difFraction = phDifference / 2.7;
   const phAccuracy = -0.1 * difFraction;
 
-
-  
-  /* With the scenario of 100 as base, the highest number 
-  you can get is about 180-190, (multiplied by 1.8) 
-  lowest is 35 (multiplied by 0.35)
-  If you multiply them all together in a row, the ones 
-  on the end have more influence than the first ones
-  (10*1.1*1.1=12.1 while 10*1.2=12) < this isn't the yield,
-  this is just an example to show the difference of
-  adding before multiplying  
-  */ 
-
-  /* oh yeah, that makes sense
-  what are the numbers that you're getting to put into the equation? I might 
-  be thinking about those wrong
-  */
   let result =
     gameData.baseFruit[gameData.level - 1] *
     (1 + pollinationRate + gameData.growth + 
     pruneMult + infestation + phAccuracy);
 
   result = Math.round(result);
+  if (gameData.treeType == 'peach') result *= 2;
+  if (gameData.treeType == 'lemon') result *= 3;
   gameData.coinYield = result;
   gameData.coins += result;
 
@@ -557,6 +550,7 @@ if (document.URL.includes("new-game.html")) {
 
 if (document.URL.includes("main-page.html")) {
   if (localStorage.getItem("saveData") == "true") retrieveData();
+  determineYield();
   menuImgDimensions();
   updateAll();
   if (gameData.level == 1) toggleInfo();
