@@ -116,7 +116,7 @@ function displayOverlay(
 ) {
 
   var lowFruitYield = gameData.baseFruit[gameData.level-1] * 0.35;
-  var highFruitYield = gameData.baseFruit[gameData.level-1]* 2;
+  var highFruitYield = gameData.baseFruit[gameData.level-1]* 1.8;
 
     var rangeOfFruit = highFruitYield - lowFruitYield / 3;
     var amtFruit;
@@ -136,13 +136,13 @@ function displayOverlay(
 
    
     var fruitType =
-      gameData.treeType.substring(0, 1).toUpperCase +
+      gameData.treeType.substring(0, 1).toUpperCase() +
       gameData.treeType.substring(1) +
       "s";
 
-    if (gameData.graftedTreeType !== "unselected") {
+    if (grafted) {
       var secondFruit =
-        gameData.graftedTreeType.substring(0, 1).toUpperCase +
+        gameData.graftedTreeType.substring(0, 1).toUpperCase() +
         gameData.graftedTreeType.substring(1) +
         "s";
       source =
