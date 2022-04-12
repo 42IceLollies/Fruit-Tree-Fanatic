@@ -550,7 +550,6 @@ if (document.URL.includes("new-game.html")) {
 
 if (document.URL.includes("main-page.html")) {
   if (localStorage.getItem("saveData") == "true") retrieveData();
-  determineYield();
   menuImgDimensions();
   updateAll();
   if (gameData.level == 1) toggleInfo();
