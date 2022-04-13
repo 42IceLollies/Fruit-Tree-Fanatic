@@ -15,9 +15,9 @@ const gameData = {
   baseFruit: [0, 40, 55, 80, 85, 90, 95, 100, 100, 105, 110, 110, 115, 120],
   coinYield: 0,
 };
-
+ 
 // =============== save data functions ===============
-
+ 
 // saves the data object values to localStorage
 function saveData() {
   for (const key in gameData) {
@@ -25,7 +25,7 @@ function saveData() {
   }
   localStorage.setItem("saveData", "true");
 }
-
+ 
 // pulls the info from localStorage when loading a saved game, and converts to original types
 function retrieveData() {
   const toNum = [
@@ -56,7 +56,7 @@ function retrieveData() {
     gameData[`${boolean}`] = JSON.parse(gameData[`${boolean}`]);
   });
 }
-
+ 
 // clears the saved data from localStorage
 function clearData() {
   for (const key in gameData) {
@@ -64,9 +64,9 @@ function clearData() {
   }
   localStorage.setItem("saveData", "false");
 }
-
+ 
 // =========== update display functions ===========
-
+ 
 // moved here so it can be used in display updates
 // moved here so it can be used in display updates
 // moved here so it can be used in display updates
@@ -75,7 +75,7 @@ const idealPh = {
   "peach": 6.5,
   "lemon": 6.2,
 };
-
+ 
 // make buttons on main page menu visible based on level
 // run every time the level is updated
 function updateButtons() {
@@ -83,19 +83,19 @@ function updateButtons() {
     document.getElementById("btn2").classList.remove("hidden");
     document.getElementById("phDisplay").classList.remove("hidden");
   }
-
+ 
   if (gameData.level >= 3)
     document.getElementById("btn3").classList.remove("hidden");
-
+ 
   if (gameData.level >= 4) {
     document.getElementById("btn4").classList.remove("hidden");
     document.getElementById("btn5").classList.remove("hidden");
   }
-
+ 
   if (gameData.level >= 7)
     document.getElementById("btn6").classList.remove("hidden");
 }
-
+ 
 //sets tree image based on level and changes the height
 function displayTree() {
   document.getElementById("mainTree").src =
@@ -106,16 +106,19 @@ function displayTree() {
     "Tree" +
     Math.ceil(gameData.level / 3) +
     ".png";
-
+ 
   document.getElementById("treeDiv").style.paddingTop = 16 - gameData.level + "%";
 }
-
+ 
 //sets and displays overlays for tree
 function displayOverlay(fruitYield) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
   var lowFruitYield = gameData.baseFruit[gameData.level-1] * 0.35;
   var highFruitYield = gameData.baseFruit[gameData.level-1]* 1.8;
-
+ 
     var rangeOfFruit = highFruitYield - lowFruitYield / 3;
     var amtFruit;
     var source;
@@ -123,28 +126,33 @@ function displayOverlay(fruitYield) {
       case fruitYield <= rangeOfFruit:
         amtFruit = "less";
         break;
-
+ 
       case fruitYield > rangeOfFruit && fruitYield < rangeOfFruit * 2:
         amtFruit = "some";
         break;
-
+ 
       case fruitYield >= rangeOfFruit * 2:
         amtFruit = "more";
     }
-
+ 
    
     var fruitType =
       gameData.treeType.substring(0, 1).toUpperCase() +
       gameData.treeType.substring(1) +
       "s";
     if (gameData.treeType == 'peach') fruitType = 'Peaches';
+<<<<<<< HEAD
     // it returns peachs otherwise
 
+=======
+    // it returned peachs
+ 
+>>>>>>> origin/main
     var lcFruitType = gameData.treeType + 's';
     if (lcFruitType == 'peachs') lcFruitType = gameData.treeType + 'es';
-
+ 
     var srcStart = `./images/${gameData.treeType}Tree/${lcFruitType}/`
-
+ 
     if (gameData.grafted) {
       var secondFruit =
         gameData.graftedTreeType.substring(0, 1).toUpperCase() +
@@ -154,17 +162,17 @@ function displayOverlay(fruitYield) {
     } else {
       source = `${srcStart}${amtFruit}${fruitType}Tree${Math.ceil(gameData.level / 3)}.png`;
     }
-
+ 
     document.getElementById("fruitOverlay").src = source;
     document.getElementById("fruitOverlay").classList.remove("hidden");
   
 }
-
+ 
 //gets rid of overlay
 function removeOverlay() {
     document.getElementById("fruitOverlay").classList.add("hidden");
 }
-
+ 
 // sets the menuImg dimensions so they all fit in the buttons
 function menuImgDimensions() {
   const menusNode = document.querySelectorAll('.menuImg');
@@ -176,12 +184,12 @@ function menuImgDimensions() {
     }
   });
 }
-
+ 
 // updates the info at the top of the screen
 function updateInfoBar() {
   const coinCount = document.getElementById('coinDisplayText');
   coinCount.innerHTML = gameData.coins;
-
+ 
   const realPh = document.querySelector('p.real.phText');
   realPh.innerHTML = gameData.pH;
   const idealPhText = document.querySelector('p.ideal.phText');
@@ -192,7 +200,7 @@ function updateInfoBar() {
   if (phDifference < 0.6) root.style.setProperty('--ph-color', 'goldenrod');
   if (phDifference == 0) root.style.setProperty('--ph-color', 'green');
 }
-
+ 
 function updateDisabled() {
   // if a graft's been purchased, disable graft button
   if (gameData.grafted == true) document.getElementById('btn6').disabled = true;
@@ -204,7 +212,7 @@ function updateDisabled() {
   } else {
     prune.disabled = false;
   }
-
+ 
   // if bees aren't available for any reason, disabled
   const beeBtn = document.getElementById('btn4');
   if (gameData.bees == true || gameData.infested == true || gameData.lastLevelInfested == gameData.level) {
@@ -212,7 +220,7 @@ function updateDisabled() {
   } else {
     beeBtn.disabled = false;
   }
-
+ 
   // if there's not an infestation, disabled
   const repellentBtn = document.getElementById('btn5');
   if (gameData.infested) {
@@ -221,21 +229,21 @@ function updateDisabled() {
     repellentBtn.disabled = true;
   }
 }
-
+ 
 function updateButtonCost() {
   const beesCostText = document.getElementById('beesCost');
   beesCostText.innerHTML = Math.round(gameData.coinYield / 3 / 5) * 5;
   
   const repellentCostText = document.getElementById('repellentCost');
   repellentCostText.innerHTML = Math.round(gameData.coinYield / 2 / 5) * 5;
-
+ 
   const graftCostText = document.getElementById('graftCost');
   let graftCost = 100;
   if (gameData.treeType == 'peach') graftCost *= 2;
   if (gameData.treeType == 'lemon') graftCost *= 3;
   graftCostText.innerHTML = graftCost;
 }
-
+ 
 function updateBees() {
   const bees = document.getElementById('beeOverlay');
   const beeHive = document.getElementById('beeHive');
@@ -247,13 +255,13 @@ function updateBees() {
     beeHive.classList.add('hidden');
   }
 }
-
+ 
 function updateInsects() {
   const insects = document.getElementById('insectOverlay');
   if (gameData.infested) insects.classList.remove('hidden');
   if (!gameData.infested) insects.classList.add('hidden');
 }
-
+ 
 // called in purchase functions
 // declare new update functions before this one
 function updateAll() {
@@ -265,7 +273,7 @@ function updateAll() {
   updateBees();
   updateInsects();
 }
-
+ 
 // set next level to happen in the middle of the transition later
 function transition() {
   const transitionDiv = document.getElementById('transition');
@@ -275,14 +283,14 @@ function transition() {
     transitionDiv.classList.remove('on');
   }, 1000);
 }
-
+ 
 function toggleMainMenu() {
   document.getElementById('mainMenu').classList.toggle('show');
   document.getElementById('transition').classList.toggle('faded');
 }
-
+ 
 // =========== mathematical functions ===========
-
+ 
 // changes the pH level
 function adjustPH(change) {
   gameData.pH = parseFloat(gameData.pH);
@@ -297,7 +305,7 @@ function adjustPH(change) {
   }
   saveData();
 }
-
+ 
 // randomly decides if you get an insect infestation
 // to be called every time player advances a level
 function determineInfestation() {
@@ -318,7 +326,7 @@ function determineInfestation() {
     gameData.lastLevelInfested = gameData.level;
   }
 }
-
+ 
 // determines how much the tree grows based on the amount of fertilizer purchased and the level
 // to be run before level and fertilizer are updated
 function determineGrowth() {
@@ -331,12 +339,12 @@ function determineGrowth() {
   // from then on, 0.005
   if (gameData.level > 5) gameData.growth += gameData.fertilizer * 0.005;
 }
-
+ 
 function determinePhAccuracy() {
   return Math.abs(
     gameData.pH - idealPh[`${gameData.treeType}`]);
 }
-
+ 
 // determines the fruit yield at the beginning of each level
 // to be run after level has been updated and growth from fertilizer has been determined, but no other data has been changed
 // incomplete
@@ -346,7 +354,7 @@ function determineYield() {
   if (gameData.bees) {
     pollinationRate = 0.5;
   }
-
+ 
   let pruneMult = 0;
   if (gameData.level > 1) {
     const pruneFraction =
@@ -354,43 +362,46 @@ function determineYield() {
     // if pruned to fullest extent, 10% is added
     let pruneMult = 0.1 * pruneFraction;
   }
-
+ 
   let infestation = 0;
   if (gameData.infested) infestation = -0.5;
-
+ 
   const phDifference = determinePhAccuracy();
   const difFraction = phDifference / 2.7;
   const phAccuracy = -0.1 * difFraction;
-
+ 
   let result =
     gameData.baseFruit[gameData.level - 1] *
     (1 + pollinationRate + gameData.growth + 
     pruneMult + infestation + phAccuracy);
-
+ 
   result = Math.round(result);
   if (gameData.treeType == 'peach') result *= 2;
   if (gameData.treeType == 'lemon') result *= 3;
   gameData.coinYield = result;
   gameData.coins += result;
-
-
+ 
+if(gameData.level>1){
   displayOverlay(result);
 }
-
-// to be run every time a level is completed
-function nextLevel() {
-  determineGrowth();
-  gameData.fertilizer = 0;
-  gameData.level++;
-  determineYield();
-  gameData.bees = false;
-  gameData.pruneNum = 0;
-  updateAll();
-  saveData();
 }
-
+ 
+//should there be two different nextLevel functions?  It looks kind of like they're the same thing
+ 
+// // to be run every time a level is completed
+// function nextLevel() {
+//   determineGrowth();
+//   gameData.fertilizer = 0;
+//   gameData.level++;
+//   determineYield();
+//   gameData.bees = false;
+//   gameData.pruneNum = 0;
+//   updateAll();
+//   saveData();
+// }
+ 
 // =========== button specific functions ===========
-
+ 
 // runs when selecting a starting tree in new-game
 function startNewGame() {
   clearData();
@@ -400,7 +411,7 @@ function startNewGame() {
   // retrieveData();
   // console.log(gameData);
 }
-
+ 
 // to be run by infoBtn
 function toggleInfo() {
   const info = document.getElementById('infoMain');
@@ -408,7 +419,7 @@ function toggleInfo() {
   const infoBtn = document.getElementById('infoBtn');
   infoBtn.classList.toggle('white');
 }
-
+ 
 // run in nextLevel function, the first level text will
 // be set in the html file
 function setInfoText() {
@@ -419,7 +430,15 @@ function setInfoText() {
     toggleInfo();
   }
 }
-
+ 
+ 
+//test function-- delete later
+function testFruit()
+{
+  nextLevel();
+  console.log(gameData.level);
+}
+ 
 // to be run every time a level is completed
 function nextLevel() {
   determineGrowth();
@@ -431,9 +450,9 @@ function nextLevel() {
   updateAll();
   saveData();
 }
-
+ 
 // =========== purchase functions ===========
-
+ 
 function buyFertilizer() {
   console.clear();
   console.log(gameData);
@@ -446,7 +465,7 @@ function buyFertilizer() {
   updateAll();
   saveData();
 }
-
+ 
 function buyLimestone() {
   if (gameData.coins >= 10) {
     gameData.coins -= 10;
@@ -456,7 +475,7 @@ function buyLimestone() {
   updateAll();
   saveData();
 }
-
+ 
 function buyPrune() {
   if (
     gameData.coins >= 15 &&
@@ -468,7 +487,7 @@ function buyPrune() {
   updateAll();
   saveData();
 }
-
+ 
 function buyBees() {
   // can't buy bees if there's an infestation, or if it was infested this level
   if (gameData.infested || gameData.lastLevelInfested == gameData.level) return;
@@ -481,7 +500,7 @@ function buyBees() {
   updateAll();
   saveData();
 }
-
+ 
 function buyRepellent() {
   // can't buy it if there's no infestation
   if (!gameData.infested) return;
@@ -494,7 +513,7 @@ function buyRepellent() {
   updateAll();
   saveData();
 }
-
+ 
 function buyGraft() {
   // can't buy until level 7
   if (gameData.level < 7) return;
@@ -502,7 +521,7 @@ function buyGraft() {
   let graftPrice = 100;
   if (gameData.treeType == "peach") graftPrice *= 2;
   if (gameData.treeType == "lemon") graftPrice *= 3;
-
+ 
   if (gameData.coins >= graftPrice) {
     gameData.coins -= graftPrice;
     gameData.grafted = true;
@@ -514,9 +533,9 @@ function buyGraft() {
   updateAll();
   saveData();
 }
-
+ 
 // =========== event listeners ===========
-
+ 
 if (document.URL.includes("new-game.html")) {
   const newAppleTree = document.getElementById("newAppleTree");
   newAppleTree.addEventListener("click", () => {
@@ -524,14 +543,14 @@ if (document.URL.includes("new-game.html")) {
     gameData.coins -= 25;
     startNewGame();
   });
-
+ 
   const newPeachTree = document.getElementById("newPeachTree");
   newPeachTree.addEventListener("click", () => {
     gameData.treeType = "peach";
     gameData.coins -= 45;
     startNewGame();
   });
-
+ 
   const newLemonTree = document.getElementById("newLemonTree");
   newLemonTree.addEventListener("click", () => {
     gameData.coins -= 65;
@@ -539,14 +558,21 @@ if (document.URL.includes("new-game.html")) {
     startNewGame();
   });
 }
-
+ 
 if (document.URL.includes("main-page.html")) {
   if (localStorage.getItem("saveData") == "true") retrieveData();
   menuImgDimensions();
   updateAll();
   if (gameData.level == 1) toggleInfo();
+ 
+  if(!document.getElementById("fruitOverlay").classList.contains("hidden"))
+  {
+    document.getElementById("fruitOverlay").addEventListener("click", () => {
+      removeOverlay();
+    })
+  }
 }
-
+ 
 if (document.URL.includes("index.html")) {
   // grey out resume button if there's no save data
   if (localStorage.getItem('saveData') == 'true') {
@@ -555,5 +581,7 @@ if (document.URL.includes("index.html")) {
     document.getElementById('resume-game').disabled = true;
   }
 }
-
+ 
 console.log(gameData);
+ 
+
