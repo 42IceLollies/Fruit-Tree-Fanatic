@@ -371,6 +371,20 @@ button.index:disabled {
   width: 40%;
 }
 
+.mainMenuBtn {
+  background: lightgrey;
+  padding: .5em;
+  font-size: 1.2em;
+  border: 2px solid black;
+  color: #000;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.mainMenuBtn:hover {
+  opacity: 1;
+}
+
 /* ======= mixed styles ======= */
 
 .hidden {

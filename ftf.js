@@ -1,5 +1,5 @@
 const gameData = {
-  level: 7,
+  level: 1,
   growth: 0,
   pH: 7.0,
   bees: false,
@@ -111,9 +111,7 @@ function displayTree() {
 }
 
 //sets and displays overlays for tree
-function displayOverlay(
-  fruitYield
-) {
+function displayOverlay(fruitYield) {
 
   var lowFruitYield = gameData.baseFruit[gameData.level-1] * 0.35;
   var highFruitYield = gameData.baseFruit[gameData.level-1]* 1.8;
@@ -140,7 +138,7 @@ function displayOverlay(
       gameData.treeType.substring(1) +
       "s";
     if (gameData.treeType == 'peach') fruitType = 'Peaches';
-    // it returned peachs
+    // it returns peachs otherwise
 
     var lcFruitType = gameData.treeType + 's';
     if (lcFruitType == 'peachs') lcFruitType = gameData.treeType + 'es';
@@ -152,15 +150,9 @@ function displayOverlay(
         gameData.graftedTreeType.substring(0, 1).toUpperCase() +
         gameData.graftedTreeType.substring(1) +
         "s";
-      source =
-        amtFruit +
-        fruit +
-        "And" +
-        secondFruit +
-        "Tree" +
-        Math.ceil(gameData.level / 3);
+      source = `${srcStart}${amtFruit}${fruit}And${secondFruit}Tree${Math.ceil(gameData.level / 3)}`;
     } else {
-      source = srcStart + amtFruit + fruitType + "Tree" + Math.ceil(gameData.level / 3) + '.png';
+      source = `${srcStart}${amtFruit}${fruitType}Tree${Math.ceil(gameData.level / 3)}.png`;
     }
 
     document.getElementById("fruitOverlay").src = source;
