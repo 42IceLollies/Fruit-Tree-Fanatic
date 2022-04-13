@@ -366,10 +366,17 @@ button.index:disabled {
 }
 
 #fruitOverlay {
-  position: absolute;
-  top: 15%;
+  width: 30%;
   margin: 0 auto;
-  width: 40%;
+}
+
+#fruitOverlayDiv {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  margin-top: 10%;
+  z-index: 3;
 }
 
 .mainMenuBtn {
