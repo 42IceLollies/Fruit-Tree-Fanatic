@@ -104,37 +104,39 @@ function displayTree() {
     "Tree" +
     Math.ceil(gameData.level / 3) +
     ".png";
- 
-  document.getElementById("treeDiv").style.paddingTop = 16 - gameData.level + "%";
+  
+  const root = document.querySelector(":root");
+  root.style.setProperty('--padding-top', 16 - gameData.level + "%");
 }
- 
-//sets and displays overlays for tree
-function displayOverlay(fruitYield) {
+
+// sets the fruit overlay, seperate because the fruit goes away when page is reloaded
+function setOverlay() {
+  var fruitYield = gameData.coinYield;
+  if (gameData.treeType == 'peach') fruitYield /= 2;
+  if (gameData.treeType == 'lemon') fruitYield /= 3;
 
   var lowFruitYield = gameData.baseFruit[gameData.level-1] * 0.35;
   var highFruitYield = gameData.baseFruit[gameData.level-1]* 1.8;
  
-    var rangeOfFruit = highFruitYield - lowFruitYield / 3;
-    var amtFruit;
-    var source;
-    switch (true) {
-      case fruitYield <= rangeOfFruit:
-        amtFruit = "less";
-        break;
+  var rangeOfFruit = highFruitYield - lowFruitYield / 3;
+  var amtFruit;
+  var source;
+  switch (true) {
+    case fruitYield <= rangeOfFruit:
+      amtFruit = "less";
+      break;
  
-      case fruitYield > rangeOfFruit && fruitYield < rangeOfFruit * 2:
-        amtFruit = "some";
-        break;
+    case fruitYield > rangeOfFruit && fruitYield < rangeOfFruit * 2:
+      amtFruit = "some";
+      break;
  
-      case fruitYield >= rangeOfFruit * 2:
-        amtFruit = "more";
-    }
- 
+    case fruitYield >= rangeOfFruit * 2:
+      amtFruit = "more";
+  }
    
-    var fruitType =
-      gameData.treeType.substring(0, 1).toUpperCase() +
-      gameData.treeType.substring(1) +
-      "s";
+  var fruitType =
+    gameData.treeType.substring(0, 1).toUpperCase() +
+    gameData.treeType.substring(1) + "s";
     if (gameData.treeType == 'peach') fruitType = 'Peaches';
     // it returns peachs otherwise
 
@@ -154,13 +156,17 @@ function displayOverlay(fruitYield) {
     }
  
     document.getElementById("fruitOverlay").src = source;
-    document.getElementById("fruitOverlay").classList.remove("hidden");
-  
+}
+ 
+//sets and displays overlays for tree
+function displayOverlay() {
+  setOverlay();
+  document.getElementById("fruitOverlayDiv").classList.remove("hidden");
 }
  
 //gets rid of overlay
 function removeOverlay() {
-    document.getElementById("fruitOverlay").classList.add("hidden");
+    document.getElementById("fruitOverlayDiv").classList.add("hidden");
 }
  
 // sets the menuImg dimensions so they all fit in the buttons
@@ -251,6 +257,14 @@ function updateInsects() {
   if (gameData.infested) insects.classList.remove('hidden');
   if (!gameData.infested) insects.classList.add('hidden');
 }
+
+// function updateTreeWidth() {
+//   const treeImg = document.getElementById('mainTree');
+//   const root = document.querySelector(':root');
+//   console.log(treeImg);
+//   // root.style.setProperty('--tree-width')
+// }
+// // updateTreeWidth();
  
 // called in purchase functions
 // declare new update functions before this one
@@ -267,7 +281,6 @@ function updateAll() {
 // set next level to happen in the middle of the transition later
 function transition() {
   const transitionDiv = document.getElementById('transition');
-  console.log(transitionDiv.classList);
   transitionDiv.classList.add('on');
   setTimeout(() => {
     nextLevel();
@@ -369,17 +382,11 @@ function determineYield() {
   result = Math.round(result);
   if (gameData.treeType == 'peach') result *= 2;
   if (gameData.treeType == 'lemon') result *= 3;
+
   gameData.coinYield = result;
   gameData.coins += result;
- 
-if(gameData.level>1){
-  displayOverlay(result);
 }
-}
- 
-//should there be two different nextLevel functions?  It looks kind of like they're the same thing
-// there shouldn't be, I moved it and I guess I didn't delete the old one
- 
+  
 // =========== button specific functions ===========
  
 // runs when selecting a starting tree in new-game
@@ -427,6 +434,7 @@ function nextLevel() {
   determineYield();
   gameData.bees = false;
   gameData.pruneNum = 0;
+  displayOverlay();
   updateAll();
   saveData();
 }
@@ -543,6 +551,7 @@ if (document.URL.includes("main-page.html")) {
   if (localStorage.getItem("saveData") == "true") retrieveData();
   menuImgDimensions();
   updateAll();
+  setOverlay();
   if (gameData.level == 1) toggleInfo();
  
   document.getElementById("fruitOverlay").addEventListener("click", () => {

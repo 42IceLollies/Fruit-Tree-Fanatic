@@ -4,13 +4,13 @@
   --lighter-green: #d0efcb; /*Tea Green*/
   --grey: #666; /*Granite Gray*/
   --brown: #6a3e2d; /*Van Dyke Brown*/
-  --ph-color: black; /*to be changed with js*/
+  --ph-color: black; /*to be changed in js*/
+  --padding-top: 2%; /*to be changed in js*/
   font-family: "Inter", sans-serif;
 }
 
 * {
   box-sizing: border-box;
-  /* z-index: ;  (sorry it was just throwing an error in my editor)*/
 }
 
 
@@ -177,12 +177,26 @@ button.index:disabled {
 #treeDiv {
   height: 80%;
   margin: 0;
-  padding-top: 2%;
+  padding-top: var(--padding-top);
 }
 
 #mainTree {
   height: 100%;
   display: flex;
+}
+
+#fruitOverlayDiv {
+  height: 80%;
+  margin: 0;
+  position: absolute;
+  width: 100%;
+  padding-top: var(--padding-top);
+}
+
+#fruitOverlay {
+  height: 50%;
+  display: flex;
+  z-index: 2;
 }
 
 #beeOverlay {
@@ -364,20 +378,6 @@ button.index:disabled {
   width: 100%;
   height: 10%;
   background: var(--grey);
-}
-
-#fruitOverlay {
-  width: 30%;
-  margin: 0 auto;
-}
-
-#fruitOverlayDiv {
-  position: absolute;
-  text-align: center;
-  width: 100%;
-  margin: 0;
-  margin-top: 10%;
-  z-index: 3;
 }
 
 .mainMenuBtn {
