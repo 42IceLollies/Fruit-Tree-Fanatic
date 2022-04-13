@@ -66,9 +66,7 @@ function clearData() {
 }
  
 // =========== update display functions ===========
- 
-// moved here so it can be used in display updates
-// moved here so it can be used in display updates
+
 // moved here so it can be used in display updates
 const idealPh = {
   "apple": 6.7,
@@ -272,6 +270,7 @@ function transition() {
   console.log(transitionDiv.classList);
   transitionDiv.classList.add('on');
   setTimeout(() => {
+    nextLevel();
     transitionDiv.classList.remove('on');
   }, 1000);
 }

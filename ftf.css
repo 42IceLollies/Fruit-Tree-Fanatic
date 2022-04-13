@@ -274,6 +274,7 @@ button.index:disabled {
   top: 0;
   width: 100%;
   padding: 0;
+  z-index: 2;
 }
 
 #phDisplay {
