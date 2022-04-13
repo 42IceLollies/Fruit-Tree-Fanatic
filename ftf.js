@@ -112,10 +112,7 @@ function displayTree() {
  
 //sets and displays overlays for tree
 function displayOverlay(fruitYield) {
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/main
   var lowFruitYield = gameData.baseFruit[gameData.level-1] * 0.35;
   var highFruitYield = gameData.baseFruit[gameData.level-1]* 1.8;
  
@@ -141,13 +138,8 @@ function displayOverlay(fruitYield) {
       gameData.treeType.substring(1) +
       "s";
     if (gameData.treeType == 'peach') fruitType = 'Peaches';
-<<<<<<< HEAD
     // it returns peachs otherwise
 
-=======
-    // it returned peachs
- 
->>>>>>> origin/main
     var lcFruitType = gameData.treeType + 's';
     if (lcFruitType == 'peachs') lcFruitType = gameData.treeType + 'es';
  
@@ -387,18 +379,7 @@ if(gameData.level>1){
 }
  
 //should there be two different nextLevel functions?  It looks kind of like they're the same thing
- 
-// // to be run every time a level is completed
-// function nextLevel() {
-//   determineGrowth();
-//   gameData.fertilizer = 0;
-//   gameData.level++;
-//   determineYield();
-//   gameData.bees = false;
-//   gameData.pruneNum = 0;
-//   updateAll();
-//   saveData();
-// }
+// there shouldn't be, I moved it and I guess I didn't delete the old one
  
 // =========== button specific functions ===========
  
@@ -565,12 +546,10 @@ if (document.URL.includes("main-page.html")) {
   updateAll();
   if (gameData.level == 1) toggleInfo();
  
-  if(!document.getElementById("fruitOverlay").classList.contains("hidden"))
-  {
-    document.getElementById("fruitOverlay").addEventListener("click", () => {
+  document.getElementById("fruitOverlay").addEventListener("click", () => {
       removeOverlay();
-    })
-  }
+// if it's hidden, it can't be clicked. no condition needed
+  });
 }
  
 if (document.URL.includes("index.html")) {
@@ -583,5 +562,3 @@ if (document.URL.includes("index.html")) {
 }
  
 console.log(gameData);
- 
-
