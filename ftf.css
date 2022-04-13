@@ -10,8 +10,9 @@
 
 * {
   box-sizing: border-box;
-  z-index: ;
+  /* z-index: ;  (sorry it was just throwing an error in my editor)*/
 }
+
 
 /* makes it so height can be used for elements later on */
 html {

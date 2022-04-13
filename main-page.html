@@ -16,12 +16,14 @@
   <body>
     <!-- for a fade-in effect between levels -->
     <div id="transition"></div>
-
+ 
     <button id='infoBtn' onclick=toggleInfo()>i</button>
     <div id='infoMain' class='hidden'>
-      <p id='infoMainText'>Text for the first level, yay! Let's hope it always fits in the box!</p>
+      <p id='infoMainText'>Text for the first level, yay! Let's hope it always fits in the box! <br>
+        lol yeh i hope so
+      </p>
     </div>
-
+    
     <div id='info-bar'>
       <button onclick=toggleMainMenu() id='menuOpen'>
         <div class="menuDash"></div>
@@ -54,12 +56,14 @@
       <img id='beeHive' class='hidden' src='./images/beeHive.png'> <!-- bee hive img -->
 
       <img id='insectOverlay' class='hidden' src='./images/insects.png'>
-
+ 
       <img id='fruitOverlay' class='hidden'>
     </div> <!-- end of treeDiv -->
     <div id="menuDiv">
       <div class="menu" id="fertilizer">
-        <button id="btn1" class="menuBtn" onclick="buyFertilizer()">
+        <!-- <button id="btn1" class="menuBtn" onclick="buyFertilizer()"> -->
+        <!-- <button id="btn1" class="menuBtn" onclick="buyFertilizer()"> -->
+        <button id="btn1" class="menuBtn" onclick="testFruit()">
           <img src="./images/fertilizer.png" class="menuImg" />
           <div class="price">
             <p class="coinText">10</p>
@@ -67,7 +71,7 @@
           </div>
         </button>
       </div> <!-- end of menu -->
-
+ 
       <div class="menu" id="limestone">
         <button id="btn2" class="menuBtn hidden" onclick="buyLimestone()">
           <img src="./images/limestone.png" class="menuImg" />
