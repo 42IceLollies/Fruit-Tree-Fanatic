@@ -258,13 +258,32 @@ function updateInsects() {
   if (!gameData.infested) insects.classList.add('hidden');
 }
 
-// function updateTreeWidth() {
-//   const treeImg = document.getElementById('mainTree');
-//   const root = document.querySelector(':root');
-//   console.log(treeImg);
-//   // root.style.setProperty('--tree-width')
-// }
-// // updateTreeWidth();
+function updateOverlayDimensions() {
+  const fo = document.getElementById('fruitOverlay');
+  const foDiv = document.getElementById('fruitOverlayDiv');
+  switch(gameData.treeType) {
+    case ('apple'):
+      fo.style.height = '45%';
+      foDiv.style.height = '72%';
+      foDiv.style.top = '8%';
+      if (gameData.level >= 10) {
+        fo.style.height = '50%';
+        foDiv.style.height = '68%';
+        foDiv.style.top = '12%';
+      }
+      break
+    case ('peach'):
+      fo.style.height = '50%';
+      foDiv.style.height = '70%';
+      foDiv.style.top = '10%';
+      break
+    case ('lemon'):
+      fo.style.height = '40%';
+      foDiv.style.height = '74%';
+      foDiv.style.top = '6%';
+      break
+  }
+}
  
 // called in purchase functions
 // declare new update functions before this one
@@ -434,6 +453,7 @@ function nextLevel() {
   determineYield();
   gameData.bees = false;
   gameData.pruneNum = 0;
+  updateOverlayDimensions();
   displayOverlay();
   updateAll();
   saveData();
@@ -550,6 +570,7 @@ if (document.URL.includes("new-game.html")) {
 if (document.URL.includes("main-page.html")) {
   if (localStorage.getItem("saveData") == "true") retrieveData();
   menuImgDimensions();
+  updateOverlayDimensions();
   updateAll();
   setOverlay();
   if (gameData.level == 1) toggleInfo();

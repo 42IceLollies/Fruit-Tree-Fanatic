@@ -186,15 +186,16 @@ button.index:disabled {
 }
 
 #fruitOverlayDiv {
-  height: 80%;
+  height: 75%; /*changed in js*/
   margin: 0;
   position: absolute;
+  top: 5%; /*changed in js*/
   width: 100%;
   padding-top: var(--padding-top);
 }
 
 #fruitOverlay {
-  height: 50%;
+  height: 50%; /*changed in js*/
   display: flex;
   z-index: 2;
 }
