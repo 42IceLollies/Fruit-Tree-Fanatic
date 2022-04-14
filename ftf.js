@@ -143,14 +143,15 @@ function setOverlay() {
     var lcFruitType = gameData.treeType + 's';
     if (lcFruitType == 'peachs') lcFruitType = gameData.treeType + 'es';
  
-    var srcStart = `./images/${gameData.treeType}Tree/${lcFruitType}/`
+    var srcStart = `./images/${gameData.treeType}Tree/${lcFruitType}/`;
  
-    if (gameData.grafted) {
+    if (gameData.grafted) { 
       var secondFruit =
         gameData.graftedTreeType.substring(0, 1).toUpperCase() +
         gameData.graftedTreeType.substring(1) +
         "s";
-      source = `${srcStart}${amtFruit}${fruit}And${secondFruit}Tree${Math.ceil(gameData.level / 3)}`;
+      srcStart = `./images/${gameData.treeType}Tree/${lcFruitType}And${secondFruit}/`;
+      source = `${srcStart}${amtFruit}${fruitType}And${secondFruit}Tree${Math.ceil(gameData.level / 3)}.png`;
     } else {
       source = `${srcStart}${amtFruit}${fruitType}Tree${Math.ceil(gameData.level / 3)}.png`;
     }
@@ -276,6 +277,13 @@ function updateOverlayDimensions() {
       fo.style.height = '50%';
       foDiv.style.height = '70%';
       foDiv.style.top = '10%';
+      if (gameData.level >= 9) {
+        foDiv.style.height = '65%';
+        foDiv.style.top = '15%';
+      }
+      if (gameData.level >= 13) {
+        fo.style.height = '60%';
+      }
       break
     case ('lemon'):
       fo.style.height = '40%';
@@ -542,7 +550,7 @@ function buyGraft() {
   saveData();
 }
  
-// =========== event listeners ===========
+// =========== on page-load ===========
  
 if (document.URL.includes("new-game.html")) {
   const newAppleTree = document.getElementById("newAppleTree");
@@ -589,5 +597,12 @@ if (document.URL.includes("index.html")) {
     document.getElementById('resume-game').disabled = true;
   }
 }
+
+// makes all images non-draggable, so people will
+// stop thinking it's drag-and-drop!
+const images = document.querySelectorAll('img');
+images.forEach(image => {
+  image.draggable = false;
+});
  
 console.log(gameData);
