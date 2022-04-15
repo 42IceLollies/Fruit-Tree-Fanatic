@@ -451,10 +451,10 @@ function setInfoText() {
   const infoText = document.getElementById('infoMainText');
 
    if (infoArray[gameData.level - 1] !== undefined) {
-    infoText.innerHTML = infoArray[gameData.level-1] + "<br> <br>------------------------------- <br> Click fruit to collect it. <br> Buy items and actions to keep your tree healthy and ensure a good harvest.";
+    infoText.innerHTML = infoArray[gameData.level-1] + "<br> <br>------------------------------- <br> Click fruit to collect it. <br> Buy items and actions to keep your tree healthy and ensure a good harvest.  <br> Click the 'Next Level' button when you are done.";
     toggleInfo();
   } else {
-    infoText.innerHTML = "Click fruit to collect it. <br> Buy items and actions to keep your tree healthy and ensure a good harvest.";
+    infoText.innerHTML = "Click fruit to collect it. <br> Buy items and actions to keep your tree healthy and ensure a good harvest. <br> Click the 'Next Level' button when you are done.";
   }
 
   if(gameData.infested)
