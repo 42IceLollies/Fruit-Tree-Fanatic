@@ -15,6 +15,7 @@ const gameData = {
   baseFruit: [0, 40, 55, 80, 85, 90, 95, 100, 100, 105, 110, 110, 115, 120],
   coinYield: 0,
 };
+
  
 // =============== save data functions ===============
  
@@ -311,6 +312,7 @@ function transition() {
   transitionDiv.classList.add('on');
   setTimeout(() => {
     nextLevel();
+    console.log(gameData.level);
     transitionDiv.classList.remove('on');
   }, 1000);
 }
@@ -379,6 +381,8 @@ function determinePhAccuracy() {
 // determines the fruit yield at the beginning of each level
 // to be run after level has been updated and growth from fertilizer has been determined, but no other data has been changed
 // incomplete
+var coinsAdded = 0;
+
 function determineYield() {
   // without bees, the pollinationRate could reduce yield by up to 5%
   let pollinationRate = Math.round((0 - Math.random() / 20) * 100) / 100;
@@ -411,7 +415,8 @@ function determineYield() {
   if (gameData.treeType == 'lemon') result *= 3;
 
   gameData.coinYield = result;
-  gameData.coins += result;
+  coinsAdded = result;
+  // gameData.coins += result;
 }
   
 // =========== button specific functions ===========
@@ -433,16 +438,30 @@ function toggleInfo() {
   const infoBtn = document.getElementById('infoBtn');
   infoBtn.classList.toggle('white');
 }
- 
+
+if(document.URL.includes("main-page"))
+{
+setInfoText();
+}
+
 // run in nextLevel function, the first level text will
 // be set in the html file
 function setInfoText() {
-  const infoArray = []; // different text for each level
+  const infoArray = ["Welcome to the game! Here is your tree, try buying some fertilizer to feed it so it will grow lots of fruit next level!","You have your first harvest!  Click the fruit to collect it. On the other hand, it turns out the fertilizer lowers the PH of the soil. You can buy limestone to balance it out but don't forget to keep your soil fertile.","Now you can prune your tree to allow airflow through its folliage and keep diseases out.", " Bees can help pollinate your tree, you can only buy them once per round, though.",,,"You've unlocked the option to graft your tree. Grafting another type of fruit onto your tree can increase output but it's also an investment."]; // different text for each level
   const infoText = document.getElementById('infoMainText');
-  if (infoArray[gameData.level - 1] !== undefined) {
-    infoText.innerHTML = infoArray[gameData.level];
+
+   if (infoArray[gameData.level - 1] !== undefined) {
+    infoText.innerHTML = infoArray[gameData.level-1] + "<br> <br>------------------------------- <br> Click fruit to collect it. <br> Buy items and actions to keep your tree healthy and ensure a good harvest.";
     toggleInfo();
+  } else {
+    infoText.innerHTML = "Click fruit to collect it. <br> Buy items and actions to keep your tree healthy and ensure a good harvest.";
   }
+
+  if(gameData.infested)
+  {
+    infoText.innerHTML =  "Uh oh! Your tree has become infested with insects. They should be dealt with as soon as possible to ensure your future harvests are good. <br> <br>" + infoText.innerHTML;
+  }
+
 }
  
  
@@ -458,10 +477,11 @@ function nextLevel() {
   determineGrowth();
   gameData.fertilizer = 0;
   gameData.level++;
-  determineYield();
   gameData.bees = false;
   gameData.pruneNum = 0;
   updateOverlayDimensions();
+  setInfoText();
+  determineYield();
   displayOverlay();
   updateAll();
   saveData();
@@ -583,9 +603,13 @@ if (document.URL.includes("main-page.html")) {
   setOverlay();
   if (gameData.level == 1) toggleInfo();
  
+
+  //var coinsAdded = 0;
   document.getElementById("fruitOverlay").addEventListener("click", () => {
       removeOverlay();
-// if it's hidden, it can't be clicked. no condition needed
+      //adds coins after fruit has been collected
+      gameData.coins+= coinsAdded;
+      updateInfoBar();
   });
 }
  
