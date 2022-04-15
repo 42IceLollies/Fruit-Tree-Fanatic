@@ -12,7 +12,7 @@ const gameData = {
   graftedTreeType: "unselected",
   pruneNum: 0,
   pruneMax: [0, 0, 3, 5, 5, 5, 5, 6, 6, 7, 7, 7, 8, 8, 8],
-  baseFruit: [0, 40, 55, 80, 85, 90, 95, 100, 100, 105, 110, 110, 115, 120],
+  baseFruit: [0, 40, 55, 80, 85, 90, 90, 95, 100, 100, 105, 110, 110, 115, 120],
   coinYield: 0,
 };
 
@@ -118,20 +118,21 @@ function setOverlay() {
 
   var lowFruitYield = gameData.baseFruit[gameData.level-1] * 0.35;
   var highFruitYield = gameData.baseFruit[gameData.level-1]* 1.8;
- 
-  var rangeOfFruit = highFruitYield - lowFruitYield / 3;
+
+  var rangeOfFruit = (highFruitYield - lowFruitYield) / 3;
+
   var amtFruit;
   var source;
   switch (true) {
-    case fruitYield <= rangeOfFruit:
+    case fruitYield <= lowFruitYield + rangeOfFruit:
       amtFruit = "less";
       break;
  
-    case fruitYield > rangeOfFruit && fruitYield < rangeOfFruit * 2:
+    case fruitYield > lowFruitYield + rangeOfFruit && fruitYield < lowFruitYield + rangeOfFruit * 2:
       amtFruit = "some";
       break;
  
-    case fruitYield >= rangeOfFruit * 2:
+    case fruitYield >= lowFruitYield + rangeOfFruit * 2:
       amtFruit = "more";
   }
    
@@ -143,7 +144,9 @@ function setOverlay() {
 
     var lcFruitType = gameData.treeType + 's';
     if (lcFruitType == 'peachs') lcFruitType = gameData.treeType + 'es';
- 
+ //I think i'm going insane rn cos I can't stop laughing about peachs with no e
+ //(pls feel free to delete this comment lmao)
+
     var srcStart = `./images/${gameData.treeType}Tree/${lcFruitType}/`;
  
     if (gameData.grafted) { 
@@ -156,7 +159,6 @@ function setOverlay() {
     } else {
       source = `${srcStart}${amtFruit}${fruitType}Tree${Math.ceil(gameData.level / 3)}.png`;
     }
- 
     document.getElementById("fruitOverlay").src = source;
 }
  
@@ -308,6 +310,12 @@ function updateAll() {
  
 // set next level to happen in the middle of the transition later
 function transition() {
+
+  if(gameData.level==15)
+  {
+   // send to end page
+  }
+
   const transitionDiv = document.getElementById('transition');
   transitionDiv.classList.add('on');
   setTimeout(() => {
@@ -451,10 +459,10 @@ function setInfoText() {
   const infoText = document.getElementById('infoMainText');
 
    if (infoArray[gameData.level - 1] !== undefined) {
-    infoText.innerHTML = infoArray[gameData.level-1] + "<br> <br>------------------------------- <br> Click fruit to collect it. <br> Buy items and actions to keep your tree healthy and ensure a good harvest.  <br> Click the 'Next Level' button when you are done.";
+    infoText.innerHTML = infoArray[gameData.level-1] + "<br> <br>------------------------------- <br> - Click fruit to collect it. <br>- Buy items and actions to keep your tree healthy and ensure a good harvest.  <br>- Click the 'Next Level' button when you are done.";
     toggleInfo();
   } else {
-    infoText.innerHTML = "Click fruit to collect it. <br> Buy items and actions to keep your tree healthy and ensure a good harvest. <br> Click the 'Next Level' button when you are done.";
+    infoText.innerHTML = "- Click fruit to collect it. <br>- Buy items and actions to keep your tree healthy and ensure a good harvest. <br>- Click the 'Next Level' button when you are done.";
   }
 
   if(gameData.infested)
@@ -466,11 +474,11 @@ function setInfoText() {
  
  
 //test function-- delete later
-function testFruit()
-{
-  nextLevel();
-  console.log(gameData.level);
-}
+// function testFruit()
+// {
+//   nextLevel();
+//   console.log(gameData.level);
+// }
  
 // to be run every time a level is completed
 function nextLevel() {
