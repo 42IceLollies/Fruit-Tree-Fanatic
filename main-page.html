@@ -25,11 +25,11 @@
         <!-- 
           Proposition for instructions.... 
           Level One: Welcome to the game! Here is your tree, try buying some fertilizer to feed it so it will grow lots of fruit next level!
-          Level Two: You have your first harvest!  Click the fruit to collect it. On the other hand, it turns out the fertilizer lowers the PH of the soil. You can buy limestone to balance it out but don't forget to keep your soil fertile.
+          Level Two: You have your first harvest!  Click the fruit to collect it. On the other hand, it turns out the fertilizer lowers the PH of the soil. You can buy limestone to balance it out, but don't forget to keep your soil fertile.
           Level Three: Now you can prune your tree to allow airflow through its folliage and keep diseases out. 
           Level Four: Bees can help pollinate your tree, you can only buy them once per round, though.
-          // if insects come up (or in any level after): Uh oh! Your tree has become infested with insects. They should be dealt with as soon as possible to ensure your future harvests are good.
-          Level Seven: You've unlocked the option to graft your tree. Grafting another type of fruit onto your tree can increase output but it's also an investment.
+          // if insects come up (or in any level after): Uh oh! Your tree has become infested with insects. They should be dealt with as soon as possible to ensure your future harvests aren't affected.
+          Level Seven: You've unlocked the option to graft your tree. Grafting another type of fruit onto your tree can increase output, but it's quite an investment.
 
           Maybe just like general instructions that are there the whole time or when there aren't level specific directions?
             Click fruit to collect it.
@@ -46,7 +46,7 @@
         <div class="menuDash"></div>
       </button>
 
-      <button id='nextLevelBtn' onclick=transition() style='float: right;'>Next Level</button>
+      <button id='nextLevelBtn' onclick=transition();>Next Level</button>
 
       <div id='coinDisplay' class='main'>
         <p class='coinText dark-green' id='coinDisplayText'></p>
@@ -64,6 +64,13 @@
 <!-- I'm wondering if we should put like a tracker in to show how much fruit they got out of how much they could have gotten - just playing it now, it seems more exciting, working to get the maximum
 number of fruit in the next level  -->
 
+<!-- That could be good, although it could be a bit
+disappointing in some cases, seeing as if you don't 
+buy a lot of fertilizer in the first levels, you can't catch up on that later in the game -->
+
+<!-- Also, we should adjust the determination of if 
+you got a lot or some or a little of the fruit, getting 1/3 of the total range is pretty far away from the normal range in gameplay -->
+
     <div id='mainMenu'>
       <button class='mainMenuBtn' onclick="location.href = 'index.html'">home</button>
       <button class='mainMenuBtn' onclick=toggleMainMenu()>close</button>
@@ -75,7 +82,7 @@ number of fruit in the next level  -->
 
     <img id='insectOverlay' class='hidden' src='./images/insects.png'>
 
-    <div id='fruitOverlayDiv' class=''>
+    <div id='fruitOverlayDiv' class='hidden'>
       <img id='fruitOverlay'>
     </div>
 
