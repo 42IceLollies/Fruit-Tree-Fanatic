@@ -4,6 +4,7 @@
   --lighter-green: #d0efcb; /*Tea Green*/
   --grey: #666; /*Granite Gray*/
   --brown: #6a3e2d; /*Van Dyke Brown*/
+  --lightBrown: #c4ad8d;
   --ph-color: black; /*to be changed in js*/
   --padding-top: 2%; /*to be changed in js*/
   font-family: "Inter", sans-serif;
@@ -439,3 +440,15 @@ p.dark-green {
   float: right;
   padding: 10px;
 }
+
+/* -------------------end page styles------------------- */
+ 
+canvas{
+  /* background:rgb(206, 188, 151); */
+  margin:0;
+  padding:0;
+  height:100%;
+  width:50%;
+  margin-left:25%;
+}
+

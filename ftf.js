@@ -13,6 +13,7 @@ const gameData = {
   pruneNum: 0,
   pruneMax: [0, 0, 3, 5, 5, 5, 5, 6, 6, 7, 7, 7, 8, 8, 8],
   baseFruit: [0, 40, 55, 80, 85, 90, 90, 95, 100, 100, 105, 110, 110, 115, 120],
+  progressRecord: [],
   coinYield: 0,
 };
 
@@ -43,7 +44,7 @@ function retrieveData() {
   const toBoolean = ["bees", "grafted", "infested"];
   for (const key in gameData) {
     gameData[`${key}`] = localStorage.getItem(`${key}`);
-    gameData[`${key}`] = localStorage.getItem(`${key}`);
+  //  gameData[`${key}`] = localStorage.getItem(`${key}`); - I could be reading this wrong but do there need to be two lines of these?
   }
   toNum.forEach((num) => {
     gameData[`${num}`] = parseFloat(gameData[`${num}`]);
@@ -56,6 +57,9 @@ function retrieveData() {
   toBoolean.forEach((boolean) => {
     gameData[`${boolean}`] = JSON.parse(gameData[`${boolean}`]);
   });
+
+  //not quite sure how to convert progressRecord back from string - will try to work more on later lol I feel like this should be really obvious
+  console.log(gameData.progressRecord);
 }
  
 // clears the saved data from localStorage
@@ -110,14 +114,24 @@ function displayTree() {
   root.style.setProperty('--padding-top', 16 - gameData.level + "%");
 }
 
-// sets the fruit overlay, seperate because the fruit goes away when page is reloaded
-function setOverlay() {
+function findYieldRange()
+{
   var fruitYield = gameData.coinYield;
   if (gameData.treeType == 'peach') fruitYield /= 2;
   if (gameData.treeType == 'lemon') fruitYield /= 3;
-
+ 
   var lowFruitYield = gameData.baseFruit[gameData.level-1] * 0.35;
   var highFruitYield = gameData.baseFruit[gameData.level-1]* 1.8;
+ 
+  return {highFruitYield, lowFruitYield, fruitYield};
+}
+
+// sets the fruit overlay, seperate because the fruit goes away when page is reloaded
+function setOverlay() {
+  var yield = findYieldRange();
+var fruitYield = yield.fruitYield;
+  var lowFruitYield = yield.lowFruitYield;
+  var highFruitYield = yield.highFruitYield;
 
   var rangeOfFruit = (highFruitYield - lowFruitYield) / 3;
 
@@ -316,7 +330,7 @@ function transition() {
   // so you can't spam the button
 
   if (gameData.level == 15) {
-   location.href = 'endPage.html';
+   location.href = 'end-page.html';
    return;
   }
 
@@ -473,6 +487,7 @@ function setInfoText() {
 // to be run every time a level is completed
 function nextLevel() {
   determineGrowth();
+  gameData.progressRecord[gameData.level-1] = findYieldRange();
   gameData.fertilizer = 0;
   gameData.level++;
   gameData.bees = false;
