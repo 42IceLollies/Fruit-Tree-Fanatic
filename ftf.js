@@ -15,6 +15,7 @@ const gameData = {
   baseFruit: [0, 40, 55, 80, 85, 90, 90, 95, 100, 100, 105, 110, 110, 115, 120],
   progressRecord: [],
   coinYield: 0,
+  harvested: true,
 };
 
  
@@ -40,8 +41,8 @@ function retrieveData() {
     "coinYield",
     "lastLevelInfested",
   ];
-  const toArray = ["baseFruit", "pruneMax"];
-  const toBoolean = ["bees", "grafted", "infested"];
+  const toArray = ["baseFruit", "pruneMax", "progressRecord"];
+  const toBoolean = ["bees", "grafted", "infested", "harvested"];
   for (const key in gameData) {
     gameData[`${key}`] = localStorage.getItem(`${key}`);
   //  gameData[`${key}`] = localStorage.getItem(`${key}`); - I could be reading this wrong but do there need to be two lines of these?
@@ -59,7 +60,7 @@ function retrieveData() {
   });
 
   //not quite sure how to convert progressRecord back from string - will try to work more on later lol I feel like this should be really obvious
-  console.log(gameData.progressRecord);
+  // console.log(gameData.progressRecord); // if it's an array, in with the toArray list
 }
  
 // clears the saved data from localStorage
@@ -114,8 +115,7 @@ function displayTree() {
   root.style.setProperty('--padding-top', 16 - gameData.level + "%");
 }
 
-function findYieldRange()
-{
+function findYieldRange() {
   var fruitYield = gameData.coinYield;
   if (gameData.treeType == 'peach') fruitYield /= 2;
   if (gameData.treeType == 'lemon') fruitYield /= 3;
@@ -129,7 +129,7 @@ function findYieldRange()
 // sets the fruit overlay, seperate because the fruit goes away when page is reloaded
 function setOverlay() {
   var yield = findYieldRange();
-var fruitYield = yield.fruitYield;
+  var fruitYield = yield.fruitYield;
   var lowFruitYield = yield.lowFruitYield;
   var highFruitYield = yield.highFruitYield;
 
@@ -320,7 +320,7 @@ function updateAll() {
   updateButtonCost();
   updateBees();
   updateInsects();
-  setInfoText();
+  setInfoText(false);
 }
  
 // set next level to happen in the middle of the transition later
@@ -460,26 +460,40 @@ function toggleInfo() {
   infoBtn.classList.toggle('white');
 }
 
+function showInfo() {
+  const info = document.getElementById('infoMain');
+  info.classList.remove('hidden');
+  const infoBtn = document.getElementById('infoBtn');
+  infoBtn.classList.add('white');
+}
 
+function hideInfo() {
+  const info = document.getElementById('infoMain');
+  info.classList.add('hidden');
+  const infoBtn = document.getElementById('infoBtn');
+  infoBtn.classList.remove('white');
+}
 
-// run in nextLevel function, the first level text will
-// be set in the html file
-function setInfoText() {
-  const infoArray = ["Welcome to the game! Here is your tree, try buying some fertilizer to feed it so it will grow lots of fruit next level!", "You have your first harvest!  Click the fruit to collect it. It turns out the fertilizer lowers the PH of the soil. You can buy limestone to balance it out, but don't forget to keep your soil fertile.", "Now you can prune your tree, to focus it on producing fruit instead of new growth.", "Bees can help pollinate your tree, you can only buy them once per round, though.", undefined, undefined, "You've unlocked the option to graft your tree. Grafting another type of fruit onto your tree can increase output, but it's quite an investment."];// different text for each level
+// run in nextLevel function
+// argument to determine if infoMain should be shown
+function setInfoText(newLevel) {
+  const infoArray = ["Welcome to the game! Here is your tree, try buying some fertilizer to feed it so it will grow lots of fruit next level!", "You have your first harvest!  Click the fruit to collect it. It turns out the fertilizer lowers the PH of the soil. You can buy limestone to balance it out, but don't forget to keep your soil fertile.", "Now you can prune your tree, to focus it on producing fruit instead of new growth.", "Bees can help pollinate your tree, but they're only available once per level.", undefined, undefined, "You've unlocked the option to graft your tree. Grafting another type of fruit onto your tree can increase output, but it's quite an investment."];// different text for each level
 
   const infoText = document.getElementById('infoMainText');
 
   const baseText = "- Click fruit to collect it. <br>- Buy items and actions to keep your tree healthy and ensure a good harvest.  <br>- Click the 'Next Level' button when you are done.";
 
   if (infoArray[gameData.level - 1] !== undefined) {
-    infoText.innerHTML = infoArray[gameData.level - 1] + "<br> <br>------------------------------- <br>" + baseText;
+    infoText.innerHTML = infoArray[gameData.level - 1] + "<br><br>" + baseText; //  ------------------------------- 
     infoMain = document.getElementById('infoMain');
+    if (newLevel) showInfo();
   } else {
     infoText.innerHTML = baseText;
   }
 
   if (gameData.infested) {
-    infoText.innerHTML =  "Uh oh! Your tree has become infested with insects. They should be dealt with as soon as possible to ensure your future harvests are good. <br> <br>" + infoText.innerHTML;
+    infoText.innerHTML =  "Uh oh! Your tree has become infested with insects. You can buy repellent to get rid of them. They should be dealt with as soon as possible to ensure your future harvests are good. <br> <br>" + infoText.innerHTML;
+    if (newLevel) showInfo();
   }
 }
 
@@ -493,14 +507,12 @@ function nextLevel() {
   gameData.bees = false;
   gameData.pruneNum = 0;
   updateOverlayDimensions();
-  setInfoText();
+  setInfoText(true);
   determineYield();
+  gameData.harvested = false;
   displayOverlay();
   determineInfestation();
   updateAll();
-  if ([...infoMain.classList].includes('hidden')) {
-    toggleInfo();
-  }
   if (gameData.infested) gameData.lastLevelInfested = gameData.level;
   saveData();
 }
@@ -559,7 +571,6 @@ function buyRepellent() {
   // can't buy it if there's no infestation
   if (!gameData.infested) return;
   const repellentPrice = Math.round(gameData.coinYield / 2 / 5) * 5;
-  console.log(repellentPrice);
   if (gameData.coins >= repellentPrice) {
     gameData.coins -= repellentPrice;
     gameData.infested = false;
@@ -620,17 +631,17 @@ if (document.URL.includes("main-page.html")) {
   updateAll();
   setOverlay();
   setInfoText();
-  if (gameData.level == 1) toggleInfo();
+  if (!gameData.harvested) displayOverlay();
 
-  if ([...infoMain.classList].includes('hidden')) {
-    toggleInfo();
-  }
+  saveData();
 
   document.getElementById("fruitOverlay").addEventListener("click", () => {
       removeOverlay();
       // adds coins after fruit has been collected
       gameData.coins += gameData.coinYield;
+      gameData.harvested = true;
       updateInfoBar();
+      saveData();
   });
 }
  
