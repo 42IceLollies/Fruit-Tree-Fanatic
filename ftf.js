@@ -347,6 +347,44 @@ function toggleMainMenu() {
   document.getElementById('mainMenu').classList.toggle('show');
   document.getElementById('transition').classList.toggle('faded');
 }
+
+function menuBtnClicked() {
+  const buttons = document.querySelectorAll('.menuBtn');
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      button.classList.add('clicked');
+      setTimeout(() => {
+        button.classList.remove('clicked');
+      }, 75);
+    });
+  });
+}
+
+// call each time gameData.coins is changed, with the 
+// amount change, and if increasing or decreasing
+function coinChange(increase, num) {
+  const coinChangeText = document.getElementById('coinChangeText');
+  const coinChangeDiv = document.getElementById('coinChangeDiv');
+  let sign;
+  if (increase) sign = '+';
+  if (!increase) sign = '-';
+  coinChangeText.innerHTML = sign + num;
+  // coinChangeText.classList.remove(...coinChangeText.classList);
+  coinChangeText.classList.remove(['red', 'green']);
+  if (increase) coinChangeText.classList.add('green');
+  if (!increase) coinChangeText.classList.add('red');
+  coinChangeDiv.style.opacity = '1';
+  coinChangeDiv.classList.remove('hidden');
+
+  const ccIntId = setInterval(() => {
+    if (coinChangeDiv.style.opacity <= 0) {
+      coinChangeDiv.classList.add('hidden');
+      clearInterval(ccIntId);
+    }
+    console.log(coinChangeDiv.style.opacity);
+    coinChangeDiv.style.opacity -= 0.1;
+  }, 150);
+}
  
 // =========== mathematical functions ===========
  
@@ -528,6 +566,7 @@ function buyFertilizer() {
     // lower the pH
     adjustPH("-");
   }
+  coinChange(false, 10);
   updateAll();
   saveData();
 }
@@ -537,6 +576,7 @@ function buyLimestone() {
     gameData.coins -= 10;
     // raise the pH
     adjustPH("+");
+    coinChange(false, 10);
   }
   updateAll();
   saveData();
@@ -549,6 +589,7 @@ function buyPrune() {
   ) {
     gameData.coins -= 15;
     gameData.pruneNum++;
+    coinChange(false, 15);
   }
   updateAll();
   saveData();
@@ -562,6 +603,7 @@ function buyBees() {
   if (gameData.coins >= beePrice) {
     gameData.coins -= beePrice;
     gameData.bees = true;
+    coinChange(false, beePrice);
   }
   updateAll();
   saveData();
@@ -574,6 +616,7 @@ function buyRepellent() {
   if (gameData.coins >= repellentPrice) {
     gameData.coins -= repellentPrice;
     gameData.infested = false;
+    coinChange(false, repellentPrice);
   }
   updateAll();
   saveData();
@@ -589,6 +632,7 @@ function buyGraft() {
  
   if (gameData.coins >= graftPrice) {
     gameData.coins -= graftPrice;
+    coinChange(false, graftPrice);
     gameData.grafted = true;
     // determine the grafted type based on the tree type
     if (gameData.treeType == "apple") gameData.graftedTreeType = "pear";
@@ -630,8 +674,9 @@ if (document.URL.includes("main-page.html")) {
   updateOverlayDimensions();
   updateAll();
   setOverlay();
-  setInfoText();
+  menuBtnClicked();
   if (!gameData.harvested) displayOverlay();
+  if (gameData.level == 1) setInfoText(true);
 
   saveData();
 
@@ -639,6 +684,7 @@ if (document.URL.includes("main-page.html")) {
       removeOverlay();
       // adds coins after fruit has been collected
       gameData.coins += gameData.coinYield;
+      coinChange(true, gameData.coinYield);
       gameData.harvested = true;
       updateInfoBar();
       saveData();
