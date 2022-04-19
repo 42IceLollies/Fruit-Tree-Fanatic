@@ -56,17 +56,18 @@ var rings = [];
 
 var record = gameData.progressRecord;
 
-for(var i = 0; i<15; i++)
-{
-   // var percentage = record.fruitYield/(record.heighFruitYield-record.lowFruitYield);
-    var opacity = 1; //eventually will be percentage
-    var weight = 5; // this will be percentage*10/2
+for(var i = 0; i<record.length; i++)
+{ 
+    var percentage = (record[i].fruitYield-record[i].lowFruitYield)/(record[i].highFruitYield-record[i].lowFruitYield);
+    console.log(percentage);
+    var opacity = percentage;
+    var weight = percentage*10;
     rings[i] = new Ring(canvas.width/2, canvas.height/2, canvas.width/35 * (i+1), weight, "rgba(106,62,45," + opacity + ")", c);
 }
 
 bark.draw();
 trunk.draw();
-for(var i = 14; i>=0; i--)
+for(var i = record.length-1; i>=0; i--)
 {
     rings[i].draw();
 }

@@ -31,7 +31,7 @@ function saveData() {
     else
     {
       
-      localStorage.setItem("progressRecord", JSON.stringify(gameData.progressRecord));
+      localStorage.setItem("progressRecord", JSON.stringify(gameData.progressRecord))
     }
   }
   localStorage.setItem("saveData", "true");
@@ -68,8 +68,7 @@ function retrieveData() {
   });
 
 gameData.progressRecord = JSON.parse(gameData.progressRecord);
-  console.log( JSON.parse(localStorage.getItem("progressRecord")));
-  //didn't want array elements to be converted to numbers with the rest of the arrays
+  //didn't want array elements to be converted to numbers with the rest of the arrays - ig it could just go in the boolean one tho?
 }
 
  
