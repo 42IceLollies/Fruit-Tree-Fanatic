@@ -24,7 +24,15 @@ const gameData = {
 // saves the data object values to localStorage
 function saveData() {
   for (const key in gameData) {
-    localStorage.setItem(`${key}`, gameData[key]);
+    
+    if(key!= "progressRecord"){
+       localStorage.setItem(`${key}`, gameData[key]);
+    }
+    else
+    {
+      
+      localStorage.setItem("progressRecord", JSON.stringify(gameData.progressRecord));
+    }
   }
   localStorage.setItem("saveData", "true");
 }
@@ -41,7 +49,7 @@ function retrieveData() {
     "coinYield",
     "lastLevelInfested",
   ];
-  const toArray = ["baseFruit", "pruneMax", "progressRecord"];
+  const toArray = ["baseFruit", "pruneMax"]; //  const toArray = ["baseFruit", "pruneMax", "progressRecord"];
   const toBoolean = ["bees", "grafted", "infested", "harvested"];
   for (const key in gameData) {
     gameData[`${key}`] = localStorage.getItem(`${key}`);
@@ -59,9 +67,11 @@ function retrieveData() {
     gameData[`${boolean}`] = JSON.parse(gameData[`${boolean}`]);
   });
 
-  //not quite sure how to convert progressRecord back from string - will try to work more on later lol I feel like this should be really obvious
-  // console.log(gameData.progressRecord); // if it's an array, in with the toArray list
+gameData.progressRecord = JSON.parse(gameData.progressRecord);
+  console.log( JSON.parse(localStorage.getItem("progressRecord")));
+  //didn't want array elements to be converted to numbers with the rest of the arrays
 }
+
  
 // clears the saved data from localStorage
 function clearData() {
@@ -133,20 +143,21 @@ function setOverlay() {
   var lowFruitYield = yield.lowFruitYield;
   var highFruitYield = yield.highFruitYield;
 
-  var rangeOfFruit = (highFruitYield - lowFruitYield) / 3;
+  var rangeOfFruit = (highFruitYield - lowFruitYield) / 12;
+  //if you want it to be more noticable of a difference, we can divide this by 6
 
   var amtFruit;
   var source;
   switch (true) {
-    case fruitYield <= lowFruitYield + rangeOfFruit:
+    case fruitYield <= lowFruitYield + rangeOfFruit*5: //*0
       amtFruit = "less";
       break;
  
-    case fruitYield > lowFruitYield + rangeOfFruit && fruitYield < lowFruitYield + rangeOfFruit * 2:
+    case fruitYield > lowFruitYield + rangeOfFruit && fruitYield < lowFruitYield + rangeOfFruit * 9: //*2
       amtFruit = "some";
       break;
  
-    case fruitYield >= lowFruitYield + rangeOfFruit * 2:
+    case fruitYield >= lowFruitYield + rangeOfFruit * 9: //*2
       amtFruit = "more";
   }
    
@@ -418,9 +429,9 @@ function determineInfestation() {
   // if the tree was infested last round, halve the chance
   if (gameData.lastLevelInfested == gameData.level - 1) chance /= 2;
   const percent = Math.random() * 100;
-  console.log([percent, chance]);
+ console.log([percent, chance]);
   if (percent <= chance) {
-    console.log(['pass', gameData.infested]);
+    console.log(['pass', gameData.infested]); 
     gameData.infested = true;
     gameData.lastLevelInfested = gameData.level;
   }
