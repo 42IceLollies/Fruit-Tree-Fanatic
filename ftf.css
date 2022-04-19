@@ -229,6 +229,33 @@ button.index:disabled {
   top: 0;
 }
 
+#achievementMarker{
+  background-color:#666;
+  height:5%;
+  width:15%;
+  position: absolute;
+  bottom: 20%;
+  margin:1%;
+  border-radius:5%;
+  z-index: 7;
+  padding-left:1%;
+  padding-right:1%;
+}
+
+.division{
+  height:80%;
+  width: 20%;
+  margin:2%;
+  margin-left:0;
+  margin-right:0;
+  float:left;
+  background-color:#002800; /*change to individual colors */
+} 
+
+.divisionDisabled {
+  background-color:#000;
+}
+
 #menuDiv {
   height: 20%;
   width: 100%;
