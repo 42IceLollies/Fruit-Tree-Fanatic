@@ -252,8 +252,28 @@ button.index:disabled {
   background-color:#002800; /*change to individual colors */
 } 
 
+#firstDivision{
+  background-color: rgb(237, 41, 41);
+}
+
+#secondDivision{
+  background-color: rgb(255, 147, 46);
+}
+
+#thirdDivision{
+  background-color: rgb(255, 225, 57);
+}
+
+#fourthDivision{
+  background-color:rgb(226, 255, 96);
+}
+
+#fifthDivision{
+  background-color:rgb(99, 225, 99); 
+}
+
 .divisionDisabled {
-  background-color:#000;
+  background-color:#000 !important;
 }
 
 #menuDiv {

@@ -262,6 +262,29 @@ function updateDisabled() {
     repellentBtn.disabled = true;
   }
 }
+
+function updateAcheivementDivision()
+{
+ var ids = ["firstDivision", "secondDivision", "thirdDivision", "fourthDivision", "fifthDivision"];
+ for(var i = 0; i<ids.length; i++)
+ {
+   document.getElementById(ids[i]).classList.add("divisionDisabled");
+ }
+
+  var yield = findYieldRange();
+  var min = yield.lowFruitYield;
+  var range = yield.highFruitYield-yield.lowFruitYield;
+  yield = yield.fruitYield;
+console.log(range);
+console.log(yield);
+
+  if( yield>min){document.getElementById(ids[0]).classList.remove("divisionDisabled");}
+  if(yield>min+(range/5)){document.getElementById(ids[1]).classList.remove("divisionDisabled");}
+  if(yield>min+(range/5*2)){ document.getElementById(ids[2]).classList.remove("divisionDisabled");}
+  if(yield>min+(range/5*3)){document.getElementById(ids[3]).classList.remove("divisionDisabled");}
+  if(yield>min+(range/5*4)){document.getElementById(ids[4]).classList.remove("divisionDisabled");}
+      
+  }
  
 function updateButtonCost() {
   const beesCostText = document.getElementById('beesCost');
@@ -337,6 +360,7 @@ function updateAll() {
   updateInfoBar();
   updateDisabled();
   updateButtonCost();
+  updateAcheivementDivision();
   updateBees();
   updateInsects();
   setInfoText(false);
