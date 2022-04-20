@@ -456,7 +456,6 @@ button.index:disabled {
   float: right;
   margin-top: 10px;
   padding: 0;
-  min-width: 10%;
 }
 
 #coinChangeDiv {
@@ -481,6 +480,30 @@ button.index:disabled {
 #coinChangeImg {
   height: 25px;
   margin-left: 2px;
+}
+
+#graftedDiv {
+  float: right;
+  margin: 12px;
+  padding: 0;
+}
+
+#graftedSymbol {
+  height: 30px;
+}
+
+#levelDisplay {
+  float: right;
+  margin: 10px;
+  margin-top: 16px;
+  padding: 0;
+}
+
+#levelDisplay p, #levelText {
+  display: inline-block;
+  font-size: 16px;
+  margin: 0;
+  color: var(--dark-green);
 }
 
 /* ======= mixed styles ======= */

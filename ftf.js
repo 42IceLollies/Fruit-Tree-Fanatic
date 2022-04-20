@@ -9,6 +9,7 @@ const gameData = {
   fertilizer: 0,
   coins: 100,
   grafted: false,
+  levelGrafted: 0,
   graftedTreeType: "unselected",
   pruneNum: 0,
   pruneMax: [0, 0, 3, 5, 5, 5, 5, 6, 6, 7, 7, 7, 8, 8, 8],
@@ -48,6 +49,7 @@ function retrieveData() {
     "pruneNum",
     "coinYield",
     "lastLevelInfested",
+    "levelGrafted",
   ];
   const toArray = ["baseFruit", "pruneMax"]; //  const toArray = ["baseFruit", "pruneMax", "progressRecord"];
   const toBoolean = ["bees", "grafted", "infested", "harvested"];
@@ -223,6 +225,13 @@ function updateInfoBar() {
   root.style.setProperty('--ph-color', 'red');
   if (phDifference < 0.6) root.style.setProperty('--ph-color', 'goldenrod');
   if (phDifference == 0) root.style.setProperty('--ph-color', 'green');
+
+  const graftDiv = document.getElementById('graftedDiv');
+  if (gameData.grafted) graftDiv.classList.remove('hidden');
+  if (!gameData.grafted) graftDiv.classList.add('hidden');
+
+  const levelText = document.getElementById('levelText');
+  levelText.innerHTML = gameData.level;
 }
  
 function updateDisabled() {
@@ -380,7 +389,7 @@ function coinChange(increase, num) {
   if (!increase) sign = '-';
   coinChangeText.innerHTML = sign + num;
   // coinChangeText.classList.remove(...coinChangeText.classList);
-  coinChangeText.classList.remove(['red', 'green']);
+  coinChangeText.classList.remove('green');
   if (increase) coinChangeText.classList.add('green');
   if (!increase) coinChangeText.classList.add('red');
   coinChangeDiv.style.opacity = '1';
@@ -391,7 +400,6 @@ function coinChange(increase, num) {
       coinChangeDiv.classList.add('hidden');
       clearInterval(ccIntId);
     }
-    console.log(coinChangeDiv.style.opacity);
     coinChangeDiv.style.opacity -= 0.1;
   }, 150);
 }
@@ -428,9 +436,7 @@ function determineInfestation() {
   // if the tree was infested last round, halve the chance
   if (gameData.lastLevelInfested == gameData.level - 1) chance /= 2;
   const percent = Math.random() * 100;
- console.log([percent, chance]);
   if (percent <= chance) {
-    console.log(['pass', gameData.infested]); 
     gameData.infested = true;
     gameData.lastLevelInfested = gameData.level;
   }
@@ -452,6 +458,18 @@ function determineGrowth() {
 function determinePhAccuracy() {
   return Math.abs(
     gameData.pH - idealPh[`${gameData.treeType}`]);
+}
+
+function determineGraftedFruit() {
+  if (!gameData.grafted) return;
+  let amount = 10;
+  if (gameData.levelGrafted <= gameData.level - 3) amount = 15;
+  if (gameData.levelGrafted <= gameData.level - 5) amount = 20;
+
+  if (gameData.graftedTreeType == "plum") amount *= 2;
+  if (gameData.graftedTreeType == "pear") amount *= 3;
+
+  return amount;
 }
  
 // determines the fruit yield at the beginning of each level
@@ -482,13 +500,19 @@ function determineYield() {
     gameData.baseFruit[gameData.level - 1] *
     (1 + pollinationRate + gameData.growth + 
     pruneMult + infestation + phAccuracy);
- 
   result = Math.round(result);
+
   if (gameData.treeType == 'peach') result *= 2;
   if (gameData.treeType == 'lemon') result *= 3;
 
+  if (gameData.grafted) {
+    const graftedFruit = determineGraftedFruit();
+    result += graftedFruit;
+  }
+
   gameData.coinYield = result;
   // gameData.coins += result;
+  // done when overlay is clicked and fruit is collected
 }
   
 // =========== button specific functions ===========
@@ -575,8 +599,8 @@ function buyFertilizer() {
     gameData.fertilizer++;
     // lower the pH
     adjustPH("-");
+    coinChange(false, 10);
   }
-  coinChange(false, 10);
   updateAll();
   saveData();
 }
@@ -634,7 +658,7 @@ function buyRepellent() {
  
 function buyGraft() {
   // can't buy until level 7
-  if (gameData.level < 7) return;
+  if (gameData.level < 7 || gameData.grafted) return;
   // the price is the coins value from 100 fruit
   let graftPrice = 100;
   if (gameData.treeType == "peach") graftPrice *= 2;
@@ -644,6 +668,7 @@ function buyGraft() {
     gameData.coins -= graftPrice;
     coinChange(false, graftPrice);
     gameData.grafted = true;
+    gameData.levelGrafted = gameData.level;
     // determine the grafted type based on the tree type
     if (gameData.treeType == "apple") gameData.graftedTreeType = "pear";
     if (gameData.treeType == "peach") gameData.graftedTreeType = "plum";
