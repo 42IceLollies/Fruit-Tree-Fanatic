@@ -1,3 +1,4 @@
+// holds all the base information for the game
 const gameData = {
   level: 1,
   growth: 0,
@@ -22,24 +23,23 @@ const gameData = {
  
 // =============== save data functions ===============
  
-// saves the data object values to localStorage
+// saves the gameData object values to localStorage
 function saveData() {
   for (const key in gameData) {
     
-    if(key!= "progressRecord"){
+    if (key !== "progressRecord"){
        localStorage.setItem(`${key}`, gameData[key]);
-    }
-    else
-    {
-      
+    } else {
       localStorage.setItem("progressRecord", JSON.stringify(gameData.progressRecord))
     }
   }
+  // marks that there is saved data to retrieve
   localStorage.setItem("saveData", "true");
 }
  
 // pulls the info from localStorage when loading a saved game, and converts to original types
 function retrieveData() {
+  // converts the following to numbers
   const toNum = [
     "coins",
     "fertilizer",
@@ -51,7 +51,9 @@ function retrieveData() {
     "lastLevelInfested",
     "levelGrafted",
   ];
+  // converts the following to arrays
   const toArray = ["baseFruit", "pruneMax"]; //  const toArray = ["baseFruit", "pruneMax", "progressRecord"];
+  // converts the following to boolean
   const toBoolean = ["bees", "grafted", "infested", "harvested"];
   for (const key in gameData) {
     gameData[`${key}`] = localStorage.getItem(`${key}`);
@@ -69,22 +71,25 @@ function retrieveData() {
     gameData[`${boolean}`] = JSON.parse(gameData[`${boolean}`]);
   });
 
-gameData.progressRecord = JSON.parse(gameData.progressRecord);
-  //didn't want array elements to be converted to numbers with the rest of the arrays - ig it could just go in the boolean one tho?
+  // array of objects, reverted individually
+  gameData.progressRecord = JSON.parse(gameData.progressRecord);
+  // didn't want array elements to be converted to numbers with the rest of the arrays - ig it could just go in the boolean one tho?
+  // being seperate makes sense
 }
-
  
 // clears the saved data from localStorage
 function clearData() {
   for (const key in gameData) {
     localStorage.removeItem(`${key}`);
   }
+  // marks that there's no longer any saved data to retrieve
   localStorage.setItem("saveData", "false");
 }
  
 // =========== update display functions ===========
 
-// moved here so it can be used in display updates
+// the ideal pH for each kind of tree, easily accessible
+// not kept in gameData because it doesn't change, so it doesn't need to saved to localStorage
 const idealPh = {
   "apple": 6.7,
   "peach": 6.5,
@@ -95,24 +100,29 @@ const idealPh = {
 // run every time the level is updated
 function updateButtons() {
   if (gameData.level >= 2) {
+    // show limestone button, and pH indicator in info-bar
     document.getElementById("btn2").classList.remove("hidden");
     document.getElementById("phDisplay").classList.remove("hidden");
   }
  
+  // show prune button
   if (gameData.level >= 3)
     document.getElementById("btn3").classList.remove("hidden");
  
+  // show bees and insect repellent buttons
   if (gameData.level >= 4) {
     document.getElementById("btn4").classList.remove("hidden");
     document.getElementById("btn5").classList.remove("hidden");
   }
  
+  // show graft button
   if (gameData.level >= 7)
     document.getElementById("btn6").classList.remove("hidden");
 }
  
-//sets tree image based on level and changes the height
+// sets tree image and padding-top height based on level
 function displayTree() {
+  // compiles the tree image src based on gameData values
   document.getElementById("mainTree").src =
     "./images/" +
     gameData.treeType +
@@ -122,11 +132,14 @@ function displayTree() {
     Math.ceil(gameData.level / 3) +
     ".png";
   
+  // sets the css variable used in the padding-top of multiple elements to make the tree image increase in height
   const root = document.querySelector(":root");
   root.style.setProperty('--padding-top', 16 - gameData.level + "%");
 }
 
+// finds the potential max and min fruit possible by level
 function findYieldRange() {
+  // finds the fruit yield off of the coin yield
   var fruitYield = gameData.coinYield;
   if (gameData.treeType == 'peach') fruitYield /= 2;
   if (gameData.treeType == 'lemon') fruitYield /= 3;
@@ -137,7 +150,7 @@ function findYieldRange() {
   return {highFruitYield, lowFruitYield, fruitYield};
 }
 
-// sets the fruit overlay, seperate because the fruit goes away when page is reloaded
+// sets the src of the fruit overlay based on gameData values
 function setOverlay() {
   var yield = findYieldRange();
   var fruitYield = yield.fruitYield;
@@ -145,12 +158,14 @@ function setOverlay() {
   var highFruitYield = yield.highFruitYield;
 
   var rangeOfFruit = (highFruitYield - lowFruitYield) / 12;
-  //if you want it to be more noticable of a difference, we can divide this by 6
+  // if you want it to be more noticable of a difference, we can divide this by 6
+  // why's it divided by 12?
 
+  // sets the amount of fruit shown in the overlay based on how much of the potential was generated
   var amtFruit;
   var source;
   switch (true) {
-    case fruitYield <= lowFruitYield + rangeOfFruit*5: //*0
+    case fruitYield <= lowFruitYield + rangeOfFruit * 5: //*0
       amtFruit = "less";
       break;
  
@@ -170,11 +185,12 @@ function setOverlay() {
 
     var lcFruitType = gameData.treeType + 's';
     if (lcFruitType == 'peachs') lcFruitType = gameData.treeType + 'es';
- //I think i'm going insane rn cos I can't stop laughing about peachs with no e
- //(pls feel free to delete this comment lmao)
+ // I think i'm going insane rn cos I can't stop laughing about peachs with no e
+ // (pls feel free to delete this comment lmao)
+ // nah, this is staying in the final version
 
     var srcStart = `./images/${gameData.treeType}Tree/${lcFruitType}/`;
- 
+
     if (gameData.grafted) { 
       var secondFruit =
         gameData.graftedTreeType.substring(0, 1).toUpperCase() +
@@ -188,19 +204,21 @@ function setOverlay() {
     document.getElementById("fruitOverlay").src = source;
 }
  
-//sets and displays overlays for tree
+// sets and displays overlays for tree
 function displayOverlay() {
   setOverlay();
   document.getElementById("fruitOverlayDiv").classList.remove("hidden");
 }
  
-//gets rid of overlay
+// gets rid of overlay
 function removeOverlay() {
     document.getElementById("fruitOverlayDiv").classList.add("hidden");
 }
  
 // sets the menuImg dimensions so they all fit in the buttons
+// run when main-page loads
 function menuImgDimensions() {
+  // if the image is wider than it is tall, set the width instead of the height
   const menusNode = document.querySelectorAll('.menuImg');
   const menus = Array.from(menusNode);
   menus.forEach(menu => {
@@ -213,9 +231,11 @@ function menuImgDimensions() {
  
 // updates the info at the top of the screen
 function updateInfoBar() {
+  // sets the coin counter to the gameData value
   const coinCount = document.getElementById('coinDisplayText');
   coinCount.innerHTML = gameData.coins;
  
+  // sets the pH indicator based on idealPH object and the gameData value
   const realPh = document.querySelector('p.real.phText');
   realPh.innerHTML = gameData.pH;
   const idealPhText = document.querySelector('p.ideal.phText');
@@ -226,14 +246,17 @@ function updateInfoBar() {
   if (phDifference < 0.6) root.style.setProperty('--ph-color', 'goldenrod');
   if (phDifference == 0) root.style.setProperty('--ph-color', 'green');
 
+  // sets the graft symbol based on if player has purchased the graft
   const graftDiv = document.getElementById('graftedDiv');
   if (gameData.grafted) graftDiv.classList.remove('hidden');
   if (!gameData.grafted) graftDiv.classList.add('hidden');
 
+  // sets the text showing the level based on the gameData value
   const levelText = document.getElementById('levelText');
   levelText.innerHTML = gameData.level;
 }
  
+// updates which buttons are disabled, based on the availability
 function updateDisabled() {
   // if a graft's been purchased, disable graft button
   if (gameData.grafted == true) document.getElementById('btn6').disabled = true;
@@ -248,13 +271,14 @@ function updateDisabled() {
  
   // if bees aren't available for any reason, disabled
   const beeBtn = document.getElementById('btn4');
+  // if you've already purchased bees, if there's an infestation, or if there was an infestation this level
   if (gameData.bees == true || gameData.infested == true || gameData.lastLevelInfested == gameData.level) {
     beeBtn.disabled = true;
   } else {
     beeBtn.disabled = false;
   }
  
-  // if there's not an infestation, disabled
+  // if there's not an infestation, you can't buy repellent
   const repellentBtn = document.getElementById('btn5');
   if (gameData.infested) {
     repellentBtn.disabled = false;
@@ -263,30 +287,42 @@ function updateDisabled() {
   }
 }
 
-function updateAcheivementDivision()
-{
- var ids = ["firstDivision", "secondDivision", "thirdDivision", "fourthDivision", "fifthDivision"];
- for(var i = 0; i<ids.length; i++)
- {
+// sets the color meter that how well you're doing based on yield out of potential yield
+function updateAcheivementDivision() {
+  var ids = ["firstDivision", "secondDivision", "thirdDivision", "fourthDivision", "fifthDivision"];
+  for (var i = 0; i<ids.length; i++) {
    document.getElementById(ids[i]).classList.add("divisionDisabled");
- }
+  }
 
   var yield = findYieldRange();
   var min = yield.lowFruitYield;
-  var range = yield.highFruitYield-yield.lowFruitYield;
+  var range = yield.highFruitYield - yield.lowFruitYield;
   yield = yield.fruitYield;
-console.log(range);
-console.log(yield);
+  console.log(range);
+  console.log(yield);
 
-  if( yield>min){document.getElementById(ids[0]).classList.remove("divisionDisabled");}
-  if(yield>min+(range/5)){document.getElementById(ids[1]).classList.remove("divisionDisabled");}
-  if(yield>min+(range/5*2)){ document.getElementById(ids[2]).classList.remove("divisionDisabled");}
-  if(yield>min+(range/5*3)){document.getElementById(ids[3]).classList.remove("divisionDisabled");}
-  if(yield>min+(range/5*4)){document.getElementById(ids[4]).classList.remove("divisionDisabled");}
-      
+
+  // can't divide by 0, gotta keep it seperate
+  if (yield > min) {
+    document.getElementById(ids[0]).classList.remove("divisionDisabled");
+  } else {
+    document.getElementById(ids[0]).classList.add("divisionDisabled");
   }
- 
+
+  // for each benchmark, color it in if player's reached it
+  for (var i = 1; i < ids.length; i++) {
+    if (yield > min + (range / (5 * i))) {
+      document.getElementById(ids[i]).classList.remove("divisionDisabled");
+    } else {
+      document.getElementById(ids[i]).classList.add("divisionDisabled");
+    }
+  }
+}
+
+// updates the shown costs of bees, repellent and grafting
+// (the only ones that change) /\
 function updateButtonCost() {
+  // all cost determination copied from purchase function
   const beesCostText = document.getElementById('beesCost');
   beesCostText.innerHTML = Math.round(gameData.coinYield / 3 / 5) * 5;
   
@@ -299,7 +335,8 @@ function updateButtonCost() {
   if (gameData.treeType == 'lemon') graftCost *= 3;
   graftCostText.innerHTML = graftCost;
 }
- 
+
+// update if bee overlays are showing based on gameData.bees
 function updateBees() {
   const bees = document.getElementById('beeOverlay');
   const beeHive = document.getElementById('beeHive');
@@ -311,16 +348,20 @@ function updateBees() {
     beeHive.classList.add('hidden');
   }
 }
- 
+
+// updates if insectOverlay is showing, based on gameData.infestation
 function updateInsects() {
   const insects = document.getElementById('insectOverlay');
   if (gameData.infested) insects.classList.remove('hidden');
   if (!gameData.infested) insects.classList.add('hidden');
 }
 
+// updates the fine details of where the fruit overlay is
+// so that it'll stay over the leaves of the tree
 function updateOverlayDimensions() {
   const fo = document.getElementById('fruitOverlay');
   const foDiv = document.getElementById('fruitOverlayDiv');
+  // numbers determined by trial and error
   switch(gameData.treeType) {
     case ('apple'):
       fo.style.height = '45%';
@@ -353,7 +394,7 @@ function updateOverlayDimensions() {
 }
  
 // called in purchase functions
-// declare new update functions before this one
+// calls all preceding update functions, makes it easier to add another to many places in the code at once
 function updateAll() {
   displayTree();
   updateButtons();
@@ -366,7 +407,8 @@ function updateAll() {
   setInfoText(false);
 }
  
-// set next level to happen in the middle of the transition later
+// called when nextLevelBtn is clicked
+// fades screen to black, then calls nextLevel
 function transition() {
   const nextLevelBtn = document.getElementById('nextLevelBtn');
   nextLevelBtn.disabled = true;
