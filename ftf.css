@@ -231,17 +231,33 @@ button.index:disabled {
 
 #achievementMarker{
   background-color:#666;
-  height:5%;
-  width:15%;
-  position: absolute;
-  bottom: 20%;
-  margin:1%;
+  height:45%;
+  width:100%;
   border-radius:5%;
-  z-index: 7;
   padding-left:1%;
   padding-right:1%;
 }
 
+.labelOne{ 
+  top:0;
+  left:1px;
+}
+
+.labelTwo{
+  position:absolute;
+  top:0;
+  right:1px;
+
+}
+
+.acheivementDiv{
+  height:10%;
+  width:15%;
+  position: absolute;
+  z-index: 6;
+  bottom: 20%;
+  margin:1%;
+}
 .division{
   height:80%;
   width: 20%;
@@ -249,7 +265,6 @@ button.index:disabled {
   margin-left:0;
   margin-right:0;
   float:left;
-  background-color:#002800; /*change to individual colors */
 } 
 
 #firstDivision{
@@ -348,12 +363,12 @@ button.index:disabled {
 }
 
 #transition.faded {
-  z-index: 5;
+  z-index: 7;
   opacity: 0.5;
 }
 
 #transition.on {
-  z-index: 5;
+  z-index: 7;
   opacity: 1;
 }
 
@@ -546,11 +561,22 @@ p.dark-green {
 /* ======= end-page styles ======= */
  
 canvas {
-  /* background:rgb(206, 188, 151); */
   margin:0;
   padding:0;
   height:100%;
   width:50%;
-  margin-left:25%;
 }
 
+
+.leftSideText
+{
+  float:left;
+  width:25%;
+  font-size:18px;
+  margin: 3%;
+}
+
+.endPageHeader
+{
+  font-family: "Courgette", sans-serif;
+}

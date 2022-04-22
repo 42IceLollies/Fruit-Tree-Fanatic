@@ -6,7 +6,7 @@ canvas.height = window.innerHeight;
 canvas.width = window.innerHeight;
 
 //settings for label text
-c.font = "18px 'Inter', sans-serif"; 
+c.font = "16px 'Inter', sans-serif"; 
 c.textAlign = 'center';
 
 //------------------Shape Classes------------
@@ -75,6 +75,7 @@ class Circle {
 //----------------Drawing Shapes----------
 
 retrieveData();
+console.log(gameData.progressRecord);
 
 //creates all objects in drawing
 var bark = new Ring(canvas.width/2, canvas.height/2, canvas.width/2, 5, "#6a3e2d",c);

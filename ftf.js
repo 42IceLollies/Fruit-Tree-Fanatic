@@ -311,7 +311,7 @@ function updateAcheivementDivision() {
 
   // for each benchmark, color it in if player's reached it
   for (var i = 1; i < ids.length; i++) {
-    if (yield > min + (range / (5 * i))) {
+    if (yield > min + ((range / 5) * i)) {
       document.getElementById(ids[i]).classList.remove("divisionDisabled");
     } else {
       document.getElementById(ids[i]).classList.add("divisionDisabled");
@@ -415,6 +415,8 @@ function transition() {
   // so you can't spam the button
 
   if (gameData.level == 15) {
+    gameData.progressRecord[gameData.level-1] = findYieldRange();
+    saveData();
    location.href = 'end-page.html';
    return;
   }
@@ -619,7 +621,7 @@ function setInfoText(newLevel) {
 
   const infoText = document.getElementById('infoMainText');
 
-  const baseText = "- Click fruit to collect it. <br>- Buy items and actions to keep your tree healthy and ensure a good harvest.  <br>- Click the 'Next Level' button when you are done.";
+  const baseText = "- Click fruit to collect it. <br>- Buy items and actions to keep your tree healthy and ensure a good harvest. <br>-The scale in the bottom right corner shows how much of the potential fruit yield you are harvesting. <br>- Click the 'Next Level' button when you are done.";
 
   if (infoArray[gameData.level - 1] !== undefined) {
     infoText.innerHTML = infoArray[gameData.level - 1] + "<br><br>" + baseText; //  ------------------------------- 
