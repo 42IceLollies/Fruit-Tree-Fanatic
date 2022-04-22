@@ -1,11 +1,18 @@
 var canvas = document.getElementById("canvas");
 var c = canvas.getContext("2d");
 
-//canvas size is modified in css file
-canvas.height = window.innerHeight;
-canvas.width = window.innerHeight;
+// canvas size is modified in css file
+if (window.innerHeight < window.innerWidth) {
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerHeight;
+} else {
+  canvas.height = window.innerWidth;
+  canvas.width = window.innerWidth;
+}
 
-//settings for label text
+
+
+// settings for label text
 c.font = "16px 'Inter', sans-serif"; 
 c.textAlign = 'center';
 
@@ -77,7 +84,7 @@ class Circle {
 retrieveData();
 console.log(gameData.progressRecord);
 
-//creates all objects in drawing
+// creates all objects in drawing
 var bark = new Ring(canvas.width/2, canvas.height/2, canvas.width/2, 5, "#6a3e2d",c);
 var trunk = new Circle(canvas.width/2, canvas.height/2, canvas.width/2-10, "#c4ad8d", c);
 var rings = [];
@@ -85,7 +92,7 @@ var labels = [];
 
 var record = gameData.progressRecord;
 
-for(var i = 0; i<record.length; i++)
+for(var i = 0; i < record.length; i++)
 { 
     var percentage = (record[i].fruitYield-record[i].lowFruitYield)/(record[i].highFruitYield-record[i].lowFruitYield);
     var opacity = percentage;
@@ -101,9 +108,26 @@ trunk.draw();
 for(var i = record.length-1; i>=0; i--)
 {
     rings[i].draw();
-    labels[i].draw();
+    // labels[i].draw();
+    // the credits over text wasn't working
 }
 
 
+//------------credits------------
 
+function rollCredits() {
+  const creditDivs = Array.from(document.querySelectorAll('.creditDiv'));
+  let count = 0;
 
+  creditDivs.forEach(credit => {
+    credit.style.top = '100%';
+  });
+
+  const creditIntId = setInterval(() => {
+    if (count >= creditDivs.length - 1) clearInterval(creditIntId);
+    creditDivs[count].style.top = '-50%';
+    count++;
+  }, 3000);
+}
+
+rollCredits();
