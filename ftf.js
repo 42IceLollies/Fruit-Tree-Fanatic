@@ -139,13 +139,14 @@ function displayTree() {
 
 // finds the potential max and min fruit possible by level
 function findYieldRange() {
+  console.log('findYieldRange');
   // finds the fruit yield off of the coin yield
   var fruitYield = gameData.coinYield;
   if (gameData.treeType == 'peach') fruitYield /= 2;
   if (gameData.treeType == 'lemon') fruitYield /= 3;
  
   var lowFruitYield = gameData.baseFruit[gameData.level-1] * 0.35;
-  var highFruitYield = gameData.baseFruit[gameData.level-1]* 1.8;
+  var highFruitYield = gameData.baseFruit[gameData.level-1]* 1.8013;
  
   return {highFruitYield, lowFruitYield, fruitYield};
 }
@@ -513,14 +514,16 @@ function determineInfestation() {
 // determines how much the tree grows based on the amount of fertilizer purchased and the level
 // to be run before level and fertilizer are updated
 function determineGrowth() {
-  // for 1st and 2nd level, 0.02
-  if (gameData.level == 1 || gameData.level == 2)
-    gameData.growth += gameData.fertilizer * 0.02;
-  // for 3rd through 5th, 0.01
-  if (gameData.level >= 3 && gameData.level <= 5)
+  let fertilizer = gameData.fertilizer;
+  if (fertilizer > 10) fertilizer = 10 - (fertilizer - 10);
+  // for 1st level, 0.01
+  if (gameData.level == 1)
     gameData.growth += gameData.fertilizer * 0.01;
+  // for 3rd and 4th, 0.005
+  if (gameData.level == 2 || gameData.level == 3)
+    gameData.growth += gameData.fertilizer * 0.005;
   // from then on, 0.005
-  if (gameData.level > 5) gameData.growth += gameData.fertilizer * 0.005;
+  if (gameData.level >= 4) gameData.growth += gameData.fertilizer * 0.0005;
 }
  
 function determinePhAccuracy() {
@@ -562,6 +565,7 @@ function determineYield() {
  
   const phDifference = determinePhAccuracy();
   const difFraction = phDifference / 2.7;
+  // 2.7 because I decided that's the reasonable pH range
   const phAccuracy = -0.1 * difFraction;
  
   let result =
