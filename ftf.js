@@ -139,7 +139,6 @@ function displayTree() {
 
 // finds the potential max and min fruit possible by level
 function findYieldRange() {
-  console.log('findYieldRange');
   // finds the fruit yield off of the coin yield
   var fruitYield = gameData.coinYield;
   if (gameData.treeType == 'peach') fruitYield /= 2;
@@ -299,8 +298,8 @@ function updateAcheivementDivision() {
   var min = yield.lowFruitYield;
   var range = yield.highFruitYield - yield.lowFruitYield;
   yield = yield.fruitYield;
-  console.log(range);
-  console.log(yield);
+  // console.log(range);
+  // console.log(yield);
 
 
   // can't divide by 0, gotta keep it seperate
@@ -393,6 +392,16 @@ function updateOverlayDimensions() {
       break
   }
 }
+
+// hides the achievement marker in the first level, since there's no yield
+function updateAchievementHidden() {
+  const achievementDiv = document.querySelector('.achievementDiv');
+  if (gameData.level > 1) {
+    achievementDiv.classList.remove('hidden');
+  } else {
+    achievementDiv.classList.add('hidden');
+  }
+}
  
 // called in purchase functions
 // calls all preceding update functions, makes it easier to add another to many places in the code at once
@@ -405,6 +414,7 @@ function updateAll() {
   updateAcheivementDivision();
   updateBees();
   updateInsects();
+  updateAchievementHidden();
   setInfoText(false);
 }
  
@@ -518,12 +528,12 @@ function determineGrowth() {
   if (fertilizer > 10) fertilizer = 10 - (fertilizer - 10);
   // for 1st level, 0.01
   if (gameData.level == 1)
-    gameData.growth += gameData.fertilizer * 0.01;
+    gameData.growth += fertilizer * 0.01;
   // for 3rd and 4th, 0.005
   if (gameData.level == 2 || gameData.level == 3)
-    gameData.growth += gameData.fertilizer * 0.005;
+    gameData.growth += fertilizer * 0.005;
   // from then on, 0.005
-  if (gameData.level >= 4) gameData.growth += gameData.fertilizer * 0.0005;
+  if (gameData.level >= 4) gameData.growth += fertilizer * 0.0005;
 }
  
 function determinePhAccuracy() {
@@ -648,11 +658,11 @@ function nextLevel() {
   gameData.progressRecord[gameData.level-1] = findYieldRange();
   gameData.fertilizer = 0;
   gameData.level++;
+  determineYield();
   gameData.bees = false;
   gameData.pruneNum = 0;
   updateOverlayDimensions();
   setInfoText(true);
-  determineYield();
   gameData.harvested = false;
   displayOverlay();
   determineInfestation();
@@ -815,3 +825,4 @@ images.forEach(image => {
 });
  
 console.log(gameData);
+console.log(findYieldRange());
