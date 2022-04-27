@@ -366,7 +366,7 @@ button.index:disabled {
 }
 
 #transition.faded {
-  z-index: 7;
+  z-index: 5;
   opacity: 0.5;
 }
 
@@ -615,4 +615,4 @@ canvas {
   font-size: 4em;
 }
 
-achievement
+/* achievement */
