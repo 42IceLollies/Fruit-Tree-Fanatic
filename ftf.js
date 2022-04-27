@@ -129,12 +129,12 @@ function displayTree() {
     "Tree/" +
     gameData.treeType +
     "Tree" +
-    Math.ceil(gameData.level / 3) +
+    Math.ceil(gameData.level / 2) +
     ".png";
   
   // sets the css variable used in the padding-top of multiple elements to make the tree image increase in height
   const root = document.querySelector(":root");
-  root.style.setProperty('--padding-top', 16 - gameData.level + "%");
+  root.style.setProperty('--padding-top', 21 - gameData.level + "%");
 }
 
 // finds the potential max and min fruit possible by level
@@ -145,7 +145,7 @@ function findYieldRange() {
   if (gameData.treeType == 'lemon') fruitYield /= 3;
  
   var lowFruitYield = gameData.baseFruit[gameData.level-1] * 0.35;
-  var highFruitYield = gameData.baseFruit[gameData.level-1]* 1.8013;
+  var highFruitYield = (gameData.baseFruit[gameData.level-1] * 1.835) + 20;
  
   return {highFruitYield, lowFruitYield, fruitYield};
 }
@@ -199,7 +199,7 @@ function setOverlay() {
       srcStart = `./images/${gameData.treeType}Tree/${lcFruitType}And${secondFruit}/`;
       source = `${srcStart}${amtFruit}${fruitType}And${secondFruit}Tree${Math.ceil(gameData.level / 3)}.png`;
     } else {
-      source = `${srcStart}${amtFruit}${fruitType}Tree${Math.ceil(gameData.level / 3)}.png`;
+      source = `${srcStart}${amtFruit}${fruitType}Tree${Math.ceil(gameData.level / 2)}.png`;
     }
     document.getElementById("fruitOverlay").src = source;
 }
@@ -438,7 +438,7 @@ function transition() {
   nextLevelBtn.disabled = true;
   // so you can't spam the button
 
-  if (gameData.level == 15) {
+  if (gameData.level == 10) {
     gameData.progressRecord[gameData.level-1] = findYieldRange();
     saveData();
    location.href = 'end-page.html';
@@ -545,7 +545,7 @@ function determineGrowth() {
   // for 3rd and 4th, 0.005
   if (gameData.level == 2 || gameData.level == 3)
     gameData.growth += fertilizer * 0.005;
-  // from then on, 0.005
+  // from then on, 0.0005
   if (gameData.level >= 4) gameData.growth += fertilizer * 0.0005;
 }
  
@@ -557,8 +557,8 @@ function determinePhAccuracy() {
 function determineGraftedFruit() {
   if (!gameData.grafted) return;
   let amount = 10;
-  if (gameData.levelGrafted <= gameData.level - 3) amount = 15;
-  if (gameData.levelGrafted <= gameData.level - 5) amount = 20;
+  if (gameData.levelGrafted <= gameData.level - 2) amount = 15;
+  if (gameData.levelGrafted <= gameData.level - 3) amount = 20;
 
   if (gameData.graftedTreeType == "plum") amount *= 2;
   if (gameData.graftedTreeType == "pear") amount *= 3;
@@ -644,11 +644,11 @@ function hideInfo() {
 // run in nextLevel function
 // argument to determine if infoMain should be shown
 function setInfoText(newLevel) {
-  const infoArray = ["Welcome to the game! Here is your tree, try buying some fertilizer to feed it so it will grow lots of fruit next level!", "You have your first harvest!  Click the fruit to collect it. It turns out the fertilizer lowers the PH of the soil. You can buy limestone to balance it out, but don't forget to keep your soil fertile.", "Now you can prune your tree, to focus it on producing fruit instead of new growth.", "Bees can help pollinate your tree, but they're only available once per level.", undefined, undefined, "You've unlocked the option to graft your tree. Grafting another type of fruit onto your tree can increase output, but it's quite an investment."];// different text for each level
+  const infoArray = ["Welcome to the game! Here is your tree, try buying some fertilizer to feed it so it will grow lots of fruit next level!", "You have your first harvest! Click the fruit to collect it. It turns out the fertilizer lowers the pH of the soil. You can buy limestone to balance it out, but don't forget to keep your soil fertile.", "Now you can prune your tree, to focus it on producing fruit instead of new growth.", "Bees can help pollinate your tree. They're only available once per level, and not available if you've recently had insects.", undefined, undefined, "You've unlocked the option to graft your tree. Grafting another type of fruit onto your tree can increase output, but it's quite an investment."]; // different text for each level
 
   const infoText = document.getElementById('infoMainText');
 
-  const baseText = "- Click fruit to collect it. <br>- Buy items and actions to keep your tree healthy and ensure a good harvest. <br>-The scale in the bottom right corner shows how much of the potential fruit yield you are harvesting. <br>- Click the 'Next Level' button when you are done.";
+  const baseText = "- Click fruit to collect it. <br>- Buy items and actions to keep your tree healthy. <br>- Click the 'Next Level' button when you are done.";
 
   if (infoArray[gameData.level - 1] !== undefined) {
     infoText.innerHTML = infoArray[gameData.level - 1] + "<br><br>" + baseText; //  ------------------------------- 

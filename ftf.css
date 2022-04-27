@@ -427,7 +427,7 @@ button.index:disabled {
   z-index: 3;
   background: var(--grey);
   border-radius: 20px;
-  min-height: 30%;
+  /*min-height: 30%;*/
   max-height: 60%;
   width: 40%;
   opacity: 0.8;
@@ -544,6 +544,10 @@ button.index:disabled {
   color: var(--dark-green);
 }
 
+.coinText.red {
+  color: red;
+}
+
 /* ======= mixed styles ======= */
 
 .hidden {
@@ -614,5 +618,3 @@ canvas {
   font-family: "Courgette", sans-serif;
   font-size: 4em;
 }
-
-/* achievement */
