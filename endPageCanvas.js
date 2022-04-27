@@ -101,7 +101,7 @@ for(var i = 0; i < record.length; i++)
     var percentage = (record[i].fruitYield-record[i].lowFruitYield)/(record[i].highFruitYield-record[i].lowFruitYield);
     var opacity = percentage;
     var weight = percentage*10;
-    rings[i] = new Ring(canvas.width/2, canvas.height/2, canvas.width/35 * (i+1), weight, "rgba(106,62,45," + opacity + ")", c);
+    rings[i] = new Ring(canvas.width/2, canvas.height/2, canvas.width/25 * (i+1), weight, "rgba(106,62,45," + opacity + ")", c);
     labels[i] = new Label(canvas.height/2- rings[i].radius + rings[i].thickness - 7, i+1, 'black', c);
 }
 

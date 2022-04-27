@@ -603,7 +603,7 @@ canvas {
   margin: 0 auto;
   width: 100%;
   /*color: var(--dark-green);*/
-  color: #DFD; /*almost white, little green*/
+  color: rgb(236, 255, 236); /*almost white, little green*/
   text-align: center;
   font-size: 1.4em;
   transition: all 12s;
