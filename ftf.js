@@ -402,6 +402,18 @@ function updateAchievementHidden() {
     achievementDiv.classList.add('hidden');
   }
 }
+
+function updatePriceColor() {
+  const buttonCosts = document.querySelectorAll('.price .coinText');
+  
+  buttonCosts.forEach(cost => {
+    if (gameData.coins < Number(cost.innerHTML)) {
+      cost.classList.add('red');
+    } else {
+      cost.classList.remove('red');
+    }
+  });
+}
  
 // called in purchase functions
 // calls all preceding update functions, makes it easier to add another to many places in the code at once
@@ -415,6 +427,7 @@ function updateAll() {
   updateBees();
   updateInsects();
   updateAchievementHidden();
+  updatePriceColor();
   setInfoText(false);
 }
  
@@ -804,6 +817,7 @@ if (document.URL.includes("main-page.html")) {
       coinChange(true, gameData.coinYield);
       gameData.harvested = true;
       updateInfoBar();
+      updatePriceColor();
       saveData();
   });
 }

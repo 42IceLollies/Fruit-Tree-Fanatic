@@ -5,6 +5,7 @@
   --grey: #666; /*Granite Gray*/
   --brown: #6a3e2d; /*Van Dyke Brown*/
   --lightBrown: #c4ad8d;
+  --gold: #FAD749; /*Mustard*/
   --ph-color: black; /*to be changed in js*/
   --padding-top: 2%; /*to be changed in js*/
   font-family: "Inter", sans-serif;
@@ -544,6 +545,11 @@ button.index:disabled {
   color: var(--dark-green);
 }
 
+/*button cost*/
+.coinText.red {
+  color: red;
+}
+
 /* ======= mixed styles ======= */
 
 .hidden {
@@ -614,5 +620,3 @@ canvas {
   font-family: "Courgette", sans-serif;
   font-size: 4em;
 }
-
-achievement
