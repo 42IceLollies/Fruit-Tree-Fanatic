@@ -1,4 +1,4 @@
-// holds all the base information for the game
+// holds all the main information for the game
 const gameData = {
   level: 1,
   growth: 0,
@@ -403,10 +403,12 @@ function updateAchievementHidden() {
   }
 }
 
+// changes the text in the purchase buttons to red if player has too few coins
 function updatePriceColor() {
   const buttonCosts = document.querySelectorAll('.price .coinText');
   
   buttonCosts.forEach(cost => {
+    // if number of coins is less than this cost
     if (gameData.coins < Number(cost.innerHTML)) {
       cost.classList.add('red');
     } else {
@@ -434,10 +436,11 @@ function updateAll() {
 // called when nextLevelBtn is clicked
 // fades screen to black, then calls nextLevel
 function transition() {
+  // disables the button so you can't double click and skip a level
   const nextLevelBtn = document.getElementById('nextLevelBtn');
   nextLevelBtn.disabled = true;
-  // so you can't spam the button
 
+  // if it's over, move to the credits page
   if (gameData.level == 10) {
     gameData.progressRecord[gameData.level-1] = findYieldRange();
     saveData();
@@ -445,48 +448,60 @@ function transition() {
    return;
   }
 
+  // fade to black
   const transitionDiv = document.getElementById('transition');
   transitionDiv.classList.add('on');
   setTimeout(() => {
+    // when it's fully faded, run nextLevel()
     nextLevel();
+    // fade back
     transitionDiv.classList.remove('on');
+    // enable the button again
     nextLevelBtn.disabled = false;
-  }, 1000);
+  }, 1000); // same amount of time as the fade takes
 }
- 
+
+// opens/closes the menu 
 function toggleMainMenu() {
+  // slides in the side menu
   document.getElementById('mainMenu').classList.toggle('show');
+  // greys out the rest of the screen
   document.getElementById('transition').classList.toggle('faded');
 }
 
+// makes the purchase buttons blink when clicked
 function menuBtnClicked() {
   const buttons = document.querySelectorAll('.menuBtn');
   buttons.forEach(button => {
     button.addEventListener('click', () => {
+      // lowers the opacity
       button.classList.add('clicked');
       setTimeout(() => {
         button.classList.remove('clicked');
-      }, 75);
+      }, 75); // applied for this number of milliseconds
     });
   });
 }
 
-// call each time gameData.coins is changed, with the 
-// amount change, and if increasing or decreasing
+// call each time gameData.coins is changed, with the amount change, and if increasing or decreasing
 function coinChange(increase, num) {
   const coinChangeText = document.getElementById('coinChangeText');
   const coinChangeDiv = document.getElementById('coinChangeDiv');
+  
   let sign;
   if (increase) sign = '+';
   if (!increase) sign = '-';
   coinChangeText.innerHTML = sign + num;
-  // coinChangeText.classList.remove(...coinChangeText.classList);
+  // only removing green since it's on top, so it doesn't matter if red is under
   coinChangeText.classList.remove('green');
+  // sets text color based on if it's increasing or not
   if (increase) coinChangeText.classList.add('green');
   if (!increase) coinChangeText.classList.add('red');
+  // reset so it can fade
   coinChangeDiv.style.opacity = '1';
   coinChangeDiv.classList.remove('hidden');
 
+  // fade over 1.5 seconds
   const ccIntId = setInterval(() => {
     if (coinChangeDiv.style.opacity <= 0) {
       coinChangeDiv.classList.add('hidden');
@@ -499,34 +514,40 @@ function coinChange(increase, num) {
 // =========== mathematical functions ===========
  
 // changes the pH level
+// run when buying fertilizer/limestone, input '+' or '-';
 function adjustPH(change) {
-  gameData.pH = parseFloat(gameData.pH);
+  // when it's within the middle range, change by 0.1
   if (gameData.pH > 6 && gameData.pH < 8) {
     if (change == "+") gameData.pH += 0.1;
     if (change == "-") gameData.pH -= 0.1;
+    // round to 1 place after the decimal
     gameData.pH = Math.round(gameData.pH * 10) / 10;
   } else {
+    // when it's far from the goal, change by 0.01
     if (change == "+") gameData.pH += 0.01;
     if (change == "-") gameData.pH -= 0.01;
+    // round to 2 places after the decimal
     gameData.pH = Math.round(gameData.pH * 100) / 100;
   }
   saveData();
 }
  
-// randomly decides if you get an insect infestation
+// randomly decides if you get an insect infestation, better trees more likely
 // to be called every time player advances a level
 function determineInfestation() {
-  if (gameData.level < 4 || gameData.level > 13) return;
+  // if it's before level 4, or already infested, don't run the function. precaution
+  if (gameData.level < 4) return;
   if (gameData.infested == true) return;
   let chance;
   // 10% for apple trees
   if (gameData.treeType == "apple") chance = 10;
-  // 20% for peach trees
-  if (gameData.treeType == "peach") chance = 20;
-  // 30% for lemon trees
-  if (gameData.treeType == "lemon") chance = 30;
+  // 25% for peach trees
+  if (gameData.treeType == "peach") chance = 25;
+  // 40% for lemon trees
+  if (gameData.treeType == "lemon") chance = 40;
   // if the tree was infested last round, halve the chance
   if (gameData.lastLevelInfested == gameData.level - 1) chance /= 2;
+  // if a random number up to 100 is within the chance range, it becomes infested
   const percent = Math.random() * 100;
   if (percent <= chance) {
     gameData.infested = true;
@@ -538,7 +559,10 @@ function determineInfestation() {
 // to be run before level and fertilizer are updated
 function determineGrowth() {
   let fertilizer = gameData.fertilizer;
+  // if player bought more than 10 fertilizer, it starts to have a negative effect
   if (fertilizer > 10) fertilizer = 10 - (fertilizer - 10);
+  // adds to growth, increasing fruit yield
+  // essentially percents in decimal form
   // for 1st level, 0.01
   if (gameData.level == 1)
     gameData.growth += fertilizer * 0.01;
@@ -548,18 +572,24 @@ function determineGrowth() {
   // from then on, 0.0005
   if (gameData.level >= 4) gameData.growth += fertilizer * 0.0005;
 }
- 
+
+// returns how far off the pH is from what it should be
 function determinePhAccuracy() {
   return Math.abs(
     gameData.pH - idealPh[`${gameData.treeType}`]);
 }
 
+// returns how much grafted fruit is produced
+// based on levels since purchase, and type of fruit
 function determineGraftedFruit() {
   if (!gameData.grafted) return;
   let amount = 10;
+  // if it's been a level, 15 fruit
   if (gameData.levelGrafted <= gameData.level - 2) amount = 15;
+  // if it's been 2 levels, 20 fruit
   if (gameData.levelGrafted <= gameData.level - 3) amount = 20;
 
+  // plums and pears are worth more than oranges
   if (gameData.graftedTreeType == "plum") amount *= 2;
   if (gameData.graftedTreeType == "pear") amount *= 3;
 
@@ -571,6 +601,7 @@ function determineGraftedFruit() {
 function determineYield() {
   // without bees, the pollinationRate could reduce yield by up to 5%
   let pollinationRate = Math.round((0 - Math.random() / 20) * 100) / 100;
+  // with bees, increased by 50%
   if (gameData.bees) {
     pollinationRate = 0.5;
   }
@@ -583,31 +614,35 @@ function determineYield() {
     let pruneMult = 0.1 * pruneFraction;
   }
  
+  // insect infestation removes 50%
   let infestation = 0;
   if (gameData.infested) infestation = -0.5;
  
+  // pH inaccuracy can remove up to 10%
   const phDifference = determinePhAccuracy();
   const difFraction = phDifference / 2.7;
   // 2.7 because I decided that's the reasonable pH range
   const phAccuracy = -0.1 * difFraction;
  
+  // added before multiplication so all factors have an equal influence
   let result =
     gameData.baseFruit[gameData.level - 1] *
     (1 + pollinationRate + gameData.growth + 
     pruneMult + infestation + phAccuracy);
   result = Math.round(result);
 
+  // peaches and lemons are worth more than apples
   if (gameData.treeType == 'peach') result *= 2;
   if (gameData.treeType == 'lemon') result *= 3;
 
+  // if a graft has been purchased, add grafted fruit
   if (gameData.grafted) {
     const graftedFruit = determineGraftedFruit();
     result += graftedFruit;
   }
 
   gameData.coinYield = result;
-  // gameData.coins += result;
-  // done when overlay is clicked and fruit is collected
+  // result added to gameData.coins when overlay is clicked and fruit is collected
 }
   
 // =========== button specific functions ===========
@@ -620,6 +655,7 @@ function startNewGame() {
 }
  
 // to be run by infoBtn
+// hides/shows the info box in the top left
 function toggleInfo() {
   const info = document.getElementById('infoMain');
   info.classList.toggle('hidden');
@@ -627,6 +663,7 @@ function toggleInfo() {
   infoBtn.classList.toggle('white');
 }
 
+// shows the info box in the top left
 function showInfo() {
   const info = document.getElementById('infoMain');
   info.classList.remove('hidden');
@@ -634,6 +671,7 @@ function showInfo() {
   infoBtn.classList.add('white');
 }
 
+// hides the info box in the top left
 function hideInfo() {
   const info = document.getElementById('infoMain');
   info.classList.add('hidden');
@@ -642,22 +680,27 @@ function hideInfo() {
 }
 
 // run in nextLevel function
-// argument to determine if infoMain should be shown
+// if it's a new level, show infoMain
 function setInfoText(newLevel) {
-  const infoArray = ["Welcome to the game! Here is your tree, try buying some fertilizer to feed it so it will grow lots of fruit next level!", "You have your first harvest! Click the fruit to collect it. It turns out the fertilizer lowers the pH of the soil. You can buy limestone to balance it out, but don't forget to keep your soil fertile.", "Now you can prune your tree, to focus it on producing fruit instead of new growth.", "Bees can help pollinate your tree. They're only available once per level, and not available if you've recently had insects.", undefined, undefined, "You've unlocked the option to graft your tree. Grafting another type of fruit onto your tree can increase output, but it's quite an investment."]; // different text for each level
+  // array of text for the new items
+  const infoArray = ["Welcome to the game! Here is your tree, try buying some fertilizer to feed it so it will grow lots of fruit next level!", "You have your first harvest! Click the fruit to collect it. It turns out the fertilizer lowers the pH of the soil. You can buy limestone to balance it out, but don't forget to keep your soil fertile.", "Now you can prune your tree, to focus it on producing fruit instead of new growth.", "Bees can help pollinate your tree. They're only available once per level, and not available if you've recently had insects.", undefined, undefined, "You've unlocked the option to graft your tree. Grafting another type of fruit onto your tree can increase output, but it's quite an investment."];
 
   const infoText = document.getElementById('infoMainText');
 
+  // basic instructions, always included at the bottom
   const baseText = "- Click fruit to collect it. <br>- Buy items and actions to keep your tree healthy. <br>- Click the 'Next Level' button when you are done.";
 
+  // if there's instructions for this level
   if (infoArray[gameData.level - 1] !== undefined) {
-    infoText.innerHTML = infoArray[gameData.level - 1] + "<br><br>" + baseText; //  ------------------------------- 
-    infoMain = document.getElementById('infoMain');
+    infoText.innerHTML = infoArray[gameData.level - 1] + "<br><br>" + baseText;
+    // if it's the start of a new level, show infoMain
     if (newLevel) showInfo();
   } else {
+    // if there's no special instructions, just put the basic instructions
     infoText.innerHTML = baseText;
   }
 
+  // if there's insects, add instructions of what to do to the front
   if (gameData.infested) {
     infoText.innerHTML =  "Uh oh! Your tree has become infested with insects. You can buy repellent to get rid of them. They should be dealt with as soon as possible to ensure your future harvests are good. <br> <br>" + infoText.innerHTML;
     if (newLevel) showInfo();
@@ -666,6 +709,7 @@ function setInfoText(newLevel) {
 
  
 // to be run every time a level is completed
+// determines random events, resets all necessary data, and determines yield
 function nextLevel() {
   determineGrowth();
   gameData.progressRecord[gameData.level-1] = findYieldRange();
@@ -680,12 +724,14 @@ function nextLevel() {
   displayOverlay();
   determineInfestation();
   updateAll();
+  // if player hasn't gotten rid of insects, log that it's still infested
   if (gameData.infested) gameData.lastLevelInfested = gameData.level;
   saveData();
 }
  
 // =========== purchase functions ===========
  
+// run by menuBtn#fertilizer
 function buyFertilizer() {
   console.clear();
   console.log(gameData);
@@ -699,7 +745,8 @@ function buyFertilizer() {
   updateAll();
   saveData();
 }
- 
+
+// run by menuBtn#limestone
 function buyLimestone() {
   if (gameData.coins >= 10) {
     gameData.coins -= 10;
@@ -710,7 +757,8 @@ function buyLimestone() {
   updateAll();
   saveData();
 }
- 
+
+// run by menuBtn#prune
 function buyPrune() {
   if (
     gameData.coins >= 15 &&
@@ -723,7 +771,8 @@ function buyPrune() {
   updateAll();
   saveData();
 }
- 
+
+// run by menuBtn#bees
 function buyBees() {
   // can't buy bees if there's an infestation, or if it was infested this level
   if (gameData.infested || gameData.lastLevelInfested == gameData.level) return;
@@ -737,7 +786,8 @@ function buyBees() {
   updateAll();
   saveData();
 }
- 
+
+// run by menuBtn#repellent
 function buyRepellent() {
   // can't buy it if there's no infestation
   if (!gameData.infested) return;
@@ -750,7 +800,8 @@ function buyRepellent() {
   updateAll();
   saveData();
 }
- 
+
+// run by menuBtn#graft
 function buyGraft() {
   // can't buy until level 7
   if (gameData.level < 7 || gameData.grafted) return;
@@ -774,8 +825,10 @@ function buyGraft() {
 }
  
 // =========== on page-load ===========
- 
+
+// if on new-game page
 if (document.URL.includes("new-game.html")) {
+  // event listeners for if the divs are clicked to pick a starter tree
   const newAppleTree = document.getElementById("newAppleTree");
   newAppleTree.addEventListener("click", () => {
     gameData.treeType = "apple";
@@ -797,19 +850,29 @@ if (document.URL.includes("new-game.html")) {
     startNewGame();
   });
 }
- 
+
+// if on the main-page
 if (document.URL.includes("main-page.html")) {
+  // retrieve saved data
   if (localStorage.getItem("saveData") == "true") retrieveData();
+  // set all variable images
   menuImgDimensions();
   updateOverlayDimensions();
   updateAll();
   setOverlay();
-  menuBtnClicked();
+  // menuBtnClicked();
+  // not sure why this /\ was here
+
+  // if the fruit hasn't been collected, show it
+  // this way you don't lose the fruit if the page reloads
   if (!gameData.harvested) displayOverlay();
+  // not triggered in nextLevel function, because there's no level before it
+  // called here instead
   if (gameData.level == 1) setInfoText(true);
 
   saveData();
 
+  // event listener for when the fruit is clicked to be collected
   document.getElementById("fruitOverlay").addEventListener("click", () => {
       removeOverlay();
       // adds coins after fruit has been collected
@@ -821,7 +884,8 @@ if (document.URL.includes("main-page.html")) {
       saveData();
   });
 }
- 
+
+// if on index page
 if (document.URL.includes("index.html")) {
   // grey out resume button if there's no save data
   if (localStorage.getItem('saveData') == 'true') {
@@ -831,12 +895,11 @@ if (document.URL.includes("index.html")) {
   }
 }
 
-// makes all images non-draggable, so people will
-// stop thinking it's drag-and-drop!
+// makes all images non-draggable, so people will stop thinking it's drag-and-drop!
 const images = document.querySelectorAll('img');
 images.forEach(image => {
   image.draggable = false;
 });
- 
+
 console.log(gameData);
 console.log(findYieldRange());
