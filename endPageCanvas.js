@@ -1,7 +1,8 @@
+//gets context for drawing on canvas 
 var canvas = document.getElementById("canvas");
 var c = canvas.getContext("2d");
 
-// canvas size is modified in css file
+// canvas size is modified in css file but this sets initial size
 if (window.innerHeight < window.innerWidth) {
   canvas.height = window.innerHeight;
   canvas.width = window.innerHeight;
@@ -18,7 +19,7 @@ c.textAlign = 'center';
 
 //------------------Shape Classes------------
 
-//used to draw rings in tree and the overall trunk
+//Class for creating circle objects to be drawn in rings and trunk
 class Circle {
     constructor(x, y, radius, fillColor, context) {
       this.x = x;
@@ -28,6 +29,7 @@ class Circle {
       this.context = context;
     }
   
+    //method draws given circle elements
     draw() {
       if (this.fillColor) {
         this.context.fillStyle = this.fillColor;
@@ -39,7 +41,7 @@ class Circle {
   }
 
 
-  // draws rings of tree
+  // creates objects for individual rings of the tree
   class Ring {
     constructor(x, y, radius, thickness, fillColor, context) {
         this.x = x;
@@ -50,6 +52,7 @@ class Circle {
         this.context = context;
       }
 
+      //method to draw rings
       draw()
       {
           var tempFill = this.context.fillStyle;
@@ -58,7 +61,7 @@ class Circle {
       }
   }
 
-  //makes and draws labels on rings
+  //class for labels on the tree trunk
   class Label{
     constructor(y, level, fillColor, context)
     {
@@ -68,6 +71,7 @@ class Circle {
       this.context = context;
     }
 
+    //draws labels
     draw()
     { 
       var tempFill = this.context.fillStyle;
@@ -80,11 +84,11 @@ class Circle {
 
 
 //----------------Drawing Shapes----------
-
+//gets data back from local storage to calculate game acheivments
 retrieveData();
 console.log(gameData.progressRecord);
 
-// creates all objects in drawing
+// creates all objects used in drawing
 var bark = new Ring(canvas.width/2, canvas.height/2, canvas.width/2, 5, "#6a3e2d",c);
 var trunk = new Circle(canvas.width/2, canvas.height/2, canvas.width/2-10, "#c4ad8d", c);
 var rings = [];
@@ -108,8 +112,6 @@ trunk.draw();
 for(var i = record.length-1; i>=0; i--)
 {
     rings[i].draw();
-    // labels[i].draw();
-    // the credits over text wasn't working
 }
 
 
