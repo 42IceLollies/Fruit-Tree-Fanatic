@@ -398,7 +398,8 @@ button.index:disabled {
 }
 
 .ideal.phText {
-  color: var(--grey);
+  /*color: var(--grey);*/
+  color: #FFF;
 }
 
 #infoBtn {
