@@ -903,3 +903,10 @@ images.forEach(image => {
 
 console.log(gameData);
 console.log(findYieldRange());
+
+
+//plays music when page is loaded
+window.onload = document.getElementById("generalTheme").play();
+
+//to do list as far as music - need to make it repeat when it reaches the end of the song, maybe make it so it doesn't start over
+//again when you go to a new page, add bee and bug themes
