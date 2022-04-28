@@ -909,4 +909,4 @@ console.log(findYieldRange());
 window.onload = document.getElementById("generalTheme").play();
 
 //to do list as far as music - need to make it repeat when it reaches the end of the song, maybe make it so it doesn't start over
-//again when you go to a new page, add bee and bug themes
+//again when you go to a new page, add bee and bug themes, also add a way to mute music because this is starting to get really annoying
