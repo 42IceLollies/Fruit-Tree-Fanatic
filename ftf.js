@@ -18,6 +18,7 @@ const gameData = {
   progressRecord: [],
   coinYield: 0,
   harvested: true,
+  musicOn: true
 };
 
  
@@ -54,7 +55,7 @@ function retrieveData() {
   // converts the following to arrays
   const toArray = ["baseFruit", "pruneMax"]; //  const toArray = ["baseFruit", "pruneMax", "progressRecord"];
   // converts the following to boolean
-  const toBoolean = ["bees", "grafted", "infested", "harvested"];
+  const toBoolean = ["bees", "grafted", "infested", "harvested", "musicOn"];
   for (const key in gameData) {
     gameData[`${key}`] = localStorage.getItem(`${key}`);
   //  gameData[`${key}`] = localStorage.getItem(`${key}`); - I could be reading this wrong but do there need to be two lines of these?
@@ -906,7 +907,24 @@ console.log(findYieldRange());
 
 
 //plays music when page is loaded
-window.onload = document.getElementById("generalTheme").play();
+const generalTheme = document.getElementById("generalTheme");
+if(gameData.musicOn){
+window.onload = generalTheme.play();
+}
+generalTheme.loop = true;
 
-//to do list as far as music - need to make it repeat when it reaches the end of the song, maybe make it so it doesn't start over
-//again when you go to a new page, add bee and bug themes, also add a way to mute music because this is starting to get really annoying
+//turns music on and off when user selects the button to do so 
+function toggleMusic()
+{
+   if(gameData.musicOn)
+  {
+    generalTheme.play()
+    document.getElementById("muteDiv").classList.remove("muted");
+  } else
+  {
+    generalTheme.pause();
+    document.getElementById("muteDiv").classList.add("muted");
+  }
+  gameData.musicOn = !gameData.musicOn;
+}
+

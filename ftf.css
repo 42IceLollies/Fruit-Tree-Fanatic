@@ -48,6 +48,33 @@ a:visited {
   text-decoration: none !important;
 }
 
+/* styles mute button */
+#muteDiv{
+  width:3%;
+  position:absolute;
+  z-index:5;
+  top:7%;
+  right:1px;
+  border-radius:100%;
+  padding:5px;
+ 
+}
+.muteContent{
+  width:100%;
+  height:100%;
+ background-color: var(--lighter-green);
+  border-radius:100%;
+}
+
+#muteDiv:hover
+{
+  width:3.25%;
+}
+
+.muted{
+  filter: invert(100%);
+}
+
 /* ======= index.html styles ======= */
 
 #main-title {
