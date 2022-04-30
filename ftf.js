@@ -18,7 +18,7 @@ const gameData = {
   progressRecord: [],
   coinYield: 0,
   harvested: true,
-  musicOn: true,
+  musicOn: false,
 };
 
  
@@ -445,7 +445,7 @@ function transition() {
   if (gameData.level == 10) {
     gameData.progressRecord[gameData.level-1] = findYieldRange();
     saveData();
-   location.href = 'end-page.html';
+   location.replace('end-page.html');
    return;
   }
 
@@ -482,6 +482,11 @@ function menuBtnClicked() {
       }, 75); // applied for this number of milliseconds
     });
   });
+}
+
+function endPageHomeBtn() {
+  clearData();
+  location.replace('index.html');
 }
 
 // call each time gameData.coins is changed, with the amount change, and if increasing or decreasing
@@ -885,16 +890,19 @@ if (document.URL.includes("main-page.html")) {
       saveData();
   });
 
-  function playMusic() {
+  // on the first click after page load, play the music
+  // plays the music, and removes the event listener that called it
+  function playMusicOnLoad() {
     const generalTheme = document.getElementById("generalTheme");
-    if (gameData.musicOn) {
-      toggleMusic();
-    }
-    document.removeEventListener('mousedown', playMusic);
+    const muteDiv = document.getElementById('muteDiv');
+    generalTheme.play()
+    muteDiv.classList.remove("muted");
+    gameData.musicOn = true;
+    document.removeEventListener('mousedown', playMusicOnLoad);
   }
 
   // plays music when page loads
-  document.addEventListener('mousedown', playMusic);
+  document.addEventListener('mousedown', playMusicOnLoad);
 
 }
 
@@ -918,7 +926,7 @@ images.forEach(image => {
 function toggleMusic() {
   const generalTheme = document.getElementById("generalTheme");
   const muteDiv = document.getElementById('muteDiv');
-   if (gameData.musicOn) {
+   if (!gameData.musicOn) {
     generalTheme.play()
     muteDiv.classList.remove("muted");
   } else {

@@ -641,8 +641,30 @@ canvas {
   background-color:transparent;
   text-align: center;
   font-size: 1.4em;
-  transition: all 12s;
+  transition: all 16s;
   transition-timing-function: linear;
+}
+
+#btnDiv {
+  position: absolute;
+  margin: 0 auto;
+  width: 100%;
+  transition: all 8s;
+  transition-timing-function: linear;
+}
+
+button.end-page {
+  display: block;
+  margin: 10px auto;
+  font-size: 18px;
+  font-family: inherit;
+  border-radius: 12px;
+  border: 1px var(--brown) solid;
+  color: var(--dark-green);
+  text-transform: uppercase;
+  background: #ded;
+  width: 200px;
+  height: 1.6em;
 }
 
 .creditSectionText {

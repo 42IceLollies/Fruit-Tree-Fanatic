@@ -119,14 +119,20 @@ for(var i = record.length-1; i>=0; i--)
 
 function rollCredits() {
   const creditDivs = Array.from(document.querySelectorAll('.creditDiv'));
+  const btnDiv = document.getElementById('btnDiv');
   let count = 0;
 
   creditDivs.forEach(credit => {
     credit.style.top = '100%';
   });
+  btnDiv.style.top = '100%';
 
   const creditIntId = setInterval(() => {
-    if (count >= creditDivs.length - 1) clearInterval(creditIntId);
+    if (count > creditDivs.length - 1) {
+      clearInterval(creditIntId);
+      btnDiv.style.top = '45%';
+      return;
+    }
     creditDivs[count].style.top = '-50%';
     count++;
   }, 3000);
