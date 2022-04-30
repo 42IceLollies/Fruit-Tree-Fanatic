@@ -14,7 +14,6 @@
   box-sizing: border-box;
 }
 
-
 /* makes it so height can be used for elements later on */
 html {
   height: 100%;
@@ -49,29 +48,40 @@ a:visited {
 }
 
 /* styles mute button */
-#muteDiv{
-  width:3%;
-  position:absolute;
-  z-index:5;
-  top:7%;
-  right:1px;
-  border-radius:100%;
-  padding:5px;
- 
-}
-.muteContent{
-  width:100%;
-  height:100%;
- background-color: var(--lighter-green);
-  border-radius:100%;
+#muteDiv {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  float: right;
+  padding: 0;
+  margin: 12px;
 }
 
-#muteDiv:hover
-{
-  width:3.25%;
+/*#muteDiv.index {
+  position: absolute;
+  z-index: 5;
+  top: 15px;
+  right: 15px;
+  float: none;
+}*/
+
+.muteBtn {
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  margin: 0;
+  background-color: var(--lighter-green);
+  border-radius: 100%;
+  padding: 0;
 }
 
-.muted{
+.muteImg {
+  width: 15px;
+  height: 15px;
+  margin: auto;
+}
+
+.muted {
   filter: invert(100%);
 }
 
@@ -597,17 +607,14 @@ p.dark-green {
  
 canvas {
   display: block;
-  margin: 0 auto;
+  margin: auto;
   padding: 0;
-  /*height: 100%;
-  width: 50%;*/
 }
 
-
 .leftSideText {
-  float:left;
-  width:25%;
-  font-size:18px;
+  float: left;
+  width: 25%;
+  font-size: 18px;
   margin: 3%;
 }
 

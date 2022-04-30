@@ -18,15 +18,7 @@
     <div id="transition"></div>
 
     <!-- Background Music -->
-    <audio src="/audio/FTFGeneralMusic.mp3" id="generalTheme"></audio>
-
-  
-    <!-- Mute button -->
-		<div id="muteDiv">
-			<button class="muteContent" onclick="toggleMusic()">
-				<img src="images/mute.png" class="muteContent">
-			</button>
-		</div>
+    <audio src="./audio/FTFGeneralMusic.mp3" id="generalTheme"></audio>
  
     <button id='infoBtn' onclick=toggleInfo()>i</button>
     <div id='infoMain' class='hidden'>
@@ -53,6 +45,13 @@
         <p>Level <span id='levelText'>1</span></p>
       </div>
 
+      <!-- Mute button -->
+      <div id="muteDiv" class='muted'>
+        <button class="muteBtn" onclick="toggleMusic()">
+          <img src="images/mute.png" class="muteImg">
+        </button>
+      </div> <!-- end of muteDiv -->
+
       <div id='coinDisplay' class='main'>
         <p class='coinText dark-green' id='coinDisplayText'></p>
         <img src="./images/coin.png" class="costImg" />
@@ -67,7 +66,7 @@
 
       <div id='graftedDiv' class='hidden'>
         <img id='graftedSymbol' src='./images/grafting.png'>
-      </div>
+      </div> <!-- end of graftedDiv -->
 
     </div> <!-- end of info bar -->
 

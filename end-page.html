@@ -12,12 +12,12 @@
 	<body>
 		
 		<!-- Background music -->
-		<audio src="/audio/FTFGeneralMusic.mp3" id="generalTheme"></audio>
+		<audio src="./audio/FTFGeneralMusic.mp3" id="generalTheme"></audio>
 
     <!-- Mute button -->
-	<div id="muteDiv">
-		<button class="muteContent" onclick="toggleMusic()">
-			<img src="images/mute.png" class="muteContent">
+	<div id="muteDiv" class='index hidden'>
+		<button class="muteBtn" onclick="toggleMusic()">
+			<img src="images/mute.png" class="muteImg">
 		</button>
 	</div>
 
@@ -43,7 +43,12 @@
 			</div><br> <!-- end of creditDiv -->
 
 			<div class='creditDiv'>
-				<p class='creditSectionText'>Artists</p>
+				<p class='creditSectionText'>Artist</p>
+				<p>Cordelia Trueax</p>
+			</div><br> <!-- end of creditDiv -->
+
+			<div class='creditDiv'>
+				<p class='creditSectionText'>Original Music By</p>
 				<p>Cordelia Trueax</p>
 			</div><br> <!-- end of creditDiv -->
 
@@ -53,9 +58,8 @@
 			</div><br> <!-- end of creditDiv -->
 
 		</div> <!-- end of creditWindow -->
-		
-
-        <canvas id="canvas"></canvas>
+	
+    <canvas id="canvas"></canvas>
 
 	</body>
 	<script src='ftf.js' type="text/javascript"></script>
