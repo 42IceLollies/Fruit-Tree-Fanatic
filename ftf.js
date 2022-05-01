@@ -21,8 +21,10 @@ const gameData = {
   musicOn: false,
 };
 
- 
-// =============== save data functions ===============
+
+// ============================================
+// save data functions
+// ============================================
  
 // saves the gameData object values to localStorage
 function saveData() {
@@ -86,8 +88,10 @@ function clearData() {
   // marks that there's no longer any saved data to retrieve
   localStorage.setItem("saveData", "false");
 }
- 
-// =========== update display functions ===========
+
+// ============================================
+// update display functions 
+// ============================================
 
 // the ideal pH for each kind of tree, easily accessible
 // not kept in gameData because it doesn't change, so it doesn't need to saved to localStorage
@@ -103,7 +107,7 @@ function updateButtons() {
   if (gameData.level >= 2) {
     // show limestone button, and pH indicator in info-bar
     document.getElementById("btn2").classList.remove("hidden");
-    document.getElementById("phDisplay").classList.remove("hidden");
+    document.getElementById("phInfoDiv").classList.remove("hidden");
   }
  
   // show prune button
@@ -241,6 +245,7 @@ function updateInfoBar() {
   realPh.innerHTML = gameData.pH;
   const idealPhText = document.querySelector('p.ideal.phText');
   idealPhText.innerHTML = ' | ' + idealPh[gameData.treeType];
+  
   const phDifference = determinePhAccuracy();
   const root = document.querySelector(':root');
   root.style.setProperty('--ph-color', 'red');
@@ -417,6 +422,34 @@ function updatePriceColor() {
     }
   });
 }
+
+function updatePhInfoText() {
+  const phAccuracy = determinePhAccuracy();
+  let accuracyStatement;
+  switch (true) {
+    case (phAccuracy == 0):
+      accuracyStatement = 'just right.';
+      break;
+    case (phAccuracy < 0.6):
+      accuracyStatement = 'a bit off.';
+      break;
+    default:
+      accuracyStatement = 'way off.';
+      break;
+  }
+
+  let adviceStatement = '';
+  if (gameData.pH < idealPh[gameData.treeType]) {
+    adviceStatement = 'Try buying some limestone.';
+  }
+  if (gameData.pH > idealPh[gameData.treeType]) {
+    adviceStatement = 'Try buying some fertilizer.';
+  }
+
+  const advice = `Your soil pH is ${accuracyStatement} ${adviceStatement}`;
+  const phInfoText = document.getElementById('phInfoText');
+  phInfoText.innerHTML = advice;
+}
  
 // called in purchase functions
 // calls all preceding update functions, makes it easier to add another to many places in the code at once
@@ -431,6 +464,7 @@ function updateAll() {
   updateInsects();
   updateAchievementHidden();
   updatePriceColor();
+  updatePhInfoText();
   setInfoText(false);
 }
  
@@ -516,8 +550,10 @@ function coinChange(increase, num) {
     coinChangeDiv.style.opacity -= 0.1;
   }, 150);
 }
- 
-// =========== mathematical functions ===========
+
+// ============================================
+// mathematical functions
+// ============================================
  
 // changes the pH level
 // run when buying fertilizer/limestone, input '+' or '-';
@@ -650,9 +686,11 @@ function determineYield() {
   gameData.coinYield = result;
   // result added to gameData.coins when overlay is clicked and fruit is collected
 }
-  
-// =========== button specific functions ===========
- 
+
+// ============================================
+// button specific functions
+// ============================================
+
 // runs when selecting a starting tree in new-game
 function startNewGame() {
   clearData();
@@ -683,6 +721,20 @@ function hideInfo() {
   info.classList.add('hidden');
   const infoBtn = document.getElementById('infoBtn');
   infoBtn.classList.remove('white');
+}
+
+// turns music on and off when user selects the button to do so 
+function toggleMusic() {
+  const generalTheme = document.getElementById("generalTheme");
+  const muteDiv = document.getElementById('muteDiv');
+   if (!gameData.musicOn) {
+    generalTheme.play()
+    muteDiv.classList.remove("muted");
+  } else {
+    generalTheme.pause();
+    muteDiv.classList.add("muted");
+  }
+  gameData.musicOn = !gameData.musicOn;
 }
 
 // run in nextLevel function
@@ -734,8 +786,10 @@ function nextLevel() {
   if (gameData.infested) gameData.lastLevelInfested = gameData.level;
   saveData();
 }
- 
-// =========== purchase functions ===========
+
+// ============================================
+// purchase functions
+// ============================================
  
 // run by menuBtn#fertilizer
 function buyFertilizer() {
@@ -829,8 +883,10 @@ function buyGraft() {
   updateAll();
   saveData();
 }
- 
-// =========== on page-load ===========
+
+// ============================================
+// on page-load
+// ============================================
 
 // if on new-game page
 if (document.URL.includes("new-game.html")) {
@@ -921,20 +977,6 @@ const images = document.querySelectorAll('img');
 images.forEach(image => {
   image.draggable = false;
 });
-
-// turns music on and off when user selects the button to do so 
-function toggleMusic() {
-  const generalTheme = document.getElementById("generalTheme");
-  const muteDiv = document.getElementById('muteDiv');
-   if (!gameData.musicOn) {
-    generalTheme.play()
-    muteDiv.classList.remove("muted");
-  } else {
-    generalTheme.pause();
-    muteDiv.classList.add("muted");
-  }
-  gameData.musicOn = !gameData.musicOn;
-}
 
 console.log(gameData);
 console.log(findYieldRange());

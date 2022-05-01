@@ -427,7 +427,15 @@ button.index:disabled {
 #phDisplay {
   float: right;
   padding: 10px;
-  padding-top: 16px;
+  padding-top: 10px;
+  display: inline-block;
+}
+
+#phInfoText {
+  display: inline-block;
+  color: #FFF;
+  margin-top: 10px;
+  float: right;
 }
 
 .real.phText {
