@@ -1,0 +1,83 @@
+:root {
+  --light-green: #acffa1; /*Mint Green*/
+  --dark-green: #002800; /*Dark Green*/
+  --lighter-green: #d0efcb; /*Tea Green*/
+  --grey: #666; /*Granite Gray*/
+  --brown: #6a3e2d; /*Van Dyke Brown*/
+  --lightBrown: #c4ad8d;
+  --ph-color: black; /*to be changed in js*/
+  --padding-top: 2%; /*to be changed in js*/
+  font-family: "Inter", sans-serif;
+}
+
+canvas {
+  display: block;
+  margin: auto;
+  padding: 0;
+}
+
+.leftSideText {
+  float: left;
+  width: 25%;
+  font-size: 18px;
+  margin: 3%;
+}
+
+.endPageHeader {
+  font-family: "Courgette", sans-serif;
+}
+
+#creditWindow {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.creditDiv {
+  position: absolute;
+  margin: 0 auto;
+  width: 100%;
+  /*color: var(--dark-green);*/
+  color: rgb(231, 255, 231); /*almost white, little green*/
+  background-color:transparent;
+  text-align: center;
+  font-size: 1.4em;
+  transition: all 16s;
+  transition-timing-function: linear;
+}
+
+#btnDiv {
+  position: absolute;
+  margin: 0 auto;
+  width: 100%;
+  transition: all 8s;
+  transition-timing-function: linear;
+}
+
+button.end-page {
+  display: block;
+  margin: 10px auto;
+  font-size: 18px;
+  font-family: inherit;
+  border-radius: 12px;
+  border: 1px var(--brown) solid;
+  color: var(--dark-green);
+  text-transform: uppercase;
+  background: #ded;
+  width: 200px;
+  height: 1.6em;
+}
+
+.creditSectionText {
+  font-size: 1.5em;
+  font-family: 'Courgette', sans-serif;
+}
+
+#titleCredit {
+  font-family: "Courgette", sans-serif;
+  font-size: 4em;
+}

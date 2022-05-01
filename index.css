@@ -1,0 +1,67 @@
+:root {
+  --light-green: #acffa1; /*Mint Green*/
+  --dark-green: #002800; /*Dark Green*/
+  --lighter-green: #d0efcb; /*Tea Green*/
+  --grey: #666; /*Granite Gray*/
+  --brown: #6a3e2d; /*Van Dyke Brown*/
+  --lightBrown: #c4ad8d;
+  --ph-color: black; /*to be changed in js*/
+  --padding-top: 2%; /*to be changed in js*/
+  font-family: "Inter", sans-serif;
+}
+
+#main-title {
+  width: 100%;
+  text-align: center;
+  font-family: "Courgette", sans-serif;
+  font-size: 3em;
+  color: var(--dark-green);
+  position: absolute;
+  top: 35%;
+}
+
+#main-buttons {
+  position: absolute;
+  width: 40%;
+  top: 50%;
+  margin: 0 30%;
+}
+
+button.index {
+  display: block;
+  margin: 0 auto;
+  font-size: 20px;
+  font-family: inherit;
+  border-radius: 12px;
+  border: 1px var(--dark-green) solid;
+  color: var(--dark-green);
+  text-transform: uppercase;
+  background: #ded;
+  width: 200px;
+  height: 1.8em;
+}
+
+button.index:hover {
+  background: #cdc;
+}
+button.index:focus {
+  background: #bcb;
+}
+button.index:disabled {
+  background: #aba;
+  opacity: 0.5;
+}
+
+/* makes background size of screen and puts behind other elements */
+.homeBackground {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* puts other elements on top */
+.secondLayer {
+  position: relative;
+  z-index: 2;
+}

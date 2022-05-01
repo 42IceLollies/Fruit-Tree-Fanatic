@@ -949,12 +949,15 @@ if (document.URL.includes("main-page.html")) {
   // on the first click after page load, play the music
   // plays the music, and removes the event listener that called it
   function playMusicOnLoad() {
-    const generalTheme = document.getElementById("generalTheme");
-    const muteDiv = document.getElementById('muteDiv');
-    generalTheme.play()
-    muteDiv.classList.remove("muted");
-    gameData.musicOn = true;
-    document.removeEventListener('mousedown', playMusicOnLoad);
+    // delayed so if the unmute button is clicked this doesn't happen first
+    setTimeout(() => {
+      const generalTheme = document.getElementById("generalTheme");
+      const muteDiv = document.getElementById('muteDiv');
+      generalTheme.play()
+      muteDiv.classList.remove("muted");
+      gameData.musicOn = true;
+      document.removeEventListener('mousedown', playMusicOnLoad);
+    }, 100)
   }
 
   // plays music when page loads

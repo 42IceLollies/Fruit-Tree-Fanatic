@@ -1,0 +1,67 @@
+:root {
+  --light-green: #acffa1; /*Mint Green*/
+  --dark-green: #002800; /*Dark Green*/
+  --lighter-green: #d0efcb; /*Tea Green*/
+  --grey: #666; /*Granite Gray*/
+  --brown: #6a3e2d; /*Van Dyke Brown*/
+  --lightBrown: #c4ad8d;
+  --ph-color: black; /*to be changed in js*/
+  --padding-top: 2%; /*to be changed in js*/
+  font-family: "Inter", sans-serif;
+}
+
+
+#tree-options {
+  width: 100%;
+  height: 65%;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0;
+  padding-top: 10px;
+  margin: 0;
+}
+
+.option {
+  width: 30%;
+  height: 95%;
+  background: var(--lighter-green);
+  border-radius: 30px;
+  box-shadow: 0 0 7px var(--grey);
+  transition: box-shadow, 0.5s;
+  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+  overflow: hidden;
+}
+
+.option:hover {
+  box-shadow: 0px 0px 15px #666;
+}
+
+#info-new {
+  background: var(--grey);
+  opacity: 1;
+  border-radius: 30px;
+  height: 28%;
+  width: 90%;
+  margin: 0 auto;
+  box-shadow: 0 0 7px var(--grey);
+  padding: 3%;
+}
+
+#info-new p {
+  color: white;
+  text-align: center;
+  font-size: 1.4em;
+}
+
+.equal {
+  margin: 0 20px;
+}
+
+#coinDisplay.new-game {
+  float: right;
+  padding: 10px;
+  padding-bottom: 0;
+}
