@@ -5,14 +5,13 @@
   --grey: #666; /*Granite Gray*/
   --brown: #6a3e2d; /*Van Dyke Brown*/
   --lightBrown: #c4ad8d;
-  --ph-color: black; /*to be changed in js*/
-  --padding-top: 2%; /*to be changed in js*/
+  --margin-top: 0; /*to be changed in js*/
   font-family: "Inter", sans-serif;
 }
 
 canvas {
   display: block;
-  margin: auto;
+  margin: var(--margin-top) auto;
   padding: 0;
 }
 

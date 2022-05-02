@@ -1,6 +1,7 @@
 //gets context for drawing on canvas 
 var canvas = document.getElementById("canvas");
 var c = canvas.getContext("2d");
+var root = document.querySelector(':root');
 
 // canvas size is modified in css file but this sets initial size
 if (window.innerHeight < window.innerWidth) {
@@ -9,6 +10,10 @@ if (window.innerHeight < window.innerWidth) {
 } else {
   canvas.height = window.innerWidth;
   canvas.width = window.innerWidth;
+  console.log((window.innerHeight - window.innerWidth) / 2);
+  root.style.setProperty('--margin-top', (window.innerHeight - window.innerWidth) / 2 + 'px');
+  console.log(root.style);
+  console.log(canvas.style);
 }
 
 
