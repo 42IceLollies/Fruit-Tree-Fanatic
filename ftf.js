@@ -89,6 +89,33 @@ function clearData() {
   localStorage.setItem("saveData", "false");
 }
 
+// to be run when transitioning to the end-page
+function saveScoreData() {
+  if (gameData.level !== 10) return;
+  if (localStorage.getItem('scoreData') == null) {
+    localStorage.setItem('scoreData', []);
+    console.log('set');
+  }
+
+  const scoreData = localStorage.getItem('scoreData');
+  const pushObj = {
+    treeType: gameData.treeType,
+    score: gameData.progressRecord[9].fruitYield,
+  };
+  
+
+  scoreData[scoreData.length] = JSON.stringify(pushObj);
+  console.log([scoreData, "after"]);
+}
+
+function retrieveScoreData() {
+  if (localStorage.getItem('scoreData') == null) return;
+  const scoreData = localStorage.getItem('scoreData');
+  console.log(scoreData);
+}
+
+retrieveScoreData();
+
 // ============================================
 // update display functions 
 // ============================================
@@ -478,9 +505,10 @@ function transition() {
   // if it's over, move to the credits page
   if (gameData.level == 10) {
     gameData.progressRecord[gameData.level-1] = findYieldRange();
+    saveScoreData();
     saveData();
-   location.replace('end-page.html');
-   return;
+    location.replace('end-page.html');
+    return;
   }
 
   // fade to black
