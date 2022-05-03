@@ -89,32 +89,47 @@ function clearData() {
   localStorage.setItem("saveData", "false");
 }
 
+// saves the score data (tree type, fruit yield)
 // to be run when transitioning to the end-page
 function saveScoreData() {
-  if (gameData.level !== 10) return;
   if (localStorage.getItem('scoreData') == null) {
-    localStorage.setItem('scoreData', []);
+    const obj = [];
+    localStorage.setItem('scoreData', JSON.stringify(obj));
     console.log('set');
   }
 
-  const scoreData = localStorage.getItem('scoreData');
+  const scoreData = JSON.parse(localStorage.getItem('scoreData'));
+
   const pushObj = {
     treeType: gameData.treeType,
-    score: gameData.progressRecord[9].fruitYield,
+    score: gameData.progressRecord[9],
   };
-  
 
-  scoreData[scoreData.length] = JSON.stringify(pushObj);
-  console.log([scoreData, "after"]);
+  scoreData.push(pushObj);
+  localStorage.setItem('scoreData', JSON.stringify(scoreData));
 }
 
+// retrieves the score data
 function retrieveScoreData() {
   if (localStorage.getItem('scoreData') == null) return;
-  const scoreData = localStorage.getItem('scoreData');
+  const scoreData = JSON.parse(localStorage.getItem('scoreData'));
   console.log(scoreData);
 }
 
-retrieveScoreData();
+// only used for testing
+function clearScoreData() {
+  localStorage.removeItem('scoreData');
+}
+
+console.log(JSON.parse(localStorage.getItem('scoreData')));
+
+// localStorage.setItem('scoreData', JSON.stringify(obj));
+
+// const score = JSON.parse(localStorage.getItem('scoreData'));
+// score.score1 = obj;
+// localStorage.setItem('scoreData', JSON.stringify(score));
+// console.log(JSON.parse(localStorage.getItem('scoreData')));
+
 
 // ============================================
 // update display functions 
@@ -166,7 +181,7 @@ function displayTree() {
   
   // sets the css variable used in the padding-top of multiple elements to make the tree image increase in height
   const root = document.querySelector(":root");
-  root.style.setProperty('--padding-top', 21 - gameData.level + "%");
+  root.style.setProperty('--padding-top', 16 - gameData.level + "%");
 }
 
 // finds the potential max and min fruit possible by level
@@ -606,7 +621,7 @@ function adjustPH(change) {
 // to be called every time player advances a level
 function determineInfestation() {
   // if it's before level 4, or already infested, don't run the function. precaution
-  if (gameData.level < 4) return;
+  if (gameData.level < 4 || gameData.level == 10) return;
   if (gameData.infested == true) return;
   let chance;
   // 10% for apple trees
