@@ -1,0 +1,28 @@
+:root {
+  --light-green: #acffa1; /*Mint Green*/
+  --dark-green: #002800; /*Dark Green*/
+  --lighter-green: #d0efcb; /*Tea Green*/
+  --grey: #666; /*Granite Gray*/
+  --brown: #6a3e2d; /*Van Dyke Brown*/
+  --lightBrown: #c4ad8d;
+  font-family: "Inter", sans-serif;
+}
+
+
+table {
+	width: 80%;
+	/*height: 50%;*/
+	margin: 0 auto;
+	background: var(--lighter-green);
+	margin-top: 15px;
+}
+
+td {
+	border: solid var(--grey);
+	text-align: center;
+	width: 33%;
+}
+
+.gameNum {
+	font-size: 1.4em;
+}

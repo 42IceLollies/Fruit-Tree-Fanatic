@@ -594,6 +594,25 @@ function coinChange(increase, num) {
   }, 150);
 }
 
+// makes the scoreboard in scoreboard.html
+function generateScoreboard() {
+  let htmlString = '';
+  const scoreData = JSON.parse(localStorage.getItem('scoreData'));
+  const scoreboard = document.getElementById('scoreboard');
+  for (var i = 0; i < scoreData.length; i++) {
+    const scoreNum = Math.ceil((scoreData[i].score.fruitYield - scoreData[i].score.lowFruitYield) / (scoreData[0].score.highFruitYield - scoreData[0].score.lowFruitYield) * 10);
+    htmlString += `
+    <tr>
+    <td class='gameNum'>${i + 1}</td>
+    <td class='score'>${scoreNum}/10</td>
+    <td class='treeType'><img height='50' src='images/${scoreData[i].treeType}.png'></td>
+    </tr>
+    `;
+
+  }
+  scoreboard.innerHTML = htmlString;
+}
+
 // ============================================
 // mathematical functions
 // ============================================
@@ -1016,6 +1035,10 @@ if (document.URL.includes("index.html")) {
   } else {
     document.getElementById('resume-game').disabled = true;
   }
+}
+
+if (document.URL.includes('scoreboard.html')) {
+  generateScoreboard();
 }
 
 // makes all images non-draggable, so people will stop thinking it's drag-and-drop!

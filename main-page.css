@@ -415,6 +415,7 @@
 }
 
 .muteImg {
+  position: static !important;
   width: 15px;
   height: 15px;
   margin: auto;
