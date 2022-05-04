@@ -16,6 +16,16 @@
 	<link rel="icon" href="images/peach.ico" type="image/x-icon">
 </head>
 <body>
+	<button onclick=toggleMainMenu() id='menuOpen'>
+        <div class="menuDash"></div>
+        <div class="menuDash"></div>
+        <div class="menuDash"></div>
+      </button>
+	<!-- menu -->
+	<div id='mainMenu'>
+      <button class='mainMenuBtn' onclick="location.href = 'index.html'">home</button>
+      <button class='mainMenuBtn' onclick=toggleMainMenu()>close</button>
+    </div> <!-- end of mainMenu -->
 
 	<table id='scoreboard'>
 		<thead>

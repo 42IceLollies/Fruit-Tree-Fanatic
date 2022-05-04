@@ -77,3 +77,56 @@ p.dark-green {
 .price {
   margin: 0 auto;
 }
+
+
+#mainMenu {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  z-index: 6;
+  right: -50%;
+  top: 5%;
+  transition: right 1s;
+  width: 25%;
+  border: 1px solid black;
+}
+
+#mainMenu.show {
+  right: 0;
+}
+
+#menuOpen {
+  margin: 11px;
+  margin-bottom: 0;
+  padding: 0;
+  float: right;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  width: 30px;
+  height: 30px;
+  background: inherit;
+  align-content: space-between;
+  justify-content: space-evenly;
+  z-index: 7;
+}
+
+.menuDash {
+  width: 100%;
+  height: 10%;
+  background: var(--grey);
+}
+
+.mainMenuBtn {
+  background: lightgrey;
+  padding: .5em;
+  font-size: 1.2em;
+  border: 2px solid black;
+  color: #000;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.mainMenuBtn:hover {
+  opacity: 1;
+}

@@ -8,13 +8,15 @@
   font-family: "Inter", sans-serif;
 }
 
+body {
+	padding-top: 30px !important;
+}
 
 table {
 	width: 80%;
 	/*height: 50%;*/
 	margin: 0 auto;
 	background: var(--lighter-green);
-	margin-top: 15px;
 }
 
 td {
