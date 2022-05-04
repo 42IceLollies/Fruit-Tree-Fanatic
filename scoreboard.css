@@ -23,6 +23,12 @@ td {
 	width: 33%;
 }
 
+thead td {
+	padding: 5px;
+	text-decoration: underline;
+	font-size: 1.3em;
+}
+
 .gameNum {
 	font-size: 1.4em;
 }

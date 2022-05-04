@@ -17,6 +17,7 @@ const gameData = {
   baseFruit: [0, 40, 55, 80, 85, 90, 90, 95, 100, 100, 105, 110, 110, 115, 120],
   progressRecord: [],
   coinYield: 0,
+  fruitYield: 0,
   harvested: true,
   musicOn: false,
 };
@@ -53,6 +54,7 @@ function retrieveData() {
     "coinYield",
     "lastLevelInfested",
     "levelGrafted",
+    "fruitYield",
   ];
   // converts the following to arrays
   const toArray = ["baseFruit", "pruneMax"]; //  const toArray = ["baseFruit", "pruneMax", "progressRecord"];
@@ -187,10 +189,7 @@ function displayTree() {
 // finds the potential max and min fruit possible by level
 function findYieldRange() {
   // finds the fruit yield off of the coin yield
-  var fruitYield = gameData.coinYield;
-  if (gameData.treeType == 'peach') fruitYield /= 2;
-  if (gameData.treeType == 'lemon') fruitYield /= 3;
- 
+  var fruitYield = gameData.fruitYield;
   var lowFruitYield = gameData.baseFruit[gameData.level-1] * 0.35;
   var highFruitYield = (gameData.baseFruit[gameData.level-1] * 1.835) + 20;
  
@@ -292,7 +291,7 @@ function updateInfoBar() {
   const root = document.querySelector(':root');
   root.style.setProperty('--ph-color', 'red');
   if (phDifference < 0.6) root.style.setProperty('--ph-color', 'goldenrod');
-  if (phDifference == 0) root.style.setProperty('--ph-color', 'green');
+  if (phDifference == 0) root.style.setProperty('--ph-color', 'lightgreen');
 
   // sets the graft symbol based on if player has purchased the graft
   const graftDiv = document.getElementById('graftedDiv');
@@ -610,7 +609,27 @@ function generateScoreboard() {
     `;
 
   }
-  scoreboard.innerHTML = htmlString;
+  scoreboard.innerHTML += htmlString;
+}
+
+// to be called on index.html page load
+function updateIndexButtons() {
+  // if there's a game in progress, have the option to resume
+  const resumeBtn = document.getElementById('resume-game');
+  if (localStorage.getItem('saveData') == 'true') {
+    resumeBtn.disabled = false;
+  } else {
+    resumeBtn.disabled = true;
+  }
+
+  // if there have been previous games played, have the scoreboard be open
+  const scoreData = JSON.parse(localStorage.getItem('scoreData'));
+  const boardBtn = document.getElementById('toScoreboard');
+  if (scoreData == null || scoreData.length == 0) {
+    boardBtn.disabled = true;
+  } else {
+    boardBtn.disabled = false;
+  }
 }
 
 // ============================================
@@ -693,6 +712,8 @@ function determineGraftedFruit() {
   // if it's been 2 levels, 20 fruit
   if (gameData.levelGrafted <= gameData.level - 3) amount = 20;
 
+  gameData.fruitYield += amount;
+
   // plums and pears are worth more than oranges
   if (gameData.graftedTreeType == "plum") amount *= 2;
   if (gameData.graftedTreeType == "pear") amount *= 3;
@@ -734,6 +755,8 @@ function determineYield() {
     (1 + pollinationRate + gameData.growth + 
     pruneMult + infestation + phAccuracy);
   result = Math.round(result);
+
+  gameData.fruitYield = result;
 
   // peaches and lemons are worth more than apples
   if (gameData.treeType == 'peach') result *= 2;
@@ -1029,12 +1052,7 @@ if (document.URL.includes("main-page.html")) {
 
 // if on index page
 if (document.URL.includes("index.html")) {
-  // grey out resume button if there's no save data
-  if (localStorage.getItem('saveData') == 'true') {
-    document.getElementById('resume-game').disabled = false;
-  } else {
-    document.getElementById('resume-game').disabled = true;
-  }
+  updateIndexButtons()
 }
 
 if (document.URL.includes('scoreboard.html')) {
