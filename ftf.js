@@ -598,8 +598,11 @@ function generateScoreboard() {
   let htmlString = '';
   const scoreData = JSON.parse(localStorage.getItem('scoreData'));
   const scoreboard = document.getElementById('scoreboard');
+  const low = scoreData[i].score.lowFruitYield;
+  const high = scoreData[0].score.highFruitYield;
+  const actual = scoreData[i].score.fruitYield;
   for (var i = 0; i < scoreData.length; i++) {
-    const scoreNum = Math.ceil((scoreData[i].score.fruitYield - scoreData[i].score.lowFruitYield) / (scoreData[0].score.highFruitYield - scoreData[0].score.lowFruitYield) * 10);
+    const scoreNum = Math.ceil((actual - low) / (high - low) * 10);
     htmlString += `
     <tr>
     <td class='gameNum'>${i + 1}</td>

@@ -1,4 +1,4 @@
-//gets context for drawing on canvas 
+// gets context for drawing on canvas 
 var canvas = document.getElementById("canvas");
 var c = canvas.getContext("2d");
 var root = document.querySelector(':root');
@@ -111,7 +111,7 @@ for(var i = 0; i < record.length; i++)
 }
 
 
-//draws all objects in drawing
+// draws all objects in drawing
 bark.draw();
 trunk.draw();
 for(var i = record.length-1; i>=0; i--)
@@ -120,7 +120,7 @@ for(var i = record.length-1; i>=0; i--)
 }
 
 
-//------------credits------------
+// ------------credits------------
 
 function rollCredits() {
   const creditDivs = Array.from(document.querySelectorAll('.creditDiv'));
@@ -131,6 +131,12 @@ function rollCredits() {
     credit.style.top = '100%';
   });
   btnDiv.style.top = '100%';
+
+  // starts the first div up quickly
+  setTimeout(() => {
+    creditDivs[count].style.top = '-50%';
+    count++;
+  }, 50);
 
   const creditIntId = setInterval(() => {
     if (count > creditDivs.length - 1) {

@@ -38,7 +38,7 @@ canvas {
 
 .creditDiv {
   position: absolute;
-  margin: 0 auto;
+  margin: 0;
   width: 100%;
   /*color: var(--dark-green);*/
   color: rgb(231, 255, 231); /*almost white, little green*/
