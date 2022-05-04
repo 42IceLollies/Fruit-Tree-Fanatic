@@ -181,29 +181,6 @@
   opacity: 0.7;
 }
 
-/*for a fade out effect between levels*/
-#transition {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  background: #000;
-  opacity: 0; 
-  transition: all 1s;
-  z-index: 0;
-  transition-timing-function: linear;
-}
-
-#transition.faded {
-  z-index: 5;
-  opacity: 0.5;
-}
-
-#transition.on {
-  z-index: 7;
-  opacity: 1;
-}
-
 .menuBtn:disabled {
   opacity: 0.5;
 }
@@ -371,4 +348,8 @@
 
 .muted {
   filter: invert(100%);
+}
+
+#menuOpen {
+  position: static !important;
 }

@@ -8,15 +8,12 @@
   font-family: "Inter", sans-serif;
 }
 
-body {
-	padding-top: 30px !important;
-}
-
-table {
+#scoreboard {
 	width: 80%;
 	/*height: 50%;*/
 	margin: 0 auto;
 	background: var(--lighter-green);
+	margin-top: 60px;
 }
 
 td {
@@ -33,4 +30,10 @@ thead td {
 
 .gameNum {
 	font-size: 1.4em;
+}
+
+#menuOpen {
+	position: absolute;
+	top: 4px;
+	right: 4px;
 }
