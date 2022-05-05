@@ -594,7 +594,7 @@ function generateScoreboard() {
     const low = scoreData[i].score.lowFruitYield;
     const high = scoreData[0].score.highFruitYield;
     const actual = scoreData[i].score.fruitYield;
-    const scoreNum = Math.ceil((actual - low) / (high - low) * 10);
+    const scoreNum = Math.ceil((actual - low + 10) / (high - low) * 10);
     htmlString += `
     <tr>
     <td class='gameNum'>${i + 1}</td>
@@ -976,6 +976,12 @@ function buyGraft() {
 // ============================================
 
 function newTreeSelection(treeType, cost) {
+  // disable the buttons, so you can't double-click
+  const options = document.querySelectorAll('button.option');
+  options.forEach(option => {
+    option.disabled = true;
+  });
+
   gameData.treeType = treeType;
   gameData.coins -= cost;
   startNewGame();
