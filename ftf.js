@@ -828,7 +828,7 @@ function toggleMusic() {
 }
 
 // run in nextLevel function
-// if it's a new level, show infoMain
+// if it's the start of a new level, show infoMain
 function setInfoText(newLevel) {
   // array of text for the new items
   const infoArray = ["Welcome to the game! Here is your tree, try buying some fertilizer to feed it so it will grow lots of fruit next level!", "You have your first harvest! Click the fruit to collect it. It turns out the fertilizer lowers the pH of the soil. You can buy limestone to balance it out, but don't forget to keep your soil fertile.", "Now you can prune your tree, to focus it on producing fruit instead of new growth.", "Bees can help pollinate your tree. They're only available once per level, and not available if you've recently had insects.", undefined, undefined, "You've unlocked the option to graft your tree. Grafting another type of fruit onto your tree can increase output, but it's quite an investment."];
@@ -836,7 +836,7 @@ function setInfoText(newLevel) {
   const infoText = document.getElementById('infoMainText');
 
   // basic instructions, always included at the bottom
-  const baseText = "- Click fruit to collect it. <br>- Buy items and actions to keep your tree healthy. <br>- Click the 'Next Level' button when you are done.";
+  const baseText = "- Click fruit to collect it. <br>- Buy items and actions to keep your tree healthy. <br>- Click 'Next Level' when you're done.";
 
   // if there's instructions for this level
   if (infoArray[gameData.level - 1] !== undefined) {
@@ -848,9 +848,13 @@ function setInfoText(newLevel) {
     infoText.innerHTML = baseText;
   }
 
+  if (gameData.levelGrafted == gameData.level - 1) {
+    infoText.innerHTML = `It worked! Now you have ${gameData.graftedTreeType}s growing on your tree too!<br><br>` + infoText.innerHTML;
+  }
+
   // if there's insects, add instructions of what to do to the front
   if (gameData.infested) {
-    infoText.innerHTML =  "Uh oh! Your tree has become infested with insects. You can buy repellent to get rid of them. They should be dealt with as soon as possible to ensure your future harvests are good. <br> <br>" + infoText.innerHTML;
+    infoText.innerHTML =  "Uh oh! Your tree is infested with insects. You should buy repellent to get rid of them as soon as possible to ensure your future harvests are good. <br> <br>" + infoText.innerHTML;
     if (newLevel) showInfo();
   }
 }
