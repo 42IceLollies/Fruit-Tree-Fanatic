@@ -125,14 +125,6 @@ function clearScoreData() {
 
 console.log(JSON.parse(localStorage.getItem('scoreData')));
 
-// localStorage.setItem('scoreData', JSON.stringify(obj));
-
-// const score = JSON.parse(localStorage.getItem('scoreData'));
-// score.score1 = obj;
-// localStorage.setItem('scoreData', JSON.stringify(score));
-// console.log(JSON.parse(localStorage.getItem('scoreData')));
-
-
 // ============================================
 // update display functions 
 // ============================================
@@ -598,10 +590,10 @@ function generateScoreboard() {
   let htmlString = '';
   const scoreData = JSON.parse(localStorage.getItem('scoreData'));
   const scoreboard = document.getElementById('scoreboard');
-  const low = scoreData[i].score.lowFruitYield;
-  const high = scoreData[0].score.highFruitYield;
-  const actual = scoreData[i].score.fruitYield;
   for (var i = 0; i < scoreData.length; i++) {
+    const low = scoreData[i].score.lowFruitYield;
+    const high = scoreData[0].score.highFruitYield;
+    const actual = scoreData[i].score.fruitYield;
     const scoreNum = Math.ceil((actual - low) / (high - low) * 10);
     htmlString += `
     <tr>
@@ -650,7 +642,14 @@ function adjustPH(change) {
     gameData.pH = Math.round(gameData.pH * 10) / 10;
   } else {
     // when it's far from the goal, change by 0.01
-    if (change == "+") gameData.pH += 0.01;
+    if (change == "+") {
+      // only increase by .1 when at 6, .01 when decreasing
+      if (gameData.pH == 6) {
+        gameData.pH += 0.1;
+      } else {
+        gameData.pH += 0.01;
+      }
+    }
     if (change == "-") gameData.pH -= 0.01;
     // round to 2 places after the decimal
     gameData.pH = Math.round(gameData.pH * 100) / 100;
