@@ -60,14 +60,14 @@
 
 #achievementMarker {
   background-color:#666;
-  height:45%;
+  height:35%;
   width:100%;
   border-radius:5%;
   padding-left:1%;
   padding-right:1%;
 }
 
-.labelOne { 
+/* .labelOne { 
   top: 0;
   left: 1px;
   margin: 0;
@@ -78,10 +78,16 @@
   top: 0;
   right: 1px;
   margin: 0;
+} */
+
+.mainLabel{
+  font-family:"Courgette", sans-serif;
+  color:black;
+  clear:left;
 }
 
 .achievementDiv {
-  height: 10%;
+  height: 13%;
   width: 15%;
   position: absolute;
   z-index: 6;
@@ -197,7 +203,7 @@
   float: right;
   padding: 10px;
   padding-top: 10px;
-  display: inline-block;
+  /* display: inline-block; */
   width: 40%;
 }
 
@@ -207,6 +213,7 @@
   margin-top: 10px;
   float: right;
   width: 60%;
+  font-family:"Courgette", sans-serif;
 }
 
 .real.phText {

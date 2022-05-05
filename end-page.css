@@ -6,6 +6,7 @@
   --brown: #6a3e2d; /*Van Dyke Brown*/
   --lightBrown: #c4ad8d;
   --margin-top: 0; /*to be changed in js*/
+  --label-margin : 0; /*also to be changed in js*/
   font-family: "Inter", sans-serif;
 }
 
@@ -79,4 +80,22 @@ button.end-page {
 #titleCredit {
   font-family: "Courgette", sans-serif;
   font-size: 4em;
+}
+
+#labelsDiv{
+  font-family:  "Inter", sans-serif;
+  color:black;
+  font-size:1em;
+  text-align: center;
+}
+
+.lbl{
+  margin-top: var(--label-margin);
+}
+
+.bottomLbl
+{
+  color:white;
+  font-family: "Courgette", sans-serif;
+  font-size: 1.5em;
 }

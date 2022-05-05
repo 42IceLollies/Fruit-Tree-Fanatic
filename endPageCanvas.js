@@ -66,25 +66,6 @@ class Circle {
       }
   }
 
-  //class for labels on the tree trunk
-  class Label{
-    constructor(y, level, fillColor, context)
-    {
-      this.y = y;
-      this.level = level; 
-      this.fillColor = fillColor;
-      this.context = context;
-    }
-
-    //draws labels
-    draw()
-    { 
-      var tempFill = this.context.fillStyle;
-      this.context.fillStyle = this.fillColor;
-      c.fillText("Level " + this.level, canvas.width/2, this.y);
-      this.context.fillStyle = tempFill;
-    }
-  }
 
 
 
@@ -97,7 +78,6 @@ console.log(gameData.progressRecord);
 var bark = new Ring(canvas.width/2, canvas.height/2, canvas.width/2, 5, "#6a3e2d",c);
 var trunk = new Circle(canvas.width/2, canvas.height/2, canvas.width/2-10, "#c4ad8d", c);
 var rings = [];
-var labels = [];
 
 var record = gameData.progressRecord;
 
@@ -107,7 +87,8 @@ for(var i = 0; i < record.length; i++)
     var opacity = percentage;
     var weight = percentage*10;
     rings[i] = new Ring(canvas.width/2, canvas.height/2, canvas.width/25 * (i+1), weight, "rgba(106,62,45," + opacity + ")", c);
-    labels[i] = new Label(canvas.height/2- rings[i].radius + rings[i].thickness - 7, i+1, 'black', c);
+    document.documentElement.style.setProperty('--label-margin', canvas.width/50 + "px");
+    console.log(document.documentElement.style.getPropertyValue('--label-margin'));
 }
 
 
