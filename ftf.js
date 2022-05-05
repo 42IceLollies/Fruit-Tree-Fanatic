@@ -814,12 +814,15 @@ function hideInfo() {
 function toggleMusic() {
   const generalTheme = document.getElementById("generalTheme");
   const muteDiv = document.getElementById('muteDiv');
+  const unmuteText = document.getElementById('unmute');
    if (!gameData.musicOn) {
     generalTheme.play()
     muteDiv.classList.remove("muted");
+    unmuteText.classList.add('hidden');
   } else {
     generalTheme.pause();
     muteDiv.classList.add("muted");
+    unmuteText.classList.remove('hidden');
   }
   gameData.musicOn = !gameData.musicOn;
 }
@@ -1027,8 +1030,10 @@ if (document.URL.includes("main-page.html")) {
     setTimeout(() => {
       const generalTheme = document.getElementById("generalTheme");
       const muteDiv = document.getElementById('muteDiv');
+      const unmuteText = document.getElementById('unmute');
       generalTheme.play()
       muteDiv.classList.remove("muted");
+      unmuteText.classList.add('hidden');
       gameData.musicOn = true;
       document.removeEventListener('mousedown', playMusicOnLoad);
     }, 100)
