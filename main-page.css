@@ -198,6 +198,7 @@
   padding: 10px;
   padding-top: 10px;
   display: inline-block;
+  width: 40%;
 }
 
 #phInfoText {
@@ -205,6 +206,7 @@
   color: #FFF;
   margin-top: 10px;
   float: right;
+  width: 60%;
 }
 
 .real.phText {
@@ -352,4 +354,8 @@
 
 #menuOpen {
   position: static !important;
+}
+
+#transition {
+  transition: opacity 1.2s !important;
 }
