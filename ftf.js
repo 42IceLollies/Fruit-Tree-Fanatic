@@ -975,29 +975,10 @@ function buyGraft() {
 // on page-load
 // ============================================
 
-// if on new-game page
-if (document.URL.includes("new-game.html")) {
-  // event listeners for if the divs are clicked to pick a starter tree
-  const newAppleTree = document.getElementById("newAppleTree");
-  newAppleTree.addEventListener("click", () => {
-    gameData.treeType = "apple";
-    gameData.coins -= 25;
-    startNewGame();
-  });
- 
-  const newPeachTree = document.getElementById("newPeachTree");
-  newPeachTree.addEventListener("click", () => {
-    gameData.treeType = "peach";
-    gameData.coins -= 45;
-    startNewGame();
-  });
- 
-  const newLemonTree = document.getElementById("newLemonTree");
-  newLemonTree.addEventListener("click", () => {
-    gameData.coins -= 65;
-    gameData.treeType = "lemon";
-    startNewGame();
-  });
+function newTreeSelection(treeType, cost) {
+  gameData.treeType = treeType;
+  gameData.coins -= cost;
+  startNewGame();
 }
 
 // if on the main-page

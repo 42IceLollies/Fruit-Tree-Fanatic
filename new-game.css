@@ -65,3 +65,11 @@
   padding: 10px;
   padding-bottom: 0;
 }
+
+button {
+  border: none;
+}
+
+.treeImg {
+  height: 60%;
+}
