@@ -374,3 +374,8 @@
 #transition {
   transition: opacity 1.2s !important;
 }
+
+.itemLabel {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
