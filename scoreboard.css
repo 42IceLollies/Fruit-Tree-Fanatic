@@ -18,7 +18,7 @@
 td {
 	border: solid var(--grey);
 	text-align: center;
-	width: 33%;
+	width: 30%;
 }
 
 thead td {
@@ -29,6 +29,11 @@ thead td {
 
 .gameNum {
 	font-size: 1.4em;
+	width: 10%;
+}
+
+.initials {
+	font-size: 1.2em;
 }
 
 #trBuffer {

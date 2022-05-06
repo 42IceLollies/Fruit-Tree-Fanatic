@@ -105,6 +105,7 @@ function saveScoreData(initials) {
   const pushObj = {
     treeType: gameData.treeType,
     score: gameData.progressRecord[9],
+    initials: initials,
   };
 
   scoreData.push(pushObj);
@@ -610,7 +611,6 @@ function generateScoreboard() {
   const scoreData = JSON.parse(localStorage.getItem('scoreData'));
   const scoreboard = document.getElementById('scoreboard');
   for (var i = 0; i < scoreData.length; i++) {
-    console.log(scoreData[i].score.lowFruitYield)
     const low = scoreData[i].score.lowFruitYield;
     const high = scoreData[0].score.highFruitYield;
     const actual = scoreData[i].score.fruitYield;
@@ -618,6 +618,7 @@ function generateScoreboard() {
     htmlString += `
     <tr>
     <td class='gameNum'>${i + 1}</td>
+    <td class='initials'>${scoreData[i].initials}</td>
     <td class='score'>${scoreNum}/10</td>
     <td class='treeType'><img height='50' src='images/${scoreData[i].treeType}.png'></td>
     </tr>
