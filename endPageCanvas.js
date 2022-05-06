@@ -88,7 +88,7 @@ for(var i = 0; i < record.length; i++)
     var weight = percentage*10;
     rings[i] = new Ring(canvas.width/2, canvas.height/2, canvas.width/25 * (i+1), weight, "rgba(106,62,45," + opacity + ")", c);
     document.documentElement.style.setProperty('--label-margin', canvas.width/50 + "px");
-    console.log(document.documentElement.style.getPropertyValue('--label-margin'));
+    // console.log(document.documentElement.style.getPropertyValue('--label-margin'));
 }
 
 

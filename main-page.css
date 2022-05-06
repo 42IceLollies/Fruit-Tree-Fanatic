@@ -379,3 +379,41 @@
   margin: 0;
   font-family: 'Inter', sans-serif;
 }
+
+#initialInputDiv {
+  width: 40%;
+  height: 200px;
+  border-radius: 30px;
+  background: var(--grey);
+  position: fixed;
+  top: 35%;
+  left: 30%;
+  z-index: 7;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 2px 5px var(--grey);
+}
+
+#initialInput {
+  background: lightgrey;
+  border: none;
+  border-radius: 5px;
+  width: 50%;
+  margin: 0 auto;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+#initialInput:focus {
+  border: none;
+  outline: none;
+}
+
+#initialInputText {
+  margin: 4px auto;
+  color: lightgrey;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1em;
+}

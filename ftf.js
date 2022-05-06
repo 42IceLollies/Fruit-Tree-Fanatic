@@ -93,7 +93,7 @@ function clearData() {
 
 // saves the score data (tree type, fruit yield)
 // to be run when transitioning to the end-page
-function saveScoreData() {
+function saveScoreData(initials) {
   if (localStorage.getItem('scoreData') == null) {
     const obj = [];
     localStorage.setItem('scoreData', JSON.stringify(obj));
@@ -500,6 +500,22 @@ function updateAll() {
   updatePhInfoText();
   setInfoText(false);
 }
+
+function getInitials() {
+  const transition = document.getElementById('transition');
+  const initialInputDiv = document.getElementById('initialInputDiv');
+  const initialInput = document.getElementById('initialInput');
+  transition.classList.add('faded');
+  initialInputDiv.classList.remove('hidden');
+  initialInput.select();
+  initialInput.addEventListener('input', () => {
+    if (initialInput.value.length == 3) {
+      saveScoreData(initialInput.value.toUpperCase());
+      saveData();
+      location.replace('end-page.html');
+    }
+  });
+}
  
 // called when nextLevelBtn is clicked
 // fades screen to black, then calls nextLevel
@@ -511,9 +527,7 @@ function transition() {
   // if it's over, move to the credits page
   if (gameData.level == 10) {
     gameData.progressRecord[gameData.level-1] = findYieldRange();
-    saveScoreData();
-    saveData();
-    location.replace('end-page.html');
+    getInitials();
     return;
   }
 
@@ -596,6 +610,7 @@ function generateScoreboard() {
   const scoreData = JSON.parse(localStorage.getItem('scoreData'));
   const scoreboard = document.getElementById('scoreboard');
   for (var i = 0; i < scoreData.length; i++) {
+    console.log(scoreData[i].score.lowFruitYield)
     const low = scoreData[i].score.lowFruitYield;
     const high = scoreData[0].score.highFruitYield;
     const actual = scoreData[i].score.fruitYield;
@@ -852,7 +867,7 @@ function setInfoText(newLevel) {
     infoText.innerHTML = baseText;
   }
 
-  if (gameData.levelGrafted == gameData.level - 1) {
+  if (gameData.levelGrafted == gameData.level - 1 && gameData.grafted) {
     infoText.innerHTML = `It worked! Now you have ${gameData.graftedTreeType}s growing on your tree too!<br><br>` + infoText.innerHTML;
   }
 
@@ -1068,4 +1083,4 @@ images.forEach(image => {
 });
 
 console.log(gameData);
-console.log(findYieldRange());
+console.log(gameData.progressRecord);

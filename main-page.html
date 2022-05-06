@@ -22,6 +22,11 @@
 
     <!-- Background Music -->
     <audio loop src="./audio/FTFGeneralMusic.mp3" id="generalTheme"></audio>
+
+    <div id='initialInputDiv' class='hidden'>
+      <p id='initialInputText'>Enter your initials:</p>
+      <input type='text' minlength="3" maxlength="3" id='initialInput'>
+    </div>
  
     <button id='infoBtn' onclick=toggleInfo()>i</button>
     <div id='infoMain' class='hidden'>
