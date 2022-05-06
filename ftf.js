@@ -557,6 +557,11 @@ function endPageHomeBtn() {
   location.replace('index.html');
 }
 
+function endToScoreBtn() {
+  clearData();
+  location.replace('scoreboard.html');
+}
+
 // call each time gameData.coins is changed, with the amount change, and if increasing or decreasing
 function coinChange(increase, num) {
   const coinChangeText = document.getElementById('coinChangeText');
@@ -602,7 +607,6 @@ function generateScoreboard() {
     <td class='treeType'><img height='50' src='images/${scoreData[i].treeType}.png'></td>
     </tr>
     `;
-
   }
   scoreboard.innerHTML += htmlString;
 }
@@ -854,7 +858,7 @@ function setInfoText(newLevel) {
 
   // if there's insects, add instructions of what to do to the front
   if (gameData.infested) {
-    infoText.innerHTML =  "Uh oh! Your tree is infested with insects. You should buy repellent to get rid of them as soon as possible to ensure your future harvests are good. <br> <br>" + infoText.innerHTML;
+    infoText.innerHTML =  "Uh oh! Your tree is infested with insects. You should buy repellent to get rid of them as soon as possible, to ensure your future harvests are good. <br> <br>" + infoText.innerHTML;
     if (newLevel) showInfo();
   }
 }

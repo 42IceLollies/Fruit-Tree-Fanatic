@@ -10,10 +10,9 @@
 
 #scoreboard {
 	width: 80%;
-	/*height: 50%;*/
-	margin: 0 auto;
+	margin: 60px auto;
+	/*padding-bottom: 60px;*/
 	background: var(--lighter-green);
-	margin-top: 60px;
 }
 
 td {
@@ -30,6 +29,13 @@ thead td {
 
 .gameNum {
 	font-size: 1.4em;
+}
+
+#trBuffer {
+	opacity: 0;
+	height: 50px;
+	background: var(--light-green) !important;
+	margin-bottom: 50px;
 }
 
 #menuOpen {
