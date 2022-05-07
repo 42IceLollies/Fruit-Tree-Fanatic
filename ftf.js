@@ -22,6 +22,14 @@ const gameData = {
   musicOn: false,
 };
 
+// the ideal pH for each kind of tree, easily accessable
+// not kept in gameData because it doesn't change, so it doesn't need to saved to localStorage
+const idealPh = {
+  "apple": 6.7,
+  "peach": 6.5,
+  "lemon": 6.2,
+};
+
 
 // ============================================
 // save data functions
@@ -125,19 +133,145 @@ function clearScoreData() {
 }
 
 console.log(JSON.parse(localStorage.getItem('scoreData')));
+// ============================================
+// update display: main-page
+// ============================================
+
+// gives player advice of what action to take to improve their pH
+function updatePhInfoText() {
+  const phAccuracy = determinePhAccuracy();
+  // tell you how close your pH is to ideal
+  let accuracyStatement;
+  switch (true) {
+    case (phAccuracy == 0):
+      accuracyStatement = 'just right.';
+      break;
+    case (phAccuracy < 0.6):
+      accuracyStatement = 'a bit off.';
+      break;
+    default:
+      accuracyStatement = 'way off.';
+      break;
+  }
+
+  // tells you what to buy to fix the problem
+  let adviceStatement = '';
+  if (gameData.pH < idealPh[gameData.treeType]) {
+    adviceStatement = 'Try buying some limestone.';
+  }
+  if (gameData.pH > idealPh[gameData.treeType]) {
+    adviceStatement = 'Try buying some fertilizer.';
+  }
+
+  const advice = `Your soil pH is ${accuracyStatement} ${adviceStatement}`;
+  const phInfoText = document.getElementById('phInfoText');
+  phInfoText.innerHTML = advice;
+}
+
+// sets tree image and padding-top height based on level
+function displayTree() {
+  // compiles the tree image src based on gameData values
+  document.getElementById("mainTree").src =
+    "./images/" +
+    gameData.treeType +
+    "Tree/" +
+    gameData.treeType +
+    "Tree" +
+    Math.ceil(gameData.level / 2) +
+    ".png";
+  
+  // sets the css variable used in the padding-top of multiple elements to make the tree image increase in height
+  const root = document.querySelector(":root");
+  root.style.setProperty('--padding-top', 16 - gameData.level + "%");
+}
+
+// called when nextLevelBtn is clicked
+// fades screen to black, then calls nextLevel
+function transition() {
+  // disables the button so you can't double click and skip a level
+  const nextLevelBtn = document.getElementById('nextLevelBtn');
+  nextLevelBtn.disabled = true;
+
+  // if it's over, move to the credits page
+  if (gameData.level == 10) {
+    gameData.progressRecord[gameData.level-1] = findYieldRange();
+    getInitials();
+    return;
+  }
+
+  // fade to black
+  const transitionDiv = document.getElementById('transition');
+  transitionDiv.classList.add('on');
+  setTimeout(() => {
+    // when it's fully faded, run nextLevel()
+    nextLevel();
+    // fade back
+    transitionDiv.classList.remove('on');
+    // enable the button again
+    nextLevelBtn.disabled = false;
+  }, 1000); // same amount of time as the fade takes
+}
+
+// run in nextLevel function
+// if it's the start of a new level, show infoMain
+function setInfoText(newLevel) {
+  // array of text for the new items
+  const infoArray = [
+  "Welcome to the game! Here is your tree, try buying some fertilizer to feed it so it will grow lots of fruit next level!",
+  "You have your first harvest! Click the fruit to collect it. It turns out the fertilizer lowers the pH of the soil. You can buy limestone to balance it out, but don't forget to keep your soil fertile.",
+  "Now you can prune your tree, to focus it on producing fruit instead of new growth.",
+  "Bees can help pollinate your tree. They're only available once per level, and not available if you've recently had insects.",
+  undefined,
+  undefined,
+  "You've unlocked the option to graft your tree. Grafting another type of fruit onto your tree can increase output, but it's quite an investment."
+  ];
+
+  const infoText = document.getElementById('infoMainText');
+
+  // basic instructions, always included at the bottom
+  const baseText = "- Click fruit to collect it. <br>- Buy items and actions to keep your tree healthy. <br>- Click 'Next Level' when you're done.";
+
+  // if there's instructions for this level
+  if (infoArray[gameData.level - 1] !== undefined) {
+    infoText.innerHTML = infoArray[gameData.level - 1] + "<br><br>" + baseText;
+    // if it's the start of a new level, show infoMain
+    if (newLevel) showInfo();
+  } else {
+    // if there's no special instructions, just put the basic instructions
+    infoText.innerHTML = baseText;
+  }
+
+  if (gameData.levelGrafted == gameData.level - 1 && gameData.grafted) {
+    infoText.innerHTML = `It worked! Now you have ${gameData.graftedTreeType}s growing on your tree too!<br><br>` + infoText.innerHTML;
+  }
+
+  // if there's insects, add instructions of what to do to the front
+  if (gameData.infested) {
+    infoText.innerHTML =  "Uh oh! Your tree is infested with insects. You should buy repellent to get rid of them as soon as possible, to ensure your future harvests are good. <br> <br>" + infoText.innerHTML;
+    if (newLevel) showInfo();
+  }
+}
+
+function getInitials() {
+  const transition = document.getElementById('transition');
+  const initialInputDiv = document.getElementById('initialInputDiv');
+  const initialInput = document.getElementById('initialInput');
+  transition.classList.add('faded');
+  initialInputDiv.classList.remove('hidden');
+  initialInput.select();
+  initialInput.addEventListener('input', () => {
+    if (initialInput.value.length == 3) {
+      saveScoreData(initialInput.value.toUpperCase());
+      saveData();
+      location.replace('end-page.html');
+    }
+  });
+}
 
 // ============================================
-// update display functions 
+// update display: main-page: purchase buttons 
 // ============================================
 
-// the ideal pH for each kind of tree, easily accessible
-// not kept in gameData because it doesn't change, so it doesn't need to saved to localStorage
-const idealPh = {
-  "apple": 6.7,
-  "peach": 6.5,
-  "lemon": 6.2,
-};
- 
 // make buttons on main page menu visible based on level
 // run every time the level is updated
 function updateButtons() {
@@ -161,23 +295,100 @@ function updateButtons() {
   if (gameData.level >= 7)
     document.getElementById("btn6").classList.remove("hidden");
 }
- 
-// sets tree image and padding-top height based on level
-function displayTree() {
-  // compiles the tree image src based on gameData values
-  document.getElementById("mainTree").src =
-    "./images/" +
-    gameData.treeType +
-    "Tree/" +
-    gameData.treeType +
-    "Tree" +
-    Math.ceil(gameData.level / 2) +
-    ".png";
+
+// updates which buttons are disabled, based on the availability
+function updateDisabled() {
+  // if a graft's been purchased, disable graft button
+  if (gameData.grafted == true) document.getElementById('btn6').disabled = true;
   
-  // sets the css variable used in the padding-top of multiple elements to make the tree image increase in height
-  const root = document.querySelector(":root");
-  root.style.setProperty('--padding-top', 16 - gameData.level + "%");
+  // if prune is maxed out, disable prune button
+  const prune = document.getElementById('btn3');
+  if (gameData.pruneNum >= gameData.pruneMax[gameData.level - 1]) {
+    prune.disabled = true;
+  } else {
+    prune.disabled = false;
+  }
+ 
+  // if bees aren't available for any reason, disabled
+  const beeBtn = document.getElementById('btn4');
+  // if you've already purchased bees, if there's an infestation, or if there was an infestation this level
+  if (gameData.bees == true || gameData.infested == true || gameData.lastLevelInfested == gameData.level) {
+    beeBtn.disabled = true;
+  } else {
+    beeBtn.disabled = false;
+  }
+ 
+  // if there's not an infestation, you can't buy repellent
+  const repellentBtn = document.getElementById('btn5');
+  if (gameData.infested) {
+    repellentBtn.disabled = false;
+  } else {
+    repellentBtn.disabled = true;
+  }
 }
+
+// updates the shown costs of bees, repellent and grafting
+// (the only ones that change) /\
+function updateButtonCost() {
+  // all cost determination copied from purchase function
+  const beesCostText = document.getElementById('beesCost');
+  beesCostText.innerHTML = Math.round(gameData.coinYield / 3 / 5) * 5;
+  
+  const repellentCostText = document.getElementById('repellentCost');
+  repellentCostText.innerHTML = Math.round(gameData.coinYield / 2 / 5) * 5;
+ 
+  const graftCostText = document.getElementById('graftCost');
+  let graftCost = 100;
+  if (gameData.treeType == 'peach') graftCost *= 2;
+  if (gameData.treeType == 'lemon') graftCost *= 3;
+  graftCostText.innerHTML = graftCost;
+}
+
+// sets the menuImg dimensions so they all fit in the buttons
+// run when main-page loads
+function menuImgDimensions() {
+  // if the image is wider than it is tall, set the width instead of the height
+  const menusNode = document.querySelectorAll('.menuImg');
+  const menus = Array.from(menusNode);
+  menus.forEach(menu => {
+    if (menu.width > menu.height) {
+      menu.style.width = '50%';
+      menu.style.height = 'auto';
+    }
+  });
+}
+
+// changes the text in the purchase buttons to red if player has too few coins
+function updatePriceColor() {
+  const buttonCosts = document.querySelectorAll('.price .coinText');
+  
+  buttonCosts.forEach(cost => {
+    // if number of coins is less than this cost
+    if (gameData.coins < Number(cost.innerHTML)) {
+      cost.classList.add('red');
+    } else {
+      cost.classList.remove('red');
+    }
+  });
+}
+
+// makes the purchase buttons blink when clicked
+function menuBtnClicked() {
+  const buttons = document.querySelectorAll('.menuBtn');
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      // lowers the opacity
+      button.classList.add('clicked');
+      setTimeout(() => {
+        button.classList.remove('clicked');
+      }, 75); // applied for this number of milliseconds
+    });
+  });
+}
+
+// ============================================
+// update display: main-page: overlays
+// ============================================
 
 // finds the potential max and min fruit possible by level
 function findYieldRange() {
@@ -253,148 +464,6 @@ function displayOverlay() {
 function removeOverlay() {
     document.getElementById("fruitOverlayDiv").classList.add("hidden");
 }
- 
-// sets the menuImg dimensions so they all fit in the buttons
-// run when main-page loads
-function menuImgDimensions() {
-  // if the image is wider than it is tall, set the width instead of the height
-  const menusNode = document.querySelectorAll('.menuImg');
-  const menus = Array.from(menusNode);
-  menus.forEach(menu => {
-    if (menu.width > menu.height) {
-      menu.style.width = '50%';
-      menu.style.height = 'auto';
-    }
-  });
-}
- 
-// updates the info at the top of the screen
-function updateInfoBar() {
-  // sets the coin counter to the gameData value
-  const coinCount = document.getElementById('coinDisplayText');
-  coinCount.innerHTML = gameData.coins;
- 
-  // sets the pH indicator based on idealPH object and the gameData value
-  const realPh = document.querySelector('p.real.phText');
-  realPh.innerHTML = gameData.pH;
-  const idealPhText = document.querySelector('p.ideal.phText');
-  idealPhText.innerHTML = ' | ' + idealPh[gameData.treeType];
-  
-  const phDifference = determinePhAccuracy();
-  const root = document.querySelector(':root');
-  root.style.setProperty('--ph-color', 'red');
-  if (phDifference < 0.6) root.style.setProperty('--ph-color', 'goldenrod');
-  if (phDifference == 0) root.style.setProperty('--ph-color', 'lightgreen');
-
-  // sets the graft symbol based on if player has purchased the graft
-  const graftDiv = document.getElementById('graftedDiv');
-  if (gameData.grafted) graftDiv.classList.remove('hidden');
-  if (!gameData.grafted) graftDiv.classList.add('hidden');
-
-  // sets the text showing the level based on the gameData value
-  const levelText = document.getElementById('levelText');
-  levelText.innerHTML = gameData.level;
-}
- 
-// updates which buttons are disabled, based on the availability
-function updateDisabled() {
-  // if a graft's been purchased, disable graft button
-  if (gameData.grafted == true) document.getElementById('btn6').disabled = true;
-  
-  // if prune is maxed out, disable prune button
-  const prune = document.getElementById('btn3');
-  if (gameData.pruneNum >= gameData.pruneMax[gameData.level - 1]) {
-    prune.disabled = true;
-  } else {
-    prune.disabled = false;
-  }
- 
-  // if bees aren't available for any reason, disabled
-  const beeBtn = document.getElementById('btn4');
-  // if you've already purchased bees, if there's an infestation, or if there was an infestation this level
-  if (gameData.bees == true || gameData.infested == true || gameData.lastLevelInfested == gameData.level) {
-    beeBtn.disabled = true;
-  } else {
-    beeBtn.disabled = false;
-  }
- 
-  // if there's not an infestation, you can't buy repellent
-  const repellentBtn = document.getElementById('btn5');
-  if (gameData.infested) {
-    repellentBtn.disabled = false;
-  } else {
-    repellentBtn.disabled = true;
-  }
-}
-
-// sets the color meter that how well you're doing based on yield out of potential yield
-function updateAcheivementDivision() {
-  var ids = ["firstDivision", "secondDivision", "thirdDivision", "fourthDivision", "fifthDivision"];
-  for (var i = 0; i<ids.length; i++) {
-   document.getElementById(ids[i]).classList.add("divisionDisabled");
-  }
-
-  var yield = findYieldRange();
-  var min = yield.lowFruitYield;
-  var range = yield.highFruitYield - yield.lowFruitYield;
-  yield = yield.fruitYield;
-  // console.log(range);
-  // console.log(yield);
-
-
-  // can't divide by 0, gotta keep it seperate
-  if (yield > min) {
-    document.getElementById(ids[0]).classList.remove("divisionDisabled");
-  } else {
-    document.getElementById(ids[0]).classList.add("divisionDisabled");
-  }
-
-  // for each benchmark, color it in if player's reached it
-  for (var i = 1; i < ids.length; i++) {
-    if (yield > min + ((range / 5) * i)) {
-      document.getElementById(ids[i]).classList.remove("divisionDisabled");
-    } else {
-      document.getElementById(ids[i]).classList.add("divisionDisabled");
-    }
-  }
-}
-
-// updates the shown costs of bees, repellent and grafting
-// (the only ones that change) /\
-function updateButtonCost() {
-  // all cost determination copied from purchase function
-  const beesCostText = document.getElementById('beesCost');
-  beesCostText.innerHTML = Math.round(gameData.coinYield / 3 / 5) * 5;
-  
-  const repellentCostText = document.getElementById('repellentCost');
-  repellentCostText.innerHTML = Math.round(gameData.coinYield / 2 / 5) * 5;
- 
-  const graftCostText = document.getElementById('graftCost');
-  let graftCost = 100;
-  if (gameData.treeType == 'peach') graftCost *= 2;
-  if (gameData.treeType == 'lemon') graftCost *= 3;
-  graftCostText.innerHTML = graftCost;
-}
-
-// update if bee overlays are showing based on gameData.bees
-function updateBees() {
-  const bees = document.getElementById('beeOverlay');
-  const beeHive = document.getElementById('beeHive');
-  if (gameData.bees) {
-    bees.classList.remove('hidden');
-    beeHive.classList.remove('hidden');
-  } else {
-    bees.classList.add('hidden');
-    beeHive.classList.add('hidden');
-  }
-}
-
-// updates if insectOverlay is showing, based on gameData.infestation
-function updateInsects() {
-  const insects = document.getElementById('insectOverlay');
-  if (gameData.infested) insects.classList.remove('hidden');
-  if (!gameData.infested) insects.classList.add('hidden');
-}
 
 // updates the fine details of where the fruit overlay is
 // so that it'll stay over the leaves of the tree
@@ -433,6 +502,62 @@ function updateOverlayDimensions() {
   }
 }
 
+// update if bee overlays are showing based on gameData.bees
+function updateBees() {
+  const bees = document.getElementById('beeOverlay');
+  const beeHive = document.getElementById('beeHive');
+  if (gameData.bees) {
+    bees.classList.remove('hidden');
+    beeHive.classList.remove('hidden');
+  } else {
+    bees.classList.add('hidden');
+    beeHive.classList.add('hidden');
+  }
+}
+
+// updates if insectOverlay is showing, based on gameData.infestation
+function updateInsects() {
+  const insects = document.getElementById('insectOverlay');
+  if (gameData.infested) insects.classList.remove('hidden');
+  if (!gameData.infested) insects.classList.add('hidden');
+}
+
+// ============================================
+// update display: main-page: achievement marker
+// ============================================
+
+// sets the color meter that how well you're doing based on yield out of potential yield
+function updateAcheivementDivision() {
+  var ids = ["firstDivision", "secondDivision", "thirdDivision", "fourthDivision", "fifthDivision"];
+  for (var i = 0; i<ids.length; i++) {
+   document.getElementById(ids[i]).classList.add("divisionDisabled");
+  }
+
+  var yield = findYieldRange();
+  var min = yield.lowFruitYield;
+  var range = yield.highFruitYield - yield.lowFruitYield;
+  yield = yield.fruitYield;
+  // console.log(range);
+  // console.log(yield);
+
+
+  // can't divide by 0, gotta keep it seperate
+  if (yield > min) {
+    document.getElementById(ids[0]).classList.remove("divisionDisabled");
+  } else {
+    document.getElementById(ids[0]).classList.add("divisionDisabled");
+  }
+
+  // for each benchmark, color it in if player's reached it
+  for (var i = 1; i < ids.length; i++) {
+    if (yield > min + ((range / 5) * i)) {
+      document.getElementById(ids[i]).classList.remove("divisionDisabled");
+    } else {
+      document.getElementById(ids[i]).classList.add("divisionDisabled");
+    }
+  }
+}
+
 // hides the achievement marker in the first level, since there's no yield
 function updateAchievementHidden() {
   const achievementDiv = document.querySelector('.achievementDiv');
@@ -443,139 +568,9 @@ function updateAchievementHidden() {
   }
 }
 
-// changes the text in the purchase buttons to red if player has too few coins
-function updatePriceColor() {
-  const buttonCosts = document.querySelectorAll('.price .coinText');
-  
-  buttonCosts.forEach(cost => {
-    // if number of coins is less than this cost
-    if (gameData.coins < Number(cost.innerHTML)) {
-      cost.classList.add('red');
-    } else {
-      cost.classList.remove('red');
-    }
-  });
-}
-
-function updatePhInfoText() {
-  const phAccuracy = determinePhAccuracy();
-  let accuracyStatement;
-  switch (true) {
-    case (phAccuracy == 0):
-      accuracyStatement = 'just right.';
-      break;
-    case (phAccuracy < 0.6):
-      accuracyStatement = 'a bit off.';
-      break;
-    default:
-      accuracyStatement = 'way off.';
-      break;
-  }
-
-  let adviceStatement = '';
-  if (gameData.pH < idealPh[gameData.treeType]) {
-    adviceStatement = 'Try buying some limestone.';
-  }
-  if (gameData.pH > idealPh[gameData.treeType]) {
-    adviceStatement = 'Try buying some fertilizer.';
-  }
-
-  const advice = `Your soil pH is ${accuracyStatement} ${adviceStatement}`;
-  const phInfoText = document.getElementById('phInfoText');
-  phInfoText.innerHTML = advice;
-}
- 
-// called in purchase functions
-// calls all preceding update functions, makes it easier to add another to many places in the code at once
-function updateAll() {
-  displayTree();
-  updateButtons();
-  updateInfoBar();
-  updateDisabled();
-  updateButtonCost();
-  updateAcheivementDivision();
-  updateBees();
-  updateInsects();
-  updateAchievementHidden();
-  updatePriceColor();
-  updatePhInfoText();
-  setInfoText(false);
-}
-
-function getInitials() {
-  const transition = document.getElementById('transition');
-  const initialInputDiv = document.getElementById('initialInputDiv');
-  const initialInput = document.getElementById('initialInput');
-  transition.classList.add('faded');
-  initialInputDiv.classList.remove('hidden');
-  initialInput.select();
-  initialInput.addEventListener('input', () => {
-    if (initialInput.value.length == 3) {
-      saveScoreData(initialInput.value.toUpperCase());
-      saveData();
-      location.replace('end-page.html');
-    }
-  });
-}
- 
-// called when nextLevelBtn is clicked
-// fades screen to black, then calls nextLevel
-function transition() {
-  // disables the button so you can't double click and skip a level
-  const nextLevelBtn = document.getElementById('nextLevelBtn');
-  nextLevelBtn.disabled = true;
-
-  // if it's over, move to the credits page
-  if (gameData.level == 10) {
-    gameData.progressRecord[gameData.level-1] = findYieldRange();
-    getInitials();
-    return;
-  }
-
-  // fade to black
-  const transitionDiv = document.getElementById('transition');
-  transitionDiv.classList.add('on');
-  setTimeout(() => {
-    // when it's fully faded, run nextLevel()
-    nextLevel();
-    // fade back
-    transitionDiv.classList.remove('on');
-    // enable the button again
-    nextLevelBtn.disabled = false;
-  }, 1000); // same amount of time as the fade takes
-}
-
-// opens/closes the menu 
-function toggleMainMenu() {
-  // slides in the side menu
-  document.getElementById('mainMenu').classList.toggle('show');
-  // greys out the rest of the screen
-  document.getElementById('transition').classList.toggle('faded');
-}
-
-// makes the purchase buttons blink when clicked
-function menuBtnClicked() {
-  const buttons = document.querySelectorAll('.menuBtn');
-  buttons.forEach(button => {
-    button.addEventListener('click', () => {
-      // lowers the opacity
-      button.classList.add('clicked');
-      setTimeout(() => {
-        button.classList.remove('clicked');
-      }, 75); // applied for this number of milliseconds
-    });
-  });
-}
-
-function endPageHomeBtn() {
-  clearData();
-  location.replace('index.html');
-}
-
-function endToScoreBtn() {
-  clearData();
-  location.replace('scoreboard.html');
-}
+// ============================================
+// update display: main-page: info bar
+// ============================================
 
 // call each time gameData.coins is changed, with the amount change, and if increasing or decreasing
 function coinChange(increase, num) {
@@ -605,6 +600,38 @@ function coinChange(increase, num) {
   }, 150);
 }
 
+// updates the info at the top of the screen
+function updateInfoBar() {
+  // sets the coin counter to the gameData value
+  const coinCount = document.getElementById('coinDisplayText');
+  coinCount.innerHTML = gameData.coins;
+ 
+  // sets the pH indicator based on idealPH object and the gameData value
+  const realPh = document.querySelector('p.real.phText');
+  realPh.innerHTML = gameData.pH;
+  const idealPhText = document.querySelector('p.ideal.phText');
+  idealPhText.innerHTML = ' | ' + idealPh[gameData.treeType];
+  
+  const phDifference = determinePhAccuracy();
+  const root = document.querySelector(':root');
+  root.style.setProperty('--ph-color', 'red');
+  if (phDifference < 0.6) root.style.setProperty('--ph-color', 'goldenrod');
+  if (phDifference == 0) root.style.setProperty('--ph-color', 'lightgreen');
+
+  // sets the graft symbol based on if player has purchased the graft
+  const graftDiv = document.getElementById('graftedDiv');
+  if (gameData.grafted) graftDiv.classList.remove('hidden');
+  if (!gameData.grafted) graftDiv.classList.add('hidden');
+
+  // sets the text showing the level based on the gameData value
+  const levelText = document.getElementById('levelText');
+  levelText.innerHTML = gameData.level;
+}
+
+// ============================================
+// update display: scoreboard
+// ============================================
+
 // makes the scoreboard in scoreboard.html
 function generateScoreboard() {
   let htmlString = '';
@@ -626,6 +653,10 @@ function generateScoreboard() {
   }
   scoreboard.innerHTML += htmlString;
 }
+
+// ============================================
+// update display: index
+// ============================================
 
 // to be called on index.html page load
 function updateIndexButtons() {
@@ -795,7 +826,7 @@ function determineYield() {
 }
 
 // ============================================
-// button specific functions
+// button functionality
 // ============================================
 
 // runs when selecting a starting tree in new-game
@@ -847,39 +878,59 @@ function toggleMusic() {
   gameData.musicOn = !gameData.musicOn;
 }
 
-// run in nextLevel function
-// if it's the start of a new level, show infoMain
-function setInfoText(newLevel) {
-  // array of text for the new items
-  const infoArray = ["Welcome to the game! Here is your tree, try buying some fertilizer to feed it so it will grow lots of fruit next level!", "You have your first harvest! Click the fruit to collect it. It turns out the fertilizer lowers the pH of the soil. You can buy limestone to balance it out, but don't forget to keep your soil fertile.", "Now you can prune your tree, to focus it on producing fruit instead of new growth.", "Bees can help pollinate your tree. They're only available once per level, and not available if you've recently had insects.", undefined, undefined, "You've unlocked the option to graft your tree. Grafting another type of fruit onto your tree can increase output, but it's quite an investment."];
-
-  const infoText = document.getElementById('infoMainText');
-
-  // basic instructions, always included at the bottom
-  const baseText = "- Click fruit to collect it. <br>- Buy items and actions to keep your tree healthy. <br>- Click 'Next Level' when you're done.";
-
-  // if there's instructions for this level
-  if (infoArray[gameData.level - 1] !== undefined) {
-    infoText.innerHTML = infoArray[gameData.level - 1] + "<br><br>" + baseText;
-    // if it's the start of a new level, show infoMain
-    if (newLevel) showInfo();
-  } else {
-    // if there's no special instructions, just put the basic instructions
-    infoText.innerHTML = baseText;
-  }
-
-  if (gameData.levelGrafted == gameData.level - 1 && gameData.grafted) {
-    infoText.innerHTML = `It worked! Now you have ${gameData.graftedTreeType}s growing on your tree too!<br><br>` + infoText.innerHTML;
-  }
-
-  // if there's insects, add instructions of what to do to the front
-  if (gameData.infested) {
-    infoText.innerHTML =  "Uh oh! Your tree is infested with insects. You should buy repellent to get rid of them as soon as possible, to ensure your future harvests are good. <br> <br>" + infoText.innerHTML;
-    if (newLevel) showInfo();
-  }
+// opens/closes the menu 
+function toggleMainMenu() {
+  // slides in the side menu
+  document.getElementById('mainMenu').classList.toggle('show');
+  // greys out the rest of the screen
+  document.getElementById('transition').classList.toggle('faded');
 }
 
- 
+function endPageHomeBtn() {
+  clearData();
+  location.replace('index.html');
+}
+
+function endToScoreBtn() {
+  clearData();
+  location.replace('scoreboard.html');
+}
+
+// called by the new-game buttons
+// sets the gameData values associated with the choice
+function newTreeSelection(treeType, cost) {
+  // disable the buttons, so you can't double-click
+  const options = document.querySelectorAll('button.option');
+  options.forEach(option => {
+    option.disabled = true;
+  });
+
+  gameData.treeType = treeType;
+  gameData.coins -= cost;
+  startNewGame();
+}
+
+// ============================================
+// functions that call a ton of others
+// ============================================
+
+// called in purchase functions
+// calls all included update functions, makes it easier to add another to many places in the code at once
+function updateAll() {
+  displayTree();
+  updateButtons();
+  updateInfoBar();
+  updateDisabled();
+  updateButtonCost();
+  updateAcheivementDivision();
+  updateBees();
+  updateInsects();
+  updateAchievementHidden();
+  updatePriceColor();
+  updatePhInfoText();
+  setInfoText(false);
+}
+
 // to be run every time a level is completed
 // determines random events, resets all necessary data, and determines yield
 function nextLevel() {
@@ -1000,16 +1051,43 @@ function buyGraft() {
 // on page-load
 // ============================================
 
-function newTreeSelection(treeType, cost) {
-  // disable the buttons, so you can't double-click
-  const options = document.querySelectorAll('button.option');
-  options.forEach(option => {
-    option.disabled = true;
-  });
+// on the first click after page load, play the music
+// plays the music, and removes the event listener that called it
+function playMusicOnLoad() {
+  // delayed so if the unmute button is clicked this doesn't happen first
+  setTimeout(() => {
+    const generalTheme = document.getElementById("generalTheme");
+    const muteDiv = document.getElementById('muteDiv');
+    const unmuteText = document.getElementById('unmute');
+    generalTheme.play()
+    muteDiv.classList.remove("muted");
+    unmuteText.classList.add('hidden');
+    gameData.musicOn = true;
+    document.removeEventListener('mousedown', playMusicOnLoad);
+  }, 100)
+}
 
-  gameData.treeType = treeType;
-  gameData.coins -= cost;
-  startNewGame();
+// call when fruit overlay is clicked
+// removes the overlay and adds the yield for current level to coins
+function harvestFruit() {
+  removeOverlay();
+  // adds coins after fruit has been collected
+  gameData.coins += gameData.coinYield;
+  coinChange(true, gameData.coinYield);
+  gameData.harvested = true;
+  updateInfoBar();
+  updatePriceColor();
+  saveData();
+}
+
+// if on index page
+// different from other page specifiers, because index.html isn't always in the url like the others are
+if (document.querySelector('body').classList.contains('index')) {
+  updateIndexButtons()
+}
+
+if (document.URL.includes('scoreboard.html')) {
+  generateScoreboard();
 }
 
 // if on the main-page
@@ -1034,47 +1112,10 @@ if (document.URL.includes("main-page.html")) {
   saveData();
 
   // event listener for when the fruit is clicked to be collected
-  document.getElementById("fruitOverlay").addEventListener("click", () => {
-      removeOverlay();
-      // adds coins after fruit has been collected
-      gameData.coins += gameData.coinYield;
-      coinChange(true, gameData.coinYield);
-      gameData.harvested = true;
-      updateInfoBar();
-      updatePriceColor();
-      saveData();
-  });
-
-  // on the first click after page load, play the music
-  // plays the music, and removes the event listener that called it
-  function playMusicOnLoad() {
-    // delayed so if the unmute button is clicked this doesn't happen first
-    setTimeout(() => {
-      const generalTheme = document.getElementById("generalTheme");
-      const muteDiv = document.getElementById('muteDiv');
-      const unmuteText = document.getElementById('unmute');
-      generalTheme.play()
-      muteDiv.classList.remove("muted");
-      unmuteText.classList.add('hidden');
-      gameData.musicOn = true;
-      document.removeEventListener('mousedown', playMusicOnLoad);
-    }, 100)
-  }
+  document.getElementById("fruitOverlay").addEventListener("click", harvestFruit);
 
   // plays music when page loads
   document.addEventListener('mousedown', playMusicOnLoad);
-
-}
-
-// if on index page
-console.log(document.querySelector('body').classList);
-if (document.querySelector('body').classList.contains('index')) {
-  console.log('on index');
-  updateIndexButtons()
-}
-
-if (document.URL.includes('scoreboard.html')) {
-  generateScoreboard();
 }
 
 // makes all images non-draggable, so people will stop thinking it's drag-and-drop!
