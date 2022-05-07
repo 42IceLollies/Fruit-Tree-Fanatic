@@ -16,6 +16,12 @@
   padding-top: var(--padding-top);
 }
 
+#transition {
+  transition: opacity 1.2s !important;
+}
+
+/*============== overlays ==============*/
+
 #mainTree {
   height: 100%;
   display: flex;
@@ -58,6 +64,8 @@
   top: 0;
 }
 
+/*============== tree health ==============*/
+
 #achievementMarker {
   background-color: #666;
   height: 35%;
@@ -68,19 +76,6 @@
   align-self: flex-end;
   margin-bottom: 12px;
 }
-
-/* .labelOne { 
-  top: 0;
-  left: 1px;
-  margin: 0;
-}
-
-.labelTwo {
-  position: absolute;
-  top: 0;
-  right: 1px;
-  margin: 0;
-} */
 
 .mainLabel{
   font-family:"Courgette", sans-serif;
@@ -137,6 +132,8 @@
   background-color:#000 !important;
 }
 
+/*============== purchase buttons ==============*/
+
 #menuDiv {
   height: 20%;
   width: 100%;
@@ -168,6 +165,10 @@
   border-width: 3px;
 }
 
+.menuBtn:disabled {
+  opacity: 0.5;
+}
+
 .menuBtn.clicked {
   opacity: 0.7;
 }
@@ -176,6 +177,17 @@
   height: 60%;
   width: auto;
   margin: auto;
+}
+
+.itemLabel {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+/*============== info bar ==============*/
+
+#menuOpen {
+  position: static !important;
 }
 
 #nextLevelBtn {
@@ -195,109 +207,12 @@
   opacity: 0.7;
 }
 
-.menuBtn:disabled {
-  opacity: 0.5;
-}
-
 #info-bar {
   position: absolute;
   top: 0;
   width: 100%;
   padding: 0;
   z-index: 2;
-}
-
-#phDisplay {
-  float: right;
-  padding: 10px;
-  padding-top: 10px;
-  /* display: inline-block; */
-  width: 40%;
-}
-
-#phInfoText {
-  display: inline;
-  color: #FFF;
-  margin-top: 10px;
-  float: right;
-  width: 60%;
-  font-family:"Courgette", sans-serif;
-}
-
-.real.phText {
-  color: var(--ph-color);
-}
-
-.ideal.phText {
-  /*color: var(--grey);*/
-  color: #FFF;
-}
-
-#infoBtn {
-  width: 20px;
-  height: 20px;
-  border-radius: 20px;
-  border: 2px solid var(--grey);
-  background: var(--grey);
-  color: #FFF;
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 4;
-}
-
-#infoBtn.white {
-  color: var(--grey);
-  border-color: #FFF;
-  background: #FFF;
-}
-
-#infoMain {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 3;
-  background: var(--grey);
-  border-radius: 20px;
-  /*min-height: 30%;*/
-  max-height: 60%;
-  width: 40%;
-  opacity: 0.8;
-  padding: 25px;
-}
-
-#infoMainText {
-  color: white;
-}
-
-#coinDisplay.main {
-  float: right;
-  margin-top: 10px;
-  padding: 0;
-}
-
-#coinChangeDiv {
-  opacity: 1;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
-}
-
-#coinChangeText.red {
-  color: red;
-}
-
-#coinChangeText.green {
-  color: green;
-}
-
-#coinChangeImg {
-  height: 25px;
-  margin-left: 2px;
 }
 
 #graftedDiv {
@@ -338,14 +253,6 @@
   margin: 12px;
 }
 
-/*#muteDiv.index {
-  position: absolute;
-  z-index: 5;
-  top: 15px;
-  right: 15px;
-  float: none;
-}*/
-
 .muteBtn {
   width: 30px;
   height: 30px;
@@ -367,18 +274,104 @@
   filter: invert(100%);
 }
 
-#menuOpen {
-  position: static !important;
+#coinDisplay.main {
+  float: right;
+  margin-top: 10px;
+  padding: 0;
 }
 
-#transition {
-  transition: opacity 1.2s !important;
-}
+/*============== coin change ==============*/
 
-.itemLabel {
+#coinChangeDiv {
+  opacity: 1;
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
 }
+
+#coinChangeText.red {
+  color: red;
+}
+
+#coinChangeText.green {
+  color: green;
+}
+
+#coinChangeImg {
+  height: 25px;
+  margin-left: 2px;
+}
+
+/*============== info box ==============*/
+
+#infoBtn {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  border: 2px solid var(--grey);
+  background: var(--grey);
+  color: #FFF;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 4;
+}
+
+#infoBtn.white {
+  color: var(--grey);
+  border-color: #FFF;
+  background: #FFF;
+}
+
+#infoMain {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  background: var(--grey);
+  border-radius: 20px;
+  /*min-height: 30%;*/
+  max-height: 60%;
+  width: 40%;
+  opacity: 0.8;
+  padding: 25px;
+}
+
+#infoMainText {
+  color: white;
+}
+
+#phDisplay {
+  float: right;
+  padding: 10px;
+  padding-top: 10px;
+  /* display: inline-block; */
+  width: 40%;
+}
+
+#phInfoText {
+  display: inline;
+  color: #FFF;
+  margin-top: 10px;
+  float: right;
+  width: 60%;
+  font-family:"Courgette", sans-serif;
+}
+
+.real.phText {
+  color: var(--ph-color);
+}
+
+.ideal.phText {
+  /*color: var(--grey);*/
+  color: #FFF;
+}
+
+/*============== initial input ==============*/
 
 #initialInputDiv {
   width: 40%;
