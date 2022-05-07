@@ -262,7 +262,7 @@ function menuImgDimensions() {
   const menus = Array.from(menusNode);
   menus.forEach(menu => {
     if (menu.width > menu.height) {
-      menu.style.width = '60%';
+      menu.style.width = '50%';
       menu.style.height = 'auto';
     }
   });
@@ -907,8 +907,6 @@ function nextLevel() {
  
 // run by menuBtn#fertilizer
 function buyFertilizer() {
-  console.clear();
-  console.log(gameData);
   if (gameData.coins >= 10) {
     gameData.coins -= 10;
     gameData.fertilizer++;
@@ -1069,7 +1067,7 @@ if (document.URL.includes("main-page.html")) {
 }
 
 // if on index page
-if (document.URL.includes("index.html")) {
+if (document.body.classList.includes('index')) {
   updateIndexButtons()
 }
 
