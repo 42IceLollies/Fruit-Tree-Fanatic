@@ -1067,7 +1067,9 @@ if (document.URL.includes("main-page.html")) {
 }
 
 // if on index page
-if (document.body.classList.includes('index')) {
+console.log(document.querySelector('body').classList);
+if (document.querySelector('body').classList.contains('index')) {
+  console.log('on index');
   updateIndexButtons()
 }
 
