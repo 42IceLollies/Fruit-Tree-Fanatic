@@ -641,7 +641,7 @@ function generateScoreboard() {
     const low = scoreData[i].score.lowFruitYield;
     const high = scoreData[0].score.highFruitYield;
     const actual = scoreData[i].score.fruitYield;
-    const scoreNum = Math.ceil((actual - low + 10) / (high - low) * 10);
+    const scoreNum = Math.ceil((actual - low + 5) / (high - low) * 10);
     htmlString += `
     <tr>
     <td class='gameNum'>${i + 1}</td>
