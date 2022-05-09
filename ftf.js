@@ -794,7 +794,10 @@ function determineYield() {
  
   // insect infestation removes 50%
   let infestation = 0;
-  if (gameData.infested) infestation = -0.5;
+  if (gameData.infested) {
+    if (gameData.lastLevelInfested == gameData.level - 1) infestation = -0.25;
+    if (gameData.lastLevelInfested > gameData.level - 1) infestation = -0.5;
+  }
  
   // pH inaccuracy can remove up to 10%
   const phDifference = determinePhAccuracy();
@@ -948,7 +951,7 @@ function nextLevel() {
   determineInfestation();
   updateAll();
   // if player hasn't gotten rid of insects, log that it's still infested
-  if (gameData.infested) gameData.lastLevelInfested = gameData.level;
+  // if (gameData.infested) gameData.lastLevelInfested = gameData.level;
   saveData();
 }
 
@@ -1018,6 +1021,7 @@ function buyRepellent() {
   if (gameData.coins >= repellentPrice) {
     gameData.coins -= repellentPrice;
     gameData.infested = false;
+    gameData.lastLevelInfested = gameData.level;
     coinChange(false, repellentPrice);
   }
   updateAll();
