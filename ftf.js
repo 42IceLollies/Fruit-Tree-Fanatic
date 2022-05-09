@@ -795,9 +795,10 @@ function determineYield() {
   // insect infestation removes 50%
   let infestation = 0;
   if (gameData.infested) {
-    if (gameData.lastLevelInfested == gameData.level - 1) infestation = -0.25;
-    if (gameData.lastLevelInfested > gameData.level - 1) infestation = -0.5;
+    if (gameData.lastLevelInfested == gameData.level) infestation = -0.25;
+    if (gameData.lastLevelInfested < gameData.level) infestation = -0.5;
   }
+  console.log([gameData.lastLevelInfested, gameData.level, infestation]);
  
   // pH inaccuracy can remove up to 10%
   const phDifference = determinePhAccuracy();
@@ -941,6 +942,7 @@ function nextLevel() {
   gameData.progressRecord[gameData.level-1] = findYieldRange();
   gameData.fertilizer = 0;
   gameData.level++;
+  determineInfestation();
   determineYield();
   gameData.bees = false;
   gameData.pruneNum = 0;
@@ -948,7 +950,6 @@ function nextLevel() {
   setInfoText(true);
   gameData.harvested = false;
   displayOverlay();
-  determineInfestation();
   updateAll();
   // if player hasn't gotten rid of insects, log that it's still infested
   // if (gameData.infested) gameData.lastLevelInfested = gameData.level;
