@@ -83,14 +83,21 @@ button.end-page {
 }
 
 #labelsDiv{
-  font-family:  "Inter", sans-serif;
-  color:black;
-  font-size:1em;
+  width:100%; 
   text-align: center;
-}
+  position:absolute;
+  margin: 0 auto;
+  transition: all 8s;
+  transition-timing-function: linear;
+  
+} 
 
 .lbl{
-  margin-top: var(--label-margin);
+  width:100%;
+  position: absolute; 
+  font-family:  "Inter", sans-serif;
+  font-size:1em;
+  color:black;
 }
 
 .bottomLbl

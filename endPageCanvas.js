@@ -57,6 +57,12 @@ class Circle {
         this.context = context;
       }
 
+      //returns position of ring for calculating label height
+      getY()
+      {
+        return this.y + this.radius;
+      }
+
       //method to draw rings
       draw()
       {
@@ -87,7 +93,11 @@ for(var i = 0; i < record.length; i++)
     var opacity = percentage;
     var weight = percentage*10;
     rings[i] = new Ring(canvas.width/2, canvas.height/2, canvas.width/25 * (i+1), weight, "rgba(106,62,45," + opacity + ")", c);
-    document.documentElement.style.setProperty('--label-margin', canvas.width/50 + "px");
+    if(i<=8){
+    document.getElementById("lbl"+ i).style.top = rings[i].getY() + "px";
+    console.log(rings[i].getY());
+    }
+    //document.documentElement.style.setProperty('--label-margin', canvas.width/50 + "px");
     // console.log(document.documentElement.style.getPropertyValue('--label-margin'));
 }
 
@@ -106,12 +116,14 @@ for(var i = record.length-1; i>=0; i--)
 function rollCredits() {
   const creditDivs = Array.from(document.querySelectorAll('.creditDiv'));
   const btnDiv = document.getElementById('btnDiv');
+  const labelDiv = document.getElementById('labelsDiv');
   let count = 0;
 
   creditDivs.forEach(credit => {
     credit.style.top = '100%';
   });
   btnDiv.style.top = '100%';
+  labelDiv.style.top = '100%';
 
   // starts the first div up quickly
   setTimeout(() => {
@@ -122,7 +134,8 @@ function rollCredits() {
   const creditIntId = setInterval(() => {
     if (count > creditDivs.length - 1) {
       clearInterval(creditIntId);
-      btnDiv.style.top = '45%';
+      btnDiv.style.top = '41%';
+      labelsDiv.style.top = "52%";
       return;
     }
     creditDivs[count].style.top = '-50%';
