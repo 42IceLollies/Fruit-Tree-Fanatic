@@ -58,9 +58,10 @@ class Circle {
       }
 
       //returns position of ring for calculating label height
-      getY()
+      getYLocation()
       {
-        return this.y + this.radius;
+       // return this.y + this.radius;
+       return this.radius - this.thickness - 20;
       }
 
       //method to draw rings
@@ -94,8 +95,8 @@ for(var i = 0; i < record.length; i++)
     var weight = percentage*10;
     rings[i] = new Ring(canvas.width/2, canvas.height/2, canvas.width/25 * (i+1), weight, "rgba(106,62,45," + opacity + ")", c);
     if(i<=8){
-    document.getElementById("lbl"+ i).style.top = rings[i].getY() + "px";
-    console.log(rings[i].getY());
+     document.getElementById("lbl"+ i).style.top = rings[i].getYLocation() + "px";
+    //document.getElementById("lbl"+ i).style.top = "1px";
     }
     //document.documentElement.style.setProperty('--label-margin', canvas.width/50 + "px");
     // console.log(document.documentElement.style.getPropertyValue('--label-margin'));
@@ -134,8 +135,8 @@ function rollCredits() {
   const creditIntId = setInterval(() => {
     if (count > creditDivs.length - 1) {
       clearInterval(creditIntId);
-      btnDiv.style.top = '41%';
-      labelsDiv.style.top = "52%";
+      btnDiv.style.top = '20%';
+      labelDiv.style.top = "52%";
       return;
     }
     creditDivs[count].style.top = '-50%';
