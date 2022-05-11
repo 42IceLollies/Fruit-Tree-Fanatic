@@ -77,9 +77,19 @@ class Circle {
 
 
 //----------------Drawing Shapes----------
-//gets data back from local storage to calculate game acheivments
+// gets data back from local storage to calculate game acheivments
 retrieveData();
 console.log(gameData.progressRecord);
+
+// makes all the ring labels
+const labelsDiv = document.getElementById('labelsDiv');
+for (var i = 0; i < 9; i++) {
+  labelsDiv.innerHTML += `
+  <p class='lbl' id="lbl${i}">Year ${i + 2}</p>
+  `;
+}
+labelsDiv.innerHTML += '<p  class="lbl bottomLbl">A dark ring means a healthy year.</p>';
+
 
 // creates all objects used in drawing
 var bark = new Ring(canvas.width/2, canvas.height/2, canvas.width/2, 5, "#6a3e2d",c);

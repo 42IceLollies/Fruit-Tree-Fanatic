@@ -132,7 +132,6 @@ function clearScoreData() {
   localStorage.removeItem('scoreData');
 }
 
-console.log(JSON.parse(localStorage.getItem('scoreData')));
 // ============================================
 // update display: main-page
 // ============================================
