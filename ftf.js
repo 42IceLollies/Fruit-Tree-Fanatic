@@ -636,14 +636,13 @@ function generateScoreboard() {
   let htmlString = '';
   const scoreData = JSON.parse(localStorage.getItem('scoreData'));
   const scoreboard = document.getElementById('scoreboard');
-  for (var i = 0; i < scoreData.length; i++) {
+  for (var i = scoreData.length - 1; i >= 0; i--) {
     const low = scoreData[i].score.lowFruitYield;
     const high = scoreData[0].score.highFruitYield;
     const actual = scoreData[i].score.fruitYield;
     const scoreNum = Math.ceil((actual - low + 5) / (high - low) * 10);
     htmlString += `
     <tr>
-    <td class='gameNum'>${i + 1}</td>
     <td class='initials'>${scoreData[i].initials}</td>
     <td class='score'>${scoreNum}/10</td>
     <td class='treeType'><img height='50' src='images/${scoreData[i].treeType}.png'></td>
