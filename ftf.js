@@ -110,10 +110,14 @@ function saveScoreData(initials) {
 
   const scoreData = JSON.parse(localStorage.getItem('scoreData'));
 
+  const now = new Date();
+  const thenDate = `${Number(now.getMonth()) + 1}-${now.getDate()}-${JSON.stringify(now.getFullYear()).slice(-2)}`;
+
   const pushObj = {
     treeType: gameData.treeType,
     score: gameData.progressRecord[9],
     initials: initials,
+    then: thenDate,
   };
 
   scoreData.push(pushObj);
@@ -522,7 +526,7 @@ function updateInsects() {
 }
 
 // ============================================
-// update display: main-page: achievement marker
+// update display: main-page: acheivement marker
 // ============================================
 
 // sets the color meter that how well you're doing based on yield out of potential yield
@@ -643,6 +647,7 @@ function generateScoreboard() {
     const scoreNum = Math.ceil((actual - low + 5) / (high - low) * 10);
     htmlString += `
     <tr>
+    <td class='date'>${scoreData[i].then}</td>
     <td class='initials'>${scoreData[i].initials}</td>
     <td class='score'>${scoreNum}/10</td>
     <td class='treeType'><img height='50' src='images/${scoreData[i].treeType}.png'></td>

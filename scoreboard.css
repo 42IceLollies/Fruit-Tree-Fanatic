@@ -27,11 +27,6 @@ thead td {
 	font-size: 1.3em;
 }
 
-.gameNum {
-	font-size: 1.4em;
-	width: 10%;
-}
-
 .initials {
 	font-size: 1.2em;
 }
@@ -44,7 +39,7 @@ thead td {
 }
 
 #menuOpen {
-	position: absolute;
+	position: fixed;
 	top: 4px;
 	right: 4px;
 }
