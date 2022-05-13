@@ -731,6 +731,7 @@ function determineInfestation() {
   if (percent <= chance) {
     gameData.infested = true;
     gameData.lastLevelInfested = gameData.level;
+    updateMusic();
   }
 }
  
@@ -801,7 +802,7 @@ function determineYield() {
     if (gameData.lastLevelInfested == gameData.level) infestation = -0.25;
     if (gameData.lastLevelInfested < gameData.level) infestation = -0.5;
   }
-  console.log([gameData.lastLevelInfested, gameData.level, infestation]);
+  // console.log([gameData.lastLevelInfested, gameData.level, infestation]);
  
   // pH inaccuracy can remove up to 10%
   const phDifference = determinePhAccuracy();
@@ -871,18 +872,40 @@ function hideInfo() {
 // turns music on and off when user selects the button to do so 
 function toggleMusic() {
   const generalTheme = document.getElementById("generalTheme");
+  const insectTheme = document.getElementById('insectTheme');
   const muteDiv = document.getElementById('muteDiv');
   const unmuteText = document.getElementById('unmute');
    if (!gameData.musicOn) {
-    generalTheme.play()
+    if (gameData.infested) {
+      insectTheme.play();
+      generalTheme.pause();
+    } else {
+      generalTheme.play();
+      insectTheme.pause();
+    }
     muteDiv.classList.remove("muted");
     unmuteText.classList.add('hidden');
   } else {
+    insectTheme.pause();
     generalTheme.pause();
     muteDiv.classList.add("muted");
     unmuteText.classList.remove('hidden');
   }
   gameData.musicOn = !gameData.musicOn;
+}
+
+function updateMusic() {
+  const generalTheme = document.getElementById('generalTheme');
+  const insectTheme = document.getElementById('insectTheme');
+  if (gameData.musicOn) {
+    if (gameData.infested) {
+      insectTheme.play();
+      generalTheme.pause();
+    } else {
+      generalTheme.play();
+      insectTheme.pause();
+    }
+  }
 }
 
 // opens/closes the menu 
@@ -1027,6 +1050,7 @@ function buyRepellent() {
     gameData.infested = false;
     gameData.lastLevelInfested = gameData.level;
     coinChange(false, repellentPrice);
+    updateMusic();
   }
   updateAll();
   saveData();
@@ -1065,9 +1089,15 @@ function playMusicOnLoad() {
   // delayed so if the unmute button is clicked this doesn't happen first
   setTimeout(() => {
     const generalTheme = document.getElementById("generalTheme");
+    const insectTheme = document.getElementById('insectTheme');
     const muteDiv = document.getElementById('muteDiv');
     const unmuteText = document.getElementById('unmute');
-    generalTheme.play()
+    if (gameData.infested) {
+      insectTheme.play();
+    } else {
+      generalTheme.play();
+    }
+
     muteDiv.classList.remove("muted");
     unmuteText.classList.add('hidden');
     gameData.musicOn = true;
