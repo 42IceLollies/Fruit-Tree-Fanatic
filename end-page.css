@@ -42,7 +42,7 @@ canvas {
   margin: 0;
   width: 100%;
   /*color: var(--dark-green);*/
-  color: rgb(231, 255, 231); /*almost white, little green*/
+  color: rgb(236, 255, 236); /*almost white, little green*/
   background-color:transparent;
   text-align: center;
   font-size: 1.4em;
@@ -84,6 +84,7 @@ button.end-page {
 
 #labelsDiv{
   width:100%; 
+  height:50%;
   text-align: center;
   position:absolute;
   margin: 0 auto;
@@ -100,10 +101,10 @@ button.end-page {
   color:black;
 }
 
-.bottomLbl
+#bottomLbl
 {
   color:white;
+  position:absolute;
   font-family: "Courgette", sans-serif;
   font-size: 1.5em;
-  bottom: 10%;
 }
