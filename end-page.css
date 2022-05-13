@@ -46,7 +46,7 @@ canvas {
   background-color:transparent;
   text-align: center;
   font-size: 1.4em;
-  transition: all 16s;
+  transition: top 16s;
   transition-timing-function: linear;
 }
 
@@ -82,17 +82,16 @@ button.end-page {
   font-size: 4em;
 }
 
-#labelsDiv{
+#labelsDiv {
   width:100%; 
   text-align: center;
   position:absolute;
   margin: 0 auto;
   transition: all 8s;
   transition-timing-function: linear;
-  
 } 
 
-.lbl{
+.lbl {
   width:100%;
   position: absolute; 
   font-family:  "Inter", sans-serif;
@@ -100,10 +99,45 @@ button.end-page {
   color:black;
 }
 
-.bottomLbl
-{
+.bottomLbl {
   color:white;
   font-family: "Courgette", sans-serif;
   font-size: 1.5em;
   bottom: 10%;
+}
+
+#infoMain {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  background: var(--grey);
+  border-radius: 20px;
+  max-height: 60%;
+  width: 40%;
+  opacity: 0.85;
+  padding: 20px;
+  color: white;
+  font-family: 'Courgette', sans-serif;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+#infoBtn {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  border: 2px solid var(--grey);
+  background: var(--grey);
+  color: #FFF;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 4;
+}
+
+#infoBtn.white {
+  color: var(--grey);
+  border-color: #FFF;
+  background: #FFF;
 }

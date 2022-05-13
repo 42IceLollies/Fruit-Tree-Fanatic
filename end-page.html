@@ -19,16 +19,13 @@
 
 		<div id="transition"></div>
 		
+		<button id='infoBtn' class='white' onclick=toggleInfo()>i</button>
+		<div id='infoMain' class=''>
+      		<p id='infoMainText'>A darker ring means a healthier year</p>
+  		</div>
+
 		<!-- Background music -->
 		<audio src="./audio/FTFGeneralMusic.mp3" id="generalTheme"></audio>
-
-    	<!-- Mute button -->
-		<div id="muteDiv" class='index hidden'>
-			<button class="muteBtn" onclick="toggleMusic()">
-				<img src="images/mute.png" class="muteImg">
-			</button>
-		</div>
-
 		
 		<!-- button to open menu -->
 		<button onclick=toggleMainMenu() id='menuOpen'>
