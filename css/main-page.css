@@ -207,6 +207,10 @@
   opacity: 0.7;
 }
 
+#nextLevelBtn:hover{
+  font-size: .9em;
+}
+
 #info-bar {
   position: absolute;
   top: 0;

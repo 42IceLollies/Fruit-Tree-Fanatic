@@ -20,6 +20,7 @@ const gameData = {
   fruitYield: 0,
   harvested: true,
   musicOn: false,
+  sfxOn: true,
 };
 
 // the ideal pH for each kind of tree, easily accessable
@@ -869,6 +870,22 @@ function hideInfo() {
   infoBtn.classList.remove('white');
 }
 
+//turns all sound on and off when main mute button is hit
+function toggleSound()
+{
+  if(gameData.musicOn == gameData.sfxOn)
+  {
+    toggleMusic();
+    toggleSfx();
+  } else if(gameData.musicOn)
+  {
+    toggleMusic();
+  } else
+  {
+    toggleSfx();
+  }
+}
+
 // turns music on and off when user selects the button to do so 
 function toggleMusic() {
   const generalTheme = document.getElementById("generalTheme");
@@ -894,6 +911,23 @@ function toggleMusic() {
   gameData.musicOn = !gameData.musicOn;
 }
 
+//turns on and off sound effects when user selects button to do so
+function toggleSfx()
+{
+  var un = document.getElementById("unmuteSfx");
+  if(gameData.sfxOn)
+  {
+    gameData.sfxOn = false;
+    un.classList.remove("hidden");
+    console.log("off");
+  } else
+  {
+    gameData.sfxOn = true;
+    un.classList.add("hidden");
+    console.log("on");
+  }
+}
+
 function updateMusic() {
   const generalTheme = document.getElementById('generalTheme');
   const insectTheme = document.getElementById('insectTheme');
@@ -914,6 +948,13 @@ function toggleMainMenu() {
   document.getElementById('mainMenu').classList.toggle('show');
   // greys out the rest of the screen
   document.getElementById('transition').classList.toggle('faded');
+
+
+  console.log(document.getElementById('transition'));
+  // setTimeout(()=>{if(document.getElementById('mainMenu').classList.contains('show')){
+  // document.getElementById('transition').addEventListener("mousedown", console.log("hi"));
+  // }},1000);
+ 
 }
 
 function endPageHomeBtn() {

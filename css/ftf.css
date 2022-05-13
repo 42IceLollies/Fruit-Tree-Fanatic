@@ -84,7 +84,7 @@ p.dark-green {
   position: fixed;
   display: flex;
   flex-direction: column;
-  z-index: 6;
+  z-index: 8;
   right: -50%;
   top: 5%;
   transition: right 1s;
