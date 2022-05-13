@@ -4,18 +4,16 @@ var c = canvas.getContext("2d");
 var root = document.querySelector(':root');
 
 // canvas size is modified in css file but this sets initial size
-function setCanvasSize() {
-  if (window.innerHeight < window.innerWidth) {
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerHeight;
-  } else {
-    canvas.height = window.innerWidth;
-    canvas.width = window.innerWidth;
-    // console.log((window.innerHeight - window.innerWidth) / 2);
-    root.style.setProperty('--margin-top', (window.innerHeight - window.innerWidth) / 2 + 'px');
-    // console.log(root.style);
-    // console.log(canvas.style);
-  }
+if (window.innerHeight < window.innerWidth) {
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerHeight;
+} else {
+  canvas.height = window.innerWidth;
+  canvas.width = window.innerWidth;
+  console.log((window.innerHeight - window.innerWidth) / 2);
+  root.style.setProperty('--margin-top', (window.innerHeight - window.innerWidth) / 2 + 'px');
+  console.log(root.style);
+  console.log(canvas.style);
 }
 
 
@@ -63,7 +61,7 @@ class Circle {
       getYLocation()
       {
        // return this.y + this.radius;
-       return this.radius - this.thickness - 20;
+       return this.radius - this.thickness;
       }
 
       //method to draw rings
@@ -90,33 +88,37 @@ for (var i = 0; i < 9; i++) {
   <p class='lbl' id="lbl${i}">Year ${i + 2}</p>
   `;
 }
+labelsDiv.innerHTML += '<p  class="lbl" id="bottomLbl">A dark ring means a healthy year.</p>';
+
 
 // creates all objects used in drawing
-function generateStump() {
-  var bark = new Ring(canvas.width/2, canvas.height/2, canvas.width/2, 5, "#6a3e2d",c);
-  var trunk = new Circle(canvas.width/2, canvas.height/2, canvas.width/2-10, "#c4ad8d", c);
-  var rings = [];
+var bark = new Ring(canvas.width/2, canvas.height/2, canvas.width/2, 5, "#6a3e2d",c);
+var trunk = new Circle(canvas.width/2, canvas.height/2, canvas.width/2-10, "#c4ad8d", c);
+var rings = [];
 
-  var record = gameData.progressRecord;
+var record = gameData.progressRecord;
 
-  for (var i = 0; i < record.length; i++) { 
+for(var i = 0; i < record.length; i++)
+{ 
     var percentage = (record[i].fruitYield-record[i].lowFruitYield)/(record[i].highFruitYield-record[i].lowFruitYield);
     var opacity = percentage;
     var weight = percentage*10;
     rings[i] = new Ring(canvas.width/2, canvas.height/2, canvas.width/25 * (i+1), weight, "rgba(106,62,45," + opacity + ")", c);
     if(i<=8){
-     document.getElementById("lbl"+ i).style.top = rings[i].getYLocation() + "px";
+     document.getElementById("lbl"+ i).style.top = "calc(" + rings[i].getYLocation() + "px + 8%)";
     //document.getElementById("lbl"+ i).style.top = "1px";
     }
     //document.documentElement.style.setProperty('--label-margin', canvas.width/50 + "px");
     // console.log(document.documentElement.style.getPropertyValue('--label-margin'));
-  }
-  // draws all the shapes
-  bark.draw();
-  trunk.draw();
-  for(var i = record.length-1; i>=0; i--) {
+}
+
+
+// draws all objects in drawing
+bark.draw();
+trunk.draw();
+for(var i = record.length-1; i>=0; i--)
+{
     rings[i].draw();
-  }
 }
 
 
@@ -131,7 +133,7 @@ function rollCredits() {
   creditDivs.forEach(credit => {
     credit.style.top = '100%';
   });
-  btnDiv.style.bottom = '-40%';
+  btnDiv.style.top = '100%';
   labelDiv.style.top = '100%';
 
   // starts the first div up quickly
@@ -143,10 +145,8 @@ function rollCredits() {
   const creditIntId = setInterval(() => {
     if (count > creditDivs.length - 1) {
       clearInterval(creditIntId);
-      btnDiv.style.bottom = '45%';
-      setTimeout(() => {
-        labelDiv.style.top = "52%";
-      }, 3000);
+      btnDiv.style.top = '20%';
+      labelDiv.style.top = "45%";
       return;
     }
     creditDivs[count].style.top = '-50%';
@@ -154,11 +154,4 @@ function rollCredits() {
   }, 3000);
 }
 
-window.addEventListener('resize', () => {
-  setCanvasSize();
-  generateStump();
-});
-
-setCanvasSize();
-generateStump();
 rollCredits();
