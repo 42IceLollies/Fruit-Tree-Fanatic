@@ -63,7 +63,7 @@ class Circle {
       getYLocation()
       {
        // return this.y + this.radius;
-       return this.radius - this.thickness - 20;
+       return this.radius - this.thickness;
       }
 
       //method to draw rings
@@ -104,9 +104,8 @@ function generateStump() {
     var opacity = percentage;
     var weight = percentage*10;
     rings[i] = new Ring(canvas.width/2, canvas.height/2, canvas.width/25 * (i+1), weight, "rgba(106,62,45," + opacity + ")", c);
-    if(i<=8){
-     document.getElementById("lbl"+ i).style.top = rings[i].getYLocation() + "px";
-    //document.getElementById("lbl"+ i).style.top = "1px";
+    if (i <= 8) {
+      document.getElementById("lbl"+ i).style.top = "calc(" + rings[i].getYLocation() + "px + 8%)";
     }
     //document.documentElement.style.setProperty('--label-margin', canvas.width/50 + "px");
     // console.log(document.documentElement.style.getPropertyValue('--label-margin'));
