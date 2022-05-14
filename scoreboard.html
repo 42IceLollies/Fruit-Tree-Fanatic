@@ -9,7 +9,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Courgette&family=Inter&display=swap" rel="stylesheet">
 
-	<link rel='stylesheet' href='./css/ftf.css'></link>
+	<link rel='stylesheet' href='./css/ftf.css'>
 	<link rel='stylesheet' href='./css/scoreboard.css'>
 
 	<link rel="shortcut icon" href="images/peach.ico" type="image/x-icon">
@@ -26,7 +26,8 @@
       </button>
 	<!-- menu -->
 	<div id='mainMenu'>
-      <button class='mainMenuBtn' onclick="location.href = 'index.html'">home</button>
+      <button class='mainMenuBtn' onclick="location.replace('index.html')">home</button>
+      <button class='mainMenuBtn' onclick=clearScoreData()>clear scores</button>
       <button class='mainMenuBtn' onclick=toggleMainMenu()>close</button>
     </div> <!-- end of mainMenu -->
 

@@ -135,6 +135,7 @@ function retrieveScoreData() {
 // only used for testing
 function clearScoreData() {
   localStorage.removeItem('scoreData');
+  location.replace('index.html');
 }
 
 // ============================================
