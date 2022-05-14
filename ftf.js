@@ -935,6 +935,16 @@ function updateMusic() {
   }
 }
 
+// plays a sound effect
+// enter the id of the audio element, usually from a purchase function
+function playSFX(id) {
+  const sfx = document.getElementById(id);
+  if (gameData.sfxOn) {
+    sfx.currentTime = 0;
+    sfx.play();
+  }
+}
+
 // opens/closes the menu 
 function toggleMainMenu() {
   // slides in the side menu
@@ -1028,6 +1038,7 @@ function buyFertilizer() {
     // lower the pH
     adjustPH("-");
     coinChange(false, 10);
+    // playSFX('fertilizerSFX');
   }
   updateAll();
   saveData();
@@ -1040,6 +1051,7 @@ function buyLimestone() {
     // raise the pH
     adjustPH("+");
     coinChange(false, 10);
+    // playSFX('limestoneSFX');
   }
   updateAll();
   saveData();
@@ -1054,6 +1066,7 @@ function buyPrune() {
     gameData.coins -= 15;
     gameData.pruneNum++;
     coinChange(false, 15);
+    // playSFX('pruneSFX');
   }
   updateAll();
   saveData();
@@ -1108,6 +1121,8 @@ function buyGraft() {
     if (gameData.treeType == "apple") gameData.graftedTreeType = "pear";
     if (gameData.treeType == "peach") gameData.graftedTreeType = "plum";
     if (gameData.treeType == "lemon") gameData.graftedTreeType = "orange";
+    
+    playSFX('graftSFX');
   }
   updateAll();
   saveData();
@@ -1151,6 +1166,7 @@ function harvestFruit() {
   updateInfoBar();
   updatePriceColor();
   saveData();
+  // playSFX('coinSFX');
 }
 
 // if on index page
