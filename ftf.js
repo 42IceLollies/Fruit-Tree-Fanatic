@@ -20,7 +20,7 @@ const gameData = {
   fruitYield: 0,
   harvested: true,
   musicOn: false,
-  sfxOn: true,
+  sfxOn: false,
 };
 
 // the ideal pH for each kind of tree, easily accessable
@@ -871,17 +871,13 @@ function hideInfo() {
 }
 
 //turns all sound on and off when main mute button is hit
-function toggleSound()
-{
-  if(gameData.musicOn == gameData.sfxOn)
-  {
+function toggleSound() {
+  if (gameData.musicOn == gameData.sfxOn) {
     toggleMusic();
     toggleSfx();
-  } else if(gameData.musicOn)
-  {
+  } else if (gameData.musicOn) {
     toggleMusic();
-  } else
-  {
+  } else {
     toggleSfx();
   }
 }
@@ -912,16 +908,13 @@ function toggleMusic() {
 }
 
 //turns on and off sound effects when user selects button to do so
-function toggleSfx()
-{
+function toggleSfx() {
   var un = document.getElementById("unmuteSfx");
-  if(gameData.sfxOn)
-  {
+  if (gameData.sfxOn) {
     gameData.sfxOn = false;
     un.classList.remove("hidden");
     console.log("off");
-  } else
-  {
+  } else {
     gameData.sfxOn = true;
     un.classList.add("hidden");
     console.log("on");
@@ -1142,6 +1135,7 @@ function playMusicOnLoad() {
     muteDiv.classList.remove("muted");
     unmuteText.classList.add('hidden');
     gameData.musicOn = true;
+    gameData.sfxOn = true;
     document.removeEventListener('mousedown', playMusicOnLoad);
   }, 100)
 }
