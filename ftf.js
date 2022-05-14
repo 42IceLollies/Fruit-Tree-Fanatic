@@ -1056,7 +1056,7 @@ function buyFertilizer() {
     adjustPH("-");
     coinChange(false, 10);
 
-     playSFX("fertilizer", 1);
+     playSFX("fertilizer", .5);
   }
   updateAll();
   saveData();
