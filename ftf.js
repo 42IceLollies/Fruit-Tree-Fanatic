@@ -881,13 +881,15 @@ function toggleSound() {
   } else {
     toggleSfx();
   }
+  updateMuteBtn();
+  console.log([gameData.musicOn, gameData.sfxOn]);
 }
 
 // turns music on and off when user selects the button to do so 
 function toggleMusic() {
   const generalTheme = document.getElementById("generalTheme");
   const insectTheme = document.getElementById('insectTheme');
-  const muteDiv = document.getElementById('muteDiv');
+  // const muteDiv = document.getElementById('muteDiv');
   const unmuteText = document.getElementById('unmute');
    if (!gameData.musicOn) {
     if (gameData.infested) {
@@ -897,15 +899,26 @@ function toggleMusic() {
       generalTheme.play();
       insectTheme.pause();
     }
-    muteDiv.classList.remove("muted");
+    // muteDiv.classList.remove("muted");
     unmuteText.classList.add('hidden');
   } else {
     insectTheme.pause();
     generalTheme.pause();
-    muteDiv.classList.add("muted");
+    // muteDiv.classList.add("muted");
     unmuteText.classList.remove('hidden');
   }
   gameData.musicOn = !gameData.musicOn;
+  updateMuteBtn();
+}
+
+// updates the main mute button based on music and sfx
+function updateMuteBtn() {
+  const muteDiv = document.getElementById('muteDiv');
+  if (!gameData.musicOn && !gameData.sfxOn) {
+    muteDiv.classList.add('muted');
+  } else {
+    muteDiv.classList.remove('muted');
+  }
 }
 
 //turns on and off sound effects when user selects button to do so
@@ -914,12 +927,13 @@ function toggleSfx() {
   if (gameData.sfxOn) {
     gameData.sfxOn = false;
     un.classList.remove("hidden");
-    console.log("off");
+    // console.log("off");
   } else {
     gameData.sfxOn = true;
     un.classList.add("hidden");
-    console.log("on");
+    // console.log("on");
   }
+  updateMuteBtn();
 }
 
 function updateMusic() {
@@ -934,6 +948,7 @@ function updateMusic() {
       insectTheme.pause();
     }
   }
+  updateMuteBtn();
 }
 
 // plays a sound effect
@@ -1138,6 +1153,7 @@ function buyGraft() {
 function playMusicOnLoad() {
   // delayed so if the unmute button is clicked this doesn't happen first
   setTimeout(() => {
+    var un = document.getElementById("unmuteSfx");
     const generalTheme = document.getElementById("generalTheme");
     const insectTheme = document.getElementById('insectTheme');
     const muteDiv = document.getElementById('muteDiv');
@@ -1148,6 +1164,7 @@ function playMusicOnLoad() {
       generalTheme.play();
     }
 
+    un.classList.add("hidden");
     muteDiv.classList.remove("muted");
     unmuteText.classList.add('hidden');
     gameData.musicOn = true;
