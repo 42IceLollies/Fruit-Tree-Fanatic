@@ -882,7 +882,7 @@ function toggleSound() {
     toggleSfx();
   }
   updateMuteBtn();
-  console.log([gameData.musicOn, gameData.sfxOn]);
+  // console.log([gameData.musicOn, gameData.sfxOn]);
 }
 
 // turns music on and off when user selects the button to do so 
