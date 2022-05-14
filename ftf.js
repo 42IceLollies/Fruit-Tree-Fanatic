@@ -871,7 +871,51 @@ function hideInfo() {
   infoBtn.classList.remove('white');
 }
 
-//turns all sound on and off when main mute button is hit
+
+// opens/closes the menu 
+function toggleMainMenu() {
+  // slides in the side menu
+  document.getElementById('mainMenu').classList.toggle('show');
+  // greys out the rest of the screen
+  document.getElementById('transition').classList.toggle('faded');
+
+
+  console.log(document.getElementById('transition'));
+  // setTimeout(()=>{if(document.getElementById('mainMenu').classList.contains('show')){
+  // document.getElementById('transition').addEventListener("mousedown", console.log("hi"));
+  // }},1000);
+ 
+}
+
+function endPageHomeBtn() {
+  clearData();
+  location.replace('index.html');
+}
+
+function endToScoreBtn() {
+  clearData();
+  location.replace('scoreboard.html');
+}
+
+// called by the new-game buttons
+// sets the gameData values associated with the choice
+function newTreeSelection(treeType, cost) {
+  // disable the buttons, so you can't double-click
+  const options = document.querySelectorAll('button.option');
+  options.forEach(option => {
+    option.disabled = true;
+  });
+
+  gameData.treeType = treeType;
+  gameData.coins -= cost;
+  startNewGame();
+}
+
+// ============================================
+// music & sound
+// ============================================
+
+// turns all sound on and off when main mute button is hit
 function toggleSound() {
   if (gameData.musicOn == gameData.sfxOn) {
     toggleMusic();
@@ -899,12 +943,10 @@ function toggleMusic() {
       generalTheme.play();
       insectTheme.pause();
     }
-    // muteDiv.classList.remove("muted");
     unmuteText.classList.add('hidden');
   } else {
     insectTheme.pause();
     generalTheme.pause();
-    // muteDiv.classList.add("muted");
     unmuteText.classList.remove('hidden');
   }
   gameData.musicOn = !gameData.musicOn;
@@ -960,45 +1002,6 @@ function playSFX(id, volume) {
     sfx.currentTime = 0;
     sfx.play();
   }
-}
-
-// opens/closes the menu 
-function toggleMainMenu() {
-  // slides in the side menu
-  document.getElementById('mainMenu').classList.toggle('show');
-  // greys out the rest of the screen
-  document.getElementById('transition').classList.toggle('faded');
-
-
-  console.log(document.getElementById('transition'));
-  // setTimeout(()=>{if(document.getElementById('mainMenu').classList.contains('show')){
-  // document.getElementById('transition').addEventListener("mousedown", console.log("hi"));
-  // }},1000);
- 
-}
-
-function endPageHomeBtn() {
-  clearData();
-  location.replace('index.html');
-}
-
-function endToScoreBtn() {
-  clearData();
-  location.replace('scoreboard.html');
-}
-
-// called by the new-game buttons
-// sets the gameData values associated with the choice
-function newTreeSelection(treeType, cost) {
-  // disable the buttons, so you can't double-click
-  const options = document.querySelectorAll('button.option');
-  options.forEach(option => {
-    option.disabled = true;
-  });
-
-  gameData.treeType = treeType;
-  gameData.coins -= cost;
-  startNewGame();
 }
 
 // ============================================
