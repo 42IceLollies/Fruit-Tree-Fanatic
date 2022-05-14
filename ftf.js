@@ -1056,7 +1056,7 @@ function buyFertilizer() {
     adjustPH("-");
     coinChange(false, 10);
 
-     playSFX("fertilizer", .5);
+     playSFX("fertilizerSFX", .5);
   }
   updateAll();
   saveData();
@@ -1070,7 +1070,7 @@ function buyLimestone() {
     adjustPH("+");
     coinChange(false, 10);
    
-    playSFX("limestone", 1)
+    playSFX("limestoneSFX", 1)
   }
   updateAll();
   saveData();
@@ -1086,7 +1086,7 @@ function buyPrune() {
     gameData.pruneNum++;
     coinChange(false, 15);
    
-    playSFX("pruning", 1)
+    playSFX("pruningSFX", 1)
   }
   updateAll();
   saveData();
@@ -1142,7 +1142,7 @@ function buyGraft() {
     if (gameData.treeType == "peach") gameData.graftedTreeType = "plum";
     if (gameData.treeType == "lemon") gameData.graftedTreeType = "orange";
     
-    playSFX("graft", 1)
+    playSFX("graftSFX", 1)
   }
   updateAll();
   saveData();
@@ -1189,7 +1189,7 @@ function harvestFruit() {
   updatePriceColor();
   saveData();
   // playSFX('coinSFX');
-  playSFX("coins", 1);
+  playSFX("coinsSFX", 1);
 }
 
 // if on index page
