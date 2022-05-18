@@ -33,10 +33,25 @@
   flex-direction: column;
   padding-bottom: 10px;
   overflow: hidden;
+  color: #000;
 }
 
 .option:hover {
   box-shadow: 0px 0px 15px #666;
+}
+
+.equal {
+  margin: 0 20px;
+}
+
+#coinDisplay.new-game {
+  float: right;
+  padding: 10px;
+  padding-bottom: 0;
+}
+
+button {
+  border: none;
 }
 
 #info-new {
@@ -56,20 +71,38 @@
   font-size: 1.4em;
 }
 
-.equal {
-  margin: 0 20px;
+@media (min-width: 751px) {
+  .treeImg {
+    height: 60%;
+  }
 }
 
-#coinDisplay.new-game {
-  float: right;
-  padding: 10px;
-  padding-bottom: 0;
+@media (max-width: 750px) {
+  .treeImg {
+    width: 80%;
+    margin-bottom: 10%;
+  }
+
+  .treeImg[src*='peach'] {
+    width: 100%;
+  }
 }
 
-button {
-  border: none;
-}
+@media (max-width: 450px) {
+  #tree-options {
+    height: 45%;
+  }
 
-.treeImg {
-  height: 60%;
+  #info-new {
+    height: 48%;
+    padding: 6%;
+  }
+
+  .cost {
+    white-space: nowrap;
+  }
+
+  .costImg {
+    height: 20px !important;
+  }
 }

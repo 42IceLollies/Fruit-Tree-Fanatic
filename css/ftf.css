@@ -34,6 +34,11 @@ img {
   margin: auto;
 }
 
+/* to remove link color from button text */
+button {
+  color: black;
+}
+
 /*removes link underlines thoroughly*/
 a:link {
   text-decoration: none !important;
@@ -158,4 +163,10 @@ p.dark-green {
 #transition.on {
   z-index: 7;
   opacity: 1;
+}
+
+@media (max-width: 450px) {
+  #mainMenu {
+    width: 50%;
+  }
 }
